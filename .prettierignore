@@ -1,0 +1,14 @@
+node_modules
+.vscode
+dist
+.angular
+coverage
+eslint.config.js
+package-lock.json
+package.json
+README.md
+angular.json
+tsconfig.json
+tsconfig.spec.json
+tsconfig.app.json
+.prettierrc
