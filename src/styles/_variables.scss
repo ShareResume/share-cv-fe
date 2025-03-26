@@ -1,0 +1,98 @@
+/*      TYPOGRAPHY      */
+/* -------------------- */
+
+$font-thin: "Roboto Thin"; // fw100
+$font-light: "Roboto Light"; // fw300
+$font-regular: "Roboto Regular"; // fw 400
+$font-medium: "Roboto Medium"; // fw 500
+$font-bold: "Roboto Bold"; // fw 700
+$font-black: "Roboto Black"; // fw900
+
+/*      BUTTONS      */
+/* -------------------- */
+$button-bg-primary: #7facab;
+$button-bg-primary-hover: #9fc1c0;
+$button-bg-primary-active: #5f9796;
+$button-text-active: #395b5a;
+$button-bg-secondary: #dfeaea;
+$button-bg-secondary-hover: #f1f1f1;
+$button-border-secondary: #bfd5d5;
+$button-text-secondary: #4c7978;
+$button-text-primary: #f6f6f6;
+
+/*   NAVBAR - SIDEBAR   */
+/* -------------------- */
+$gray100: #f6f6f6;
+$sidenav-color: #f1f1f1;
+$sidenav-border: #e4e4e4;
+$sidebar-header: #395b5a;
+
+$sidebar-subheader-text-color: #767777;
+$sidebar-section-text-color: #0b0b0b;
+$sidebar-item-hover-color: #bfd5d5;
+$sidebar-item-text-hover-color: #395b5a;
+
+/*   COLORS   */
+/* -------------------- */
+$error-color: #a94442;
+$success-color: #4caf50;
+$info-color: #4c54af;
+
+$text-color: #ffffff;
+
+/*   LOADER   */
+/* -------------------- */
+$loader-background-color: #d9d9d9;
+$loader-spinner-border-color: #7c7c7c;
+$loader-spinner-top-bottom-border-color: #cbcbcb;
+$loader-text-color: #7c7c7c;
+
+/*   INPUT   */
+/* -------------------- */
+$input-border-color: #919292;
+$input-hover-color: #f1f1f1;
+$input-additional-text-color: #2f3030;
+$input-disabled-border-color: #e4e4e4;
+$input-disabled-text-color: #c8c9c9;
+$input-error-color: #ff5353;
+$input-height: 41px;
+$input-label-padding-top: 16px;
+$input-vertical-padding: 12px;
+
+/*   CARD      */
+/* -------------------- */
+$card-bg-color: #f1f1f1;
+$card-header-font-color: #5e5f5f;
+
+/*   TABLE   */
+/* -------------------- */
+$row-height: 48px;
+$border-width: 1px;
+$header-height: 48px;
+$table-font-color: #0b0b0b;
+$table-header-font-color: #5e5f5f;
+
+/*   AUTH   */
+/* -------------------- */
+
+$auth-welcome-phrase-text-color: #f6f6f6;
+$auth-separator-color: #bfd5d5;
+$auth-separator-color: #bfd5d5;
+$auth-bottom-hyperlink-color: #4c7978;
+$auth-or-color: #0b0b0b;
+
+/*   CHIPS      */
+/* -------------------- */
+$chips-color-active-in-progress: #50835e;
+$chips-color-pending: #7e6a2b;
+$chips-color-on-hold: #5350af;
+$chips-color-deactivated-cancelled: #972a2a;
+$chips-color-not-started: #717171;
+$chips-color-completed: #704db7;
+
+$chips-bg-color-active-in-progress: #cdefdc;
+$chips-bg-color-pending: #f4e8bd;
+$chips-bg-color-on-hold: #bdcdf4;
+$chips-bg-color-deactivated-cancelled: #f5c8c8;
+$chips-bg-color-not-started: #dedede;
+$chips-bg-color-completed: #e6ceff;

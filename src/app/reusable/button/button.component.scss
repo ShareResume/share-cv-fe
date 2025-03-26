@@ -1,0 +1,166 @@
+@use 'variables' as *;
+
+// Mixin for common button styles
+@mixin button-styles($width, $height, $font-size, $line-height) {
+  width: $width;
+  height: $height;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: $font-regular;
+  font-size: $font-size;
+  font-weight: 500;
+  line-height: $line-height;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+
+  &--small {
+    @include button-styles(127px, 32px, 14px, 16px);
+  }
+
+  &--medium {
+    @include button-styles(160px, 40px, 14px, 17px);
+  }
+
+  &--large {
+    @include button-styles(336px, 48px, 16px, 19px);
+  }
+
+  &--weight--regular {
+    font-family: $font-regular;
+  }
+
+  &--weight--medium {
+    font-family: $font-medium;
+  }
+
+  &--weight--bold {
+    font-family: $font-bold !important;
+  }
+
+  &--primary {
+    background-color: $button-bg-primary;
+    color: $button-text-primary;
+
+    &:hover {
+      background-color: $button-bg-primary-hover;
+    }
+
+    &:active {
+      background-color: $button-bg-primary-active;
+    }
+
+    &:disabled {
+      background-color: $button-bg-secondary;
+      color: $button-border-secondary;
+    }
+
+    // ng-content styling
+    ::ng-deep {
+      & > * {
+        * {
+          stroke: $text-color;
+        }
+      }
+    }
+  }
+
+  &--secondary {
+    background-color: $button-bg-secondary;
+    color: $button-text-secondary;
+    border: 1px solid $button-border-secondary;
+
+    &:hover {
+      background-color: $button-bg-secondary-hover;
+    }
+
+    &:active {
+      background-color: $button-bg-secondary;
+      border: 1px solid $button-bg-primary-hover;
+    }
+
+    &:disabled {
+      background-color: $button-text-primary;
+      border: 1px solid $button-bg-secondary;
+      color: $button-border-secondary;
+    }
+
+    // ng-content styling
+    ::ng-deep {
+      & > * {
+        * {
+          stroke: $button-text-secondary;
+        }
+      }
+    }
+  }
+
+  &--terniary {
+    color: $button-text-secondary;
+
+    &--small {
+      @include button-styles(127px, 32px, 14px, 16px);
+    }
+
+    &--medium {
+      @include button-styles(127px, 32px, 14px, 17px);
+    }
+
+    &--large {
+      @include button-styles(134px, 32px, 14px, 19px);
+    }
+
+    &:hover {
+      color: $button-bg-primary-hover;
+    }
+
+    &:active {
+      color: $button-text-active;
+    }
+
+    &:disabled {
+      color: $button-text-secondary;
+    }
+
+    // ng-content styling
+    ::ng-deep {
+      & > * {
+        * {
+          stroke: $button-text-secondary;
+        }
+      }
+    }
+  }
+
+  &--weight--regular {
+    font-family: $font-regular;
+  }
+
+  &--weight--medium {
+    font-family: $font-medium;
+  }
+
+  &--weight--bold {
+    font-family: $font-bold;
+  }
+
+  &.fluid {
+    width: fit-content;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+::ng-deep .btn--terniary app-icon mat-icon {
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+}

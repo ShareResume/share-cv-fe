@@ -1,0 +1,24 @@
+@use 'variables' as *;
+
+:host {
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin: 0;
+    height: fit-content;
+    max-width: 40vw;
+    min-width: 100px;
+    word-wrap: break-word;
+    padding-right: 20px;
+  }
+
+  button {
+    cursor: pointer;
+    background: transparent;
+    color: $text-color;
+    border: 0;
+  }
+}

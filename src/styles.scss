@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+
+@use 'variables' as v;
+@use 'typography' as typography;
+@use 'reset' as reset;
+@use 'globals' as globals;
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.snack-bar-overrides(
+    (
+      supporting-text-color: v.$text-color,
+    )
+  );
+  @include mat.table-overrides(
+    (
+      background-color: v.$button-bg-secondary-hover,
+      row-item-container-height: v.$row-height,
+      row-item-outline-width: 0,
+      header-container-height: v.$header-height,
+      row-item-label-text-color: v.$table-font-color,
+      header-headline-color: v.$table-header-font-color,
+    )
+  );
+
+  @include mat.form-field-overrides(
+      (
+        container-height: v.$input-height,
+        filled-with-label-container-padding-top: v.$input-label-padding-top,
+        filled-focus-label-text-color: v.$input-border-color,
+        filled-caret-color: v.$input-border-color,
+        filled-disabled-label-text-color: v.$input-disabled-text-color,
+        container-vertical-padding: v.$input-vertical-padding
+      )
+  );
+}
+
+mat-snack-bar-container {
+  &.success {
+    background-color: v.$success-color;
+  }
+  &.info {
+    background-color: v.$info-color;
+  }
+  &.error {
+    background-color: v.$error-color;
+  }
+}
+
+html,
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  font-family: v.$font-regular;
+  font-size: 14px;
+}

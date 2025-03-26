@@ -1,0 +1,9 @@
+<button
+  mat-button
+  [class]="buttonClass"
+  [class.fluid]="fluid()"
+  [disabled]="disabled()"
+  [attr.type]="isLink() ? 'button' : 'submit'"
+>
+  <ng-content></ng-content>
+</button>
