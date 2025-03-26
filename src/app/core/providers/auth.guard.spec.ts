@@ -20,7 +20,6 @@ describe('authGuard', () => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient()],
     });
-    TestBed.configureTestingModule({});
     authService = TestBed.inject(AuthService);
   });
 
@@ -29,11 +28,10 @@ describe('authGuard', () => {
   });
 
   it('should guard routes', () => {
-    jest
-      .spyOn(authService, 'getAccessToken')
-      .mockReturnValueOnce('here')
-      .mockReturnValueOnce('here')
-      .mockReturnValueOnce('');
+    const getAccessTokenSpy = spyOn(authService, 'getAccessToken');
+    
+    // First call returns 'here'
+    getAccessTokenSpy.and.returnValue('here');
 
     const snapshot = new ActivatedRouteSnapshot();
 
@@ -49,6 +47,7 @@ describe('authGuard', () => {
 
     expect(result).not.toBeTruthy();
 
+    // Second call returns 'here'
     snapshot.url = [
       {
         path: '/',
@@ -59,6 +58,9 @@ describe('authGuard', () => {
     result = executeGuard(snapshot, {} as RouterStateSnapshot);
     expect(result).toBeTruthy();
 
+    // Third call returns empty string
+    getAccessTokenSpy.and.returnValue('');
+    
     snapshot.url = [
       {
         path: '/',

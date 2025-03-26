@@ -10,7 +10,6 @@ import {
 import { errorInterceptor } from './error.interceptor';
 import { ToasterService } from '../services/toaster.service';
 import { catchError, EMPTY, of, switchMap, throwError } from 'rxjs';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('errorInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) =>
@@ -20,7 +19,7 @@ describe('errorInterceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideAnimationsAsync(), provideHttpClient()],
+      providers: [provideHttpClient()],
     });
     toasterService = TestBed.inject(ToasterService);
   });
@@ -30,7 +29,7 @@ describe('errorInterceptor', () => {
   });
 
   it('should throw error', () => {
-    jest.spyOn(toasterService, 'showError');
+    spyOn(toasterService, 'showError');
 
     const error = new HttpErrorResponse({
       status: 400,
@@ -38,7 +37,7 @@ describe('errorInterceptor', () => {
     });
 
     interceptor(new HttpRequest('GET', '', {}), () =>
-      of(1).pipe(switchMap(() => throwError(error))),
+      of(1).pipe(switchMap(() => throwError(() => error))),
     )
       .pipe(catchError(() => EMPTY))
       .subscribe();
@@ -47,7 +46,7 @@ describe('errorInterceptor', () => {
   });
 
   it('should not throw error', () => {
-    jest.spyOn(toasterService, 'showError');
+    spyOn(toasterService, 'showError');
     interceptor(new HttpRequest('GET', '', {}), () => of({} as HttpSentEvent));
     expect(toasterService.showError).not.toHaveBeenCalled();
   });

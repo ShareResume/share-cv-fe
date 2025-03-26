@@ -45,7 +45,7 @@ export class ApiService {
     let params = new HttpParams();
 
     Object.entries(paramsObj)
-      .filter(([_, value]) => typeof value !== 'undefined' && value !== null)
+      .filter(([, value]) => typeof value !== 'undefined' && value !== null)
       .map(([key, value]) => (params = params.set(key, value!)));
 
     return params.toString();

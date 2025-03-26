@@ -1,3 +1,1 @@
-export interface QueryParamsModel {
-  [key: string]: string | number | undefined;
-}
+export type QueryParamsModel = Record<string, string | number | undefined>;
