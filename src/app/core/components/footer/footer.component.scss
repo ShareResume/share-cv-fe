@@ -1,0 +1,61 @@
+@import '../../../../styles/variables';
+
+.footer {
+  background-color: $footer-bg-color;
+  border-top: 1px solid $footer-border-color;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+}
+
+.footer-left {
+  .copyright {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: $copyright-text-color;
+  }
+}
+
+.footer-right {
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  .footer-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: $nav-link-color;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $nav-link-hover-color;
+    }
+  }
+}

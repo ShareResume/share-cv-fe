@@ -20,6 +20,30 @@ $button-border-secondary: #bfd5d5;
 $button-text-secondary: #4c7978;
 $button-text-primary: #f6f6f6;
 
+/*   LAYOUT COMPONENTS   */
+/* -------------------- */
+$white: #FFFFFF;
+$black: #000000;
+$gray-100: #F6F6F6;
+$gray-200: #F5F5F5;
+$gray-250: #F1F1F1;
+$gray-300: #EEEEEE;
+$gray-400: #E5E7EB;
+$gray-500: #E5E5E5;
+$gray-600: #525252;
+
+// Header & Footer
+$header-bg-color: $white;
+$header-border-color: $gray-500;
+$footer-bg-color: $white;
+$footer-border-color: $gray-400;
+$nav-link-color: $gray-600;
+$nav-link-hover-color: $black;
+$logo-color: $black;
+$profile-button-bg-color: $gray-200;
+$profile-button-hover-bg-color: $gray-300;
+$copyright-text-color: $gray-600;
+
 /*   NAVBAR - SIDEBAR   */
 /* -------------------- */
 $gray100: #f6f6f6;

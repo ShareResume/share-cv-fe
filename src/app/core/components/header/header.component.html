@@ -1,3 +1,27 @@
-<p>
-  header works!
-</p>
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="logo">ResumeShare</div>
+        <nav class="nav-menu">
+          <a *ngFor="let item of navItems" 
+             [routerLink]="item.route" 
+             routerLinkActive="active" 
+             class="nav-link">
+            {{ item.label }}
+          </a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <app-button 
+          colorType="primary" 
+          class="upload-button">
+          Upload Resume
+        </app-button>
+        <button class="profile-button">
+          <img src="/user-icon.svg" alt="User profile" class="profile-icon">
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
