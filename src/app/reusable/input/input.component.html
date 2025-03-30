@@ -1,0 +1,38 @@
+<mat-form-field
+  [hintLabel]="additionalText"
+  [appearance]="'fill'"
+  [class.no-hint]="!additionalText"
+  [class.has-error]="errorMessage"
+>
+  @if (label) {
+    <mat-label>{{ label }}</mat-label>
+  }
+  <input
+    [type]="actualType"
+    [value]="value"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (input)="onInput($event)"
+    matInput
+  >
+  @if (type === 'password') {
+    <button
+      mat-icon-button
+      type="button"
+      [disableRipple]="true"
+      [disabled]="disabled"
+      matSuffix
+      [attr.aria-label]="'Hide password'"
+      (click)="togglePasswordVisibility()"
+    >
+      <app-icon
+        [iconName]="isPasswordVisible ? 'eye' : 'eye-closed'">
+      </app-icon>
+    </button>
+  }
+</mat-form-field>
+<div class="error-message" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>

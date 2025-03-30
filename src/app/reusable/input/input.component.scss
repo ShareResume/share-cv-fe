@@ -1,0 +1,38 @@
+@use "constants" as *;
+
+:host {
+  ::ng-deep {
+    .no-hint .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mat-mdc-form-field-hint-wrapper {
+      padding-left: 24px;
+      font-size: 16px;
+      color: $input-additional-text-color;;
+    }
+
+    .mat-mdc-form-field .mat-mdc-text-field-wrapper {
+      padding-right: 8px;
+    }
+
+    .mdc-icon-button {
+      height: 100%;
+      padding: 0;
+    }
+
+    .has-error .mat-mdc-text-field-wrapper {
+      border-color: $input-error-color;
+    }
+  }
+
+  .error-message {
+    color: $input-error-color;
+    margin-top: 0.5rem;
+    margin-left: 24px;
+    font-family: $font-regular;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
