@@ -1,28 +1,22 @@
 import {
   inject,
   Injectable,
-  makeStateKey,
   PLATFORM_ID,
-  StateKey,
-  TransferState,
 } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_BASE_KEY } from '../constants/api.constants';
 import { AuthResponse } from '../models/user.model';
 import { QueryParamsModel } from '../models/query-params-model';
 import { TOKEN_KEY } from '../constants/user.constants';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private readonly httpClient: HttpClient = inject(HttpClient);
-  private readonly transferState: TransferState = inject(TransferState);
-  private readonly stateKey: StateKey<string>
-    = makeStateKey<string>(API_BASE_KEY);
-  private baseUrl: string | null = this.transferState.get(this.stateKey, '');
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly baseUrl: string = environment.apiBaseUrl;
 
   public constructor() {
   }
@@ -50,6 +44,7 @@ export class ApiService {
 
     return params.toString();
   }
+  
   public get<T>(
     route: string,
     options?: { headers?: HttpHeaders | Record<string, string | string[]> },

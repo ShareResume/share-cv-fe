@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse, RegisterData } from '../models/user.model';
@@ -13,6 +13,24 @@ export class AuthService {
   public PATH = '/auth';
   private readonly apiService: ApiService = inject(ApiService);
   private readonly router: Router = inject(Router);
+  private isAuthenticatedSignal = signal<boolean>(false);
+  private redirectUrlSignal = signal<string | null>(null);
+
+  get isAuthenticated() {
+    return this.isAuthenticatedSignal();
+  }
+
+  setAuthenticated(value: boolean): void {
+    this.isAuthenticatedSignal.set(value);
+  }
+
+  get redirectUrl(): string | null {
+    return this.redirectUrlSignal();
+  }
+
+  setRedirectUrl(url: string | null): void {
+    this.redirectUrlSignal.set(url);
+  }
 
   public register(data: RegisterData): Observable<AuthResponse> {
     return this.apiService
@@ -38,6 +56,12 @@ export class AuthService {
   public logout(): void {
     localStorage.removeItem(TOKEN_KEY);
     this.router.navigate([PATH.LOGIN]);
+    this.setAuthenticated(false);
+    this.setRedirectUrl(null);
+  }
+
+  public resetPassword(email: string): Observable<void> {
+    return this.apiService.post<{ email: string }, void>(`${this.PATH}/reset`, { email });
   }
 
   public getAccessToken(): string {

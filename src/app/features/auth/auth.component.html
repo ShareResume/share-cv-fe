@@ -1,0 +1,98 @@
+<div class="auth">
+    <div class="auth-background">
+        <div class="auth-background__text">
+            <!-- Replace with reusable label -->
+            <div class="auth-background__label">
+                ShareCV
+            </div>
+            <h2 class="auth-background__title">
+                {{config.welcomePhrase}}
+            </h2>
+        </div>
+    </div>
+
+    <div class="auth-form">
+
+        <div class="auth-form__wrapper">
+            <div class="auth-form__text">
+                <h2 class="auth-form__title">
+                    {{ config.title }}
+                </h2>
+
+                @if (config.subtitlePhrase) {
+                    <h4
+                    class="auth-form__subtitle"
+                    [innerHTML]="config.subtitlePhrase">
+                  </h4>
+                }
+            </div>
+
+            <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+
+                @for (field of config.fields; track field) {
+                    <app-input
+                      class="input"
+                      [formControlName]="field.name"
+                      [placeholder]="field.placeholder"
+                      [type]="field.type"
+                      [errorMessages]="field.errorMessages"
+                    ></app-input>
+
+                    @if(field.additionalText) {
+                        <div class="input-additional-text" [routerLink]="['/forgot-password']">
+                            {{ field.additionalText }}
+                        </div>
+                    }
+                }
+
+                @if (config.confirmButtonText) {
+                    <app-button
+                    class="submit-button"
+                    type="submit"
+                    size="large"
+                    >
+                    {{ config.confirmButtonText }}
+                    </app-button>
+                }
+
+                @if(config.isGoogleAuth) {
+                    <div class="or-separator">
+                        <span>or</span>
+                    </div>
+                    <app-button
+                    class="google-button"
+                    size="large"
+                    colorType="secondary"
+                    [isLink]="true"
+                    >
+                    <app-icon iconName="google"></app-icon>
+                        Continue with Google
+                    </app-button>
+                }
+            </form>
+            @if (config.bottomPhrase) {
+                <div
+                class="auth-form__bottom-phrase"
+                [innerHTML]="config.bottomPhrase">
+              </div>
+            }
+            @if (config.bottomPhraseButton) {
+                <app-button
+                class="auth-form__bottom-phrase"
+                colorType="terniary"
+                fontWeight="bold"
+                [fluid]="true"
+
+                >
+                <app-icon iconName="back"></app-icon>
+                {{config.bottomPhraseButton}}
+
+              </app-button>
+            }
+        </div>
+
+
+    </div>
+
+
+</div>
