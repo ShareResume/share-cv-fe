@@ -27,7 +27,7 @@
         }
 
         &__title {
-            color: $auth-welcome-phrase-text-color;
+            color: $auth-welcome-text-color;
             margin-top: 30px;
             font-family: $font-medium;
             font-size: 32px;
@@ -57,7 +57,7 @@
                 font-family: $font-medium;
                 font-size: 14px;
                 line-height: 16.41px;
-                color: $auth-bottom-hyperlink-color;
+                color: $auth-hyperlink-color;
                 text-decoration: none;
             }
         }
@@ -88,7 +88,7 @@
                 font-family: $font-medium;
                 font-size: 14px;
                 line-height: 16.41px;
-                color: $auth-bottom-hyperlink-color;
+                color: $auth-hyperlink-color;
                 text-decoration: none;
             }
         }
@@ -133,7 +133,7 @@
             }
 
             span {
-                color: $auth-or-color;
+                color: $auth-or-text-color;
                 font-family: $font-regular;
             }
         }

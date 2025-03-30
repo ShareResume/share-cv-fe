@@ -9,17 +9,17 @@
 :root {
   @include mat.snack-bar-overrides(
     (
-      supporting-text-color: v.$text-color,
+      supporting-text-color: v.$color-white,
     )
   );
   @include mat.table-overrides(
     (
       background-color: v.$button-bg-secondary-hover,
-      row-item-container-height: v.$row-height,
+      row-item-container-height: v.$table-row-height,
       row-item-outline-width: 0,
-      header-container-height: v.$header-height,
-      row-item-label-text-color: v.$table-font-color,
-      header-headline-color: v.$table-header-font-color,
+      header-container-height: v.$table-header-height,
+      row-item-label-text-color: v.$table-text-color,
+      header-headline-color: v.$table-header-text-color,
     )
   );
 
@@ -37,13 +37,13 @@
 
 mat-snack-bar-container {
   &.success {
-    background-color: v.$success-color;
+    background-color: v.$color-success;
   }
   &.info {
-    background-color: v.$info-color;
+    background-color: v.$color-info;
   }
   &.error {
-    background-color: v.$error-color;
+    background-color: v.$color-error;
   }
 }
 

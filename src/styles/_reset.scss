@@ -155,11 +155,11 @@ mat-form-field.mat-mdc-form-field {
   .mat-mdc-text-field-wrapper {
     padding-left: 24px;
     background: transparent;
-    border: $border-width solid $input-border-color;
+    border: $table-border-width solid $input-border-color;
     border-radius: 20px;
 
     &:hover:not(.mdc-text-field--disabled) {
-      background-color: $input-hover-color;
+      background-color: $input-hover-bg-color;
     }
 
     &.mdc-text-field--disabled {

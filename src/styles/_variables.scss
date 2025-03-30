@@ -1,122 +1,167 @@
-/*      TYPOGRAPHY      */
-/* -------------------- */
+/*=============================================
+=                  TYPOGRAPHY                  =
+=============================================*/
+// Font Family
+$font-family-primary: 'Roboto', sans-serif;
+$font-family-secondary: 'Inter', sans-serif;
 
-$font-thin: "Roboto Thin"; // fw100
-$font-light: "Roboto Light"; // fw300
-$font-regular: "Roboto Regular"; // fw 400
-$font-medium: "Roboto Medium"; // fw 500
-$font-bold: "Roboto Bold"; // fw 700
-$font-black: "Roboto Black"; // fw900
+// Font Weights
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-black: 900;
 
-/*      BUTTONS      */
-/* -------------------- */
-$button-bg-primary: #000000;
-$button-bg-primary-hover: #333333;
-$button-bg-primary-active: #000000;
-$button-text-active: #000000;
-$button-bg-secondary: #F1F1F1;
-$button-bg-secondary-hover: #E5E5E5;
+// Font Aliases (for backward compatibility)
+$font-thin: "Roboto Thin";
+$font-light: "Roboto Light";
+$font-regular: "Roboto Regular";
+$font-medium: "Roboto Medium";
+$font-bold: "Roboto Bold";
+$font-black: "Roboto Black";
+
+/*=============================================
+=                   COLORS                    =
+=============================================*/
+// Base Colors
+$color-white: #FFFFFF;
+$color-black: #000000;
+
+// Gray Scale
+$color-gray-50: #FAFAFA;
+$color-gray-100: #F6F6F6;
+$color-gray-200: #F5F5F5;
+$color-gray-250: #F1F1F1;
+$color-gray-300: #EEEEEE;
+$color-gray-400: #E5E7EB;
+$color-gray-500: #E5E5E5;
+$color-gray-600: #525252;
+$color-gray-700: #7C7C7C;
+$color-gray-800: #333333;
+
+// Status Colors
+$color-error: #A94442;
+$color-error-light: #FF5353;
+$color-success: #4CAF50;
+$color-info: #4C54AF;
+
+// Feedback Colors
+$color-text-primary: $color-black;
+$color-text-secondary: #5E5F5F;
+$color-text-tertiary: #767777;
+$color-text-disabled: #C8C9C9;
+
+/*=============================================
+=                  BUTTONS                    =
+=============================================*/
+// Primary Button
+$button-bg-primary: $color-black;
+$button-bg-primary-hover: $color-gray-800;
+$button-bg-primary-active: $color-black;
+$button-text-primary: $color-white;
+
+// Secondary Button
+$button-bg-secondary: $color-gray-250;
+$button-bg-secondary-hover: $color-gray-500;
 $button-border-secondary: #E4E4E4;
-$button-text-secondary: #000000;
-$button-text-primary: #FFFFFF;
+$button-text-secondary: $color-black;
 
-/*   LAYOUT COMPONENTS   */
-/* -------------------- */
-$white: #FFFFFF;
-$black: #000000;
-$gray-100: #F6F6F6;
-$gray-200: #F5F5F5;
-$gray-250: #F1F1F1;
-$gray-300: #EEEEEE;
-$gray-400: #E5E7EB;
-$gray-500: #E5E5E5;
-$gray-600: #525252;
+// General Button
+$button-text-active: $color-black;
+
+/*=============================================
+=                   LAYOUT                    =
+=============================================*/
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+$spacing-xxxl: 80px;
+
+// Container
+$container-max-width: 1200px;
+$container-padding: $spacing-md;
 
 // Header & Footer
-$header-bg-color: $white;
-$header-border-color: $gray-500;
-$footer-bg-color: $white;
-$footer-border-color: $gray-400;
-$nav-link-color: $gray-600;
-$nav-link-hover-color: $black;
-$logo-color: $black;
-$profile-button-bg-color: $gray-200;
-$profile-button-hover-bg-color: $gray-300;
-$copyright-text-color: $gray-600;
+$header-bg-color: $color-white;
+$header-border-color: $color-gray-500;
+$footer-bg-color: $color-white;
+$footer-border-color: $color-gray-400;
+$nav-link-color: $color-gray-600;
+$nav-link-hover-color: $color-black;
+$logo-color: $color-black;
+$profile-button-bg-color: $color-gray-200;
+$profile-button-hover-bg-color: $color-gray-300;
+$copyright-text-color: $color-gray-600;
 
-/*   NAVBAR - SIDEBAR   */
-/* -------------------- */
-$gray100: #f6f6f6;
-$sidenav-color: #f1f1f1;
-$sidenav-border: #e4e4e4;
-$sidebar-header: #395b5a;
+/*=============================================
+=                  NAVIGATION                 =
+=============================================*/
+// Sidebar
+$sidebar-bg-color: $color-gray-250;
+$sidebar-border-color: #E4E4E4;
+$sidebar-header-color: #395B5A;
+$sidebar-subheader-text-color: $color-text-tertiary;
+$sidebar-section-text-color: $color-text-primary;
+$sidebar-item-hover-bg-color: #BFD5D5;
+$sidebar-item-text-hover-color: #395B5A;
 
-$sidebar-subheader-text-color: #767777;
-$sidebar-section-text-color: #0b0b0b;
-$sidebar-item-hover-color: #bfd5d5;
-$sidebar-item-text-hover-color: #395b5a;
-
-/*   COLORS   */
-/* -------------------- */
-$error-color: #a94442;
-$success-color: #4caf50;
-$info-color: #4c54af;
-
-$text-color: #ffffff;
-
-/*   LOADER   */
-/* -------------------- */
-$loader-background-color: #d9d9d9;
-$loader-spinner-border-color: #7c7c7c;
-$loader-spinner-top-bottom-border-color: #cbcbcb;
-$loader-text-color: #7c7c7c;
-
-/*   INPUT   */
-/* -------------------- */
+/*=============================================
+=                    FORMS                    =
+=============================================*/
+// Inputs
 $input-border-color: #919292;
-$input-hover-color: #f1f1f1;
-$input-additional-text-color: #2f3030;
-$input-disabled-border-color: #e4e4e4;
-$input-disabled-text-color: #c8c9c9;
-$input-error-color: #ff5353;
+$input-hover-bg-color: $color-gray-250;
+$input-additional-text-color: #2F3030;
+$input-disabled-border-color: #E4E4E4;
+$input-disabled-text-color: $color-text-disabled;
+$input-error-color: $color-error-light;
 $input-height: 41px;
-$input-label-padding-top: 16px;
+$input-label-padding-top: $spacing-md;
 $input-vertical-padding: 12px;
 
-/*   CARD      */
-/* -------------------- */
-$card-bg-color: #f1f1f1;
-$card-header-font-color: #5e5f5f;
+// Loader
+$loader-background-color: #D9D9D9;
+$loader-spinner-border-color: $color-gray-700;
+$loader-spinner-top-bottom-border-color: #CBCBCB;
+$loader-text-color: $color-gray-700;
 
-/*   TABLE   */
-/* -------------------- */
-$row-height: 48px;
-$border-width: 1px;
-$header-height: 48px;
-$table-font-color: #0b0b0b;
-$table-header-font-color: #5e5f5f;
+/*=============================================
+=                 COMPONENTS                  =
+=============================================*/
+// Card
+$card-bg-color: $color-gray-250;
+$card-header-text-color: $color-text-secondary;
 
-/*   AUTH   */
-/* -------------------- */
+// Table
+$table-row-height: 48px;
+$table-border-width: 1px;
+$table-header-height: 48px;
+$table-text-color: $color-text-primary;
+$table-header-text-color: $color-text-secondary;
 
-$auth-welcome-phrase-text-color: #f6f6f6;
-$auth-separator-color: #bfd5d5;
-$auth-separator-color: #bfd5d5;
-$auth-bottom-hyperlink-color: #4c7978;
-$auth-or-color: #0b0b0b;
+// Authentication
+$auth-welcome-text-color: $color-gray-100;
+$auth-separator-color: #BFD5D5;
+$auth-hyperlink-color: #4C7978;
+$auth-or-text-color: $color-black;
 
-/*   CHIPS      */
-/* -------------------- */
-$chips-color-active-in-progress: #50835e;
-$chips-color-pending: #7e6a2b;
-$chips-color-on-hold: #5350af;
-$chips-color-deactivated-cancelled: #972a2a;
-$chips-color-not-started: #717171;
-$chips-color-completed: #704db7;
+// Status Chips
+$chip-color-active: #50835E;
+$chip-color-pending: #7E6A2B;
+$chip-color-on-hold: #5350AF;
+$chip-color-cancelled: #972A2A;
+$chip-color-not-started: #717171;
+$chip-color-completed: #704DB7;
 
-$chips-bg-color-active-in-progress: #cdefdc;
-$chips-bg-color-pending: #f4e8bd;
-$chips-bg-color-on-hold: #bdcdf4;
-$chips-bg-color-deactivated-cancelled: #f5c8c8;
-$chips-bg-color-not-started: #dedede;
-$chips-bg-color-completed: #e6ceff;
+$chip-bg-color-active: #CDEFDC;
+$chip-bg-color-pending: #F4E8BD;
+$chip-bg-color-on-hold: #BDCDF4;
+$chip-bg-color-cancelled: #F5C8C8;
+$chip-bg-color-not-started: #DEDEDE;
+$chip-bg-color-completed: #E6CEFF;
+
