@@ -5,7 +5,7 @@
   width: $width;
   height: $height;
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 8px;
   font-family: $font-regular;
   font-size: $font-size;
   font-weight: 500;
@@ -16,15 +16,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 8px;
   white-space: nowrap;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
 
   &--small {
-    @include button-styles(127px, 32px, 14px, 16px);
+    @include button-styles(120px, 36px, 14px, 16px);
   }
 
   &--medium {
-    @include button-styles(160px, 40px, 14px, 17px);
+    @include button-styles(160px, 44px, 14px, 17px);
   }
 
   &--large {
@@ -46,6 +50,7 @@
   &--primary {
     background-color: $button-bg-primary;
     color: $button-text-primary;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
 
     &:hover {
       background-color: $button-bg-primary-hover;
@@ -56,15 +61,15 @@
     }
 
     &:disabled {
-      background-color: $button-bg-secondary;
-      color: $button-border-secondary;
+      background-color: $gray-400;
+      color: $gray-600;
     }
 
     // ng-content styling
     ::ng-deep {
       & > * {
         * {
-          stroke: $text-color;
+          stroke: $button-text-primary;
         }
       }
     }
@@ -74,6 +79,7 @@
     background-color: $button-bg-secondary;
     color: $button-text-secondary;
     border: 1px solid $button-border-secondary;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
 
     &:hover {
       background-color: $button-bg-secondary-hover;
@@ -81,13 +87,13 @@
 
     &:active {
       background-color: $button-bg-secondary;
-      border: 1px solid $button-bg-primary-hover;
+      border: 1px solid $button-border-secondary;
     }
 
     &:disabled {
-      background-color: $button-text-primary;
-      border: 1px solid $button-bg-secondary;
-      color: $button-border-secondary;
+      background-color: $white;
+      border: 1px solid $gray-400;
+      color: $gray-600;
     }
 
     // ng-content styling
@@ -102,21 +108,26 @@
 
   &--terniary {
     color: $button-text-secondary;
+    background-color: transparent;
 
     &--small {
-      @include button-styles(127px, 32px, 14px, 16px);
+      @include button-styles(fit-content, 32px, 14px, 16px);
+      padding: 4px 8px;
     }
 
     &--medium {
-      @include button-styles(127px, 32px, 14px, 17px);
+      @include button-styles(fit-content, 32px, 14px, 17px);
+      padding: 4px 8px;
     }
 
     &--large {
-      @include button-styles(134px, 32px, 14px, 19px);
+      @include button-styles(fit-content, 32px, 16px, 19px);
+      padding: 4px 8px;
     }
 
     &:hover {
-      color: $button-bg-primary-hover;
+      color: $button-bg-primary;
+      text-decoration: underline;
     }
 
     &:active {
@@ -124,7 +135,8 @@
     }
 
     &:disabled {
-      color: $button-text-secondary;
+      color: $gray-600;
+      opacity: 0.6;
     }
 
     // ng-content styling
