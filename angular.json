@@ -115,7 +115,8 @@
               "src/styles.scss",
               "src/styles/_global.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browsers": "ChromeHeadless"
           }
         },
         "lint": {
