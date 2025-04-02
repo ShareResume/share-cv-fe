@@ -1,0 +1,58 @@
+# Basic `dependabot.yml` file
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "12:00"
+    assignees:
+      - "Avcharov"
+    commit-message:
+      prefix: "github-actions"
+    pull-request-branch-name:
+      separator: "/"
+    groups:
+      github_actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
+    labels:
+      - "Dependencies"
+      - "GitHub Actions"
+    reviewers:
+      - "Avcharov"
+    open-pull-requests-limit: 3
+    target-branch: master
+
+
+  - package-ecosystem: "npm"
+    schedule:
+      interval: "daily"
+      time: "17:00"
+    groups:
+      angular:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
+    assignees:
+      - "Avcharov"
+    commit-message:
+      prefix: "npm"
+    labels:
+      - "Dependencies"
+      - "npm"
+    pull-request-branch-name:
+      separator: "/"
+    reviewers:
+      - "Avcharov"
+    open-pull-requests-limit: 3
+    target-branch: master
