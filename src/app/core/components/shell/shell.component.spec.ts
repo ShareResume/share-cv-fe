@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShellComponent } from './shell.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ShellComponent', () => {
   let component: ShellComponent;
@@ -8,6 +10,14 @@ describe('ShellComponent', () => {
   beforeEach(async() => {
     await TestBed.configureTestingModule({
       imports: [ ShellComponent ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),
+          },
+        },
+      ],
     })
     .compileComponents();
   });
