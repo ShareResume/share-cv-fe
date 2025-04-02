@@ -29,10 +29,10 @@ jobs:
       run: npm ci
 
     - name: Building application
-      run: npm run build --if-present  # Added 'run' key here
+      run: npm run build --if-present
 
     - name: Testing application
-      run: npm test  # Added 'run' key here
+      run: npm run ng test --no-watch --no-progress --browsers=ChromeHeadless
     
     - name: Post Comment on PR
       if: failure()
