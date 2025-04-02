@@ -32,7 +32,7 @@ jobs:
       run: npm run build --if-present
 
     - name: Testing application
-      run: ng test --no-watch --no-progress --browsers=ChromeHeadless
+      run: npm run ng test --no-watch --no-progress --browsers=ChromeHeadless
     
     - name: Post Comment on PR
       if: failure()
