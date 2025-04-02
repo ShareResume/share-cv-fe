@@ -6,6 +6,6 @@ import { TopSectionComponent } from './top-section/top-section.component';
   standalone: true,
   imports: [TopSectionComponent],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {} 

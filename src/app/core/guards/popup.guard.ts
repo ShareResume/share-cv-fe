@@ -3,7 +3,7 @@ import { CanActivateFn } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { PopupService } from '../services/popup.service';
 
-export const popupGuard: CanActivateFn = async (route, state) => {
+export const popupGuard: CanActivateFn = async(route, state) => {
   const authService = inject(AuthService);
   const popupService = inject(PopupService);
 

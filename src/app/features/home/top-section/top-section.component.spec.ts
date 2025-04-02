@@ -6,9 +6,9 @@ describe('TopSectionComponent', () => {
   let component: TopSectionComponent;
   let fixture: ComponentFixture<TopSectionComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     await TestBed.configureTestingModule({
-      imports: [TopSectionComponent]
+      imports: [TopSectionComponent],
     })
     .compileComponents();
 

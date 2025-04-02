@@ -7,7 +7,7 @@ import { PopupService } from '../services/popup.service';
  * Guard that shows a login popup for unauthenticated users
  * and redirects them to the login page if they choose to login
  */
-export const popupGuard: CanActivateFn = async (route, state) => {
+export const popupGuard: CanActivateFn = async(route, state) => {
   const authService = inject(AuthService);
   const popupService = inject(PopupService);
   const accessToken = authService.getAccessToken();

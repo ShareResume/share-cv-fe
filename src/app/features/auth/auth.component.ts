@@ -95,6 +95,7 @@ export class AuthComponent implements OnInit {
         this.authService.setAuthenticated(true);
         
         const redirectUrl = this.authService.redirectUrl;
+
         if (redirectUrl) {
           this.router.navigateByUrl(redirectUrl);
           this.authService.setRedirectUrl(null);
