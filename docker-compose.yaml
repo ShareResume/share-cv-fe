@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: share-cv-frontend
+    ports:
+      - "8088:80"
+    restart: unless-stopped
+    # If you need environment variables, uncomment and modify this section
+    # environment:
+    #   - API_URL=http://api-service:3000
+    networks:
+      - app-network
+
+# Define a network for the services to communicate
+networks:
+  app-network:
+    driver: bridge 
