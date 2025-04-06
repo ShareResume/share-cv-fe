@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+.statistics-section {
+  padding: 3rem 0;
+  background-color: $background-light;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.statistics-content {
+  width: 100%;
+}
+
+.loading-state, .error-state {
+  text-align: center;
+  padding: 2rem 0;
+  
+  p {
+    font-size: 1rem;
+    color: $text-dark;
+  }
+}
+
+.error-state p {
+  color: $error;
+}
+
+.statistics-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stat-card {
+  background-color: $white;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: $text-dark;
+  margin: 0 0 1.25rem;
+}
+
+.stat-companies {
+  display: flex;
+  flex-direction: column;
+} 

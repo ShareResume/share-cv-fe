@@ -1,0 +1,40 @@
+@use 'variables' as *;
+
+.company-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  
+  &:not(:last-child) {
+    border-bottom: 1px solid $light-gray;
+  }
+}
+
+.company-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.company-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: $background-gray;
+  
+  img {
+    width: 1.25rem;
+    height: 1.25rem;
+    object-fit: contain;
+  }
+}
+
+.company-name, .company-value {
+  font-size: 1rem;
+  font-weight: 400;
+  color: $text-dark;
+} 

@@ -1,0 +1,10 @@
+<div class="stat-card">
+  <h3 class="stat-title">{{ title() }}</h3>
+  <div class="stat-companies">
+    @for (company of companies(); track company.companyName) {
+      <app-company-stat-card [companyStat]="company"></app-company-stat-card>
+    } @empty {
+      <div class="no-data">No data available</div>
+    }
+  </div>
+</div> 

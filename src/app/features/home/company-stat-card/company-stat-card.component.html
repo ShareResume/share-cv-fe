@@ -1,0 +1,11 @@
+@if (companyStat()) {
+  <div class="company-stat">
+    <div class="company-info">
+      <div class="company-icon">
+        <img [src]="companyStat()!.icon" [alt]="companyStat()!.companyName + ' icon'" />
+      </div>
+      <span class="company-name">{{ companyStat()!.companyName }}</span>
+    </div>
+    <span class="company-value">{{ companyStat()!.value }}</span>
+  </div>
+} 

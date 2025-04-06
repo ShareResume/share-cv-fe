@@ -2,21 +2,33 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { routes } from './app.routes';
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { errorInterceptor } from './core/providers/error.interceptor';
 import { authInterceptor } from './core/providers/auth.interceptor';
+import { MockApiInterceptor } from './core/interceptors/mock-api.interceptor';
+import { environment } from '@environments/environment';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/i18n/', '.json');
+
+
+const mockApiInterceptorFn = (req: any, next: any) => {
+  if (environment.useMockApi) {
+    return new MockApiInterceptor().intercept(req, next);
+  }
+  return next(req);
+};
+
+const interceptors = [errorInterceptor, authInterceptor, mockApiInterceptorFn];
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([errorInterceptor, authInterceptor])),
+    provideHttpClient(withInterceptors([...interceptors])),
     importProvidersFrom([TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

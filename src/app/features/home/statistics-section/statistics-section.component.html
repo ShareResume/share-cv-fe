@@ -1,0 +1,35 @@
+<section class="statistics-section">
+  <div class="container">
+    <div class="statistics-content">
+      <!-- Loading State -->
+      @if (isLoading()) {
+        <div class="loading-state">
+          <p>Loading statistics...</p>
+        </div>
+      }
+
+      <!-- Error State -->
+      @if (error()) {
+        <div class="error-state">
+          <p>{{ error() }}</p>
+        </div>
+      }
+
+      <!-- Statistics Cards -->
+      @if (statistics().length > 0 && !isLoading() && !error()) {
+        <div class="statistics-cards">
+          @for (categoryGroup of categories(); track categoryGroup.category) {
+            <app-stat-card 
+              [title]="categoryGroup.title" 
+              [companies]="categoryGroup.companies">
+            </app-stat-card>
+          }
+        </div>
+      } @else if (!isLoading() && !error()) {
+        <div class="no-data-state">
+          <p>No statistics data available</p>
+        </div>
+      }
+    </div>
+  </div>
+</section> 

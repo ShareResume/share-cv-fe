@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+.stat-card {
+  background-color: $white;
+  border: 1px solid $border-light;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: $text-dark;
+  margin: 0 0 1.25rem;
+}
+
+.stat-companies {
+  display: flex;
+  flex-direction: column;
+}
+
+.no-data {
+  padding: 1rem 0;
+  text-align: center;
+  color: $color-gray-600;
+  font-style: italic;
+} 

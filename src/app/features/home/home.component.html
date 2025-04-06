@@ -1,1 +1,6 @@
-<app-top-section></app-top-section> 
+<app-top-section></app-top-section>
+<app-statistics-section 
+  [statistics]="statisticsData()" 
+  [isLoading]="isLoadingStatistics()" 
+  [error]="statisticsError()">
+</app-statistics-section> 
