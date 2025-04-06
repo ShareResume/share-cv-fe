@@ -9,7 +9,6 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     TranslateModule,
-    ShellComponent,
     RouterOutlet,
   ],
   templateUrl: './app.component.html',
