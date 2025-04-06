@@ -7,7 +7,7 @@ import { CompanyStat } from '../../../core/models/company-stat.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './company-stat-card.component.html',
-  styleUrls: ['./company-stat-card.component.scss']
+  styleUrls: ['./company-stat-card.component.scss'],
 })
 export class CompanyStatCardComponent {
   // Use signal input

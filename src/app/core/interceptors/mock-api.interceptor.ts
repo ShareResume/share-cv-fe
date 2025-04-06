@@ -1,5 +1,5 @@
-import { HttpEvent, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 import { environment } from '@environments/environment';
 import { CompanyStat, StatCategoryEnum } from '../models/company-stat.model';
 
@@ -17,7 +17,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.url.endsWith('/api/statistics')) {
     return of(new HttpResponse<CompanyStat[]>({
       status: 200,
-      body: getMockStatisticsData()
+      body: getMockStatisticsData(),
     }));
   }
 
@@ -40,6 +40,6 @@ function getMockStatisticsData(): CompanyStat[] {
     
     // Highest Rejection Rate
     new CompanyStat('Amazon', '89%', 'assets/icons/amazon-icon.svg', StatCategoryEnum.REJECTION),
-    new CompanyStat('Netflix', '82%', 'assets/icons/netflix-icon.svg', StatCategoryEnum.REJECTION)
+    new CompanyStat('Netflix', '82%', 'assets/icons/netflix-icon.svg', StatCategoryEnum.REJECTION),
   ];
 } 

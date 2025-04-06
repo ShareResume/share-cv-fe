@@ -9,7 +9,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { errorInterceptor } from './core/providers/error.interceptor';
 import { authInterceptor } from './core/providers/auth.interceptor';
 import { mockApiInterceptor } from './core/interceptors/mock-api.interceptor';
-import { environment } from '@environments/environment';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>

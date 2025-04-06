@@ -8,7 +8,7 @@ import { CompanyStat } from '../../../core/models/company-stat.model';
   standalone: true,
   imports: [CommonModule, CompanyStatCardComponent],
   templateUrl: './stat-card.component.html',
-  styleUrls: ['./stat-card.component.scss']
+  styleUrls: ['./stat-card.component.scss'],
 })
 export class StatCardComponent {
   title = input<string>('');

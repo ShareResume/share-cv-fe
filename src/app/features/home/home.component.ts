@@ -36,17 +36,18 @@ export class HomeComponent implements OnInit {
         catchError(err => {
           console.error('Error loading statistics:', err);
           this.statisticsError.set('Failed to load statistics. Please try again later.');
+
           // Return empty array to avoid breaking the app
           return of([]);
         }),
         finalize(() => {
           this.isLoadingStatistics.set(false);
-        })
+        }),
       )
       .subscribe({
         next: (data) => {
           this.statisticsData.set(data);
-        }
+        },
       });
   }
 } 

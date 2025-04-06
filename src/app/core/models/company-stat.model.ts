@@ -4,6 +4,13 @@ export enum StatCategoryEnum {
   REJECTION = 'rejection'
 }
 
+export interface CompanyStatData {
+  companyName: string;
+  value: string | number;
+  icon?: string;
+  category: StatCategoryEnum;
+}
+
 export class CompanyStat {
   companyName: string;
   value: string | number;
@@ -19,34 +26,37 @@ export class CompanyStat {
   /**
    * Creates an array of CompanyStat instances from JSON array data
    */
-  static fromJsonArray(jsonArray: any[]): CompanyStat[] {
+  static fromJsonArray(jsonArray: unknown[]): CompanyStat[] {
     if (!jsonArray || !Array.isArray(jsonArray)) {
       return [];
     }
+
     return jsonArray.map(json => this.fromJson(json));
   }
 
   /**
    * Creates a CompanyStat instance from JSON data
    */
-  static fromJson(json: any): CompanyStat {
+  static fromJson(json: unknown): CompanyStat {
+    const data = json as CompanyStatData;
+
     return new CompanyStat(
-      json.companyName,
-      json.value,
-      json.icon || `assets/icons/${json.companyName.toLowerCase()}-icon.svg`,
-      json.category
+      data.companyName || '',
+      data.value || 0,
+      data.icon || `assets/icons/${data.companyName?.toLowerCase() || 'default'}-icon.svg`,
+      data.category || StatCategoryEnum.SUBMISSIONS,
     );
   }
 
   /**
    * Converts the CompanyStat instance to a JSON object
    */
-  toJson(): any {
+  toJson(): CompanyStatData {
     return {
       companyName: this.companyName,
       value: this.value,
       icon: this.icon,
-      category: this.category
+      category: this.category,
     };
   }
 

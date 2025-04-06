@@ -5,7 +5,7 @@ import { environment } from '@environments/environment';
 import { CompanyStat } from '../../../core/models/company-stat.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
   private readonly http = inject(HttpClient);
@@ -18,8 +18,8 @@ export class HomeService {
   getStatistics(): Observable<CompanyStat[]> {
     const url = `${this.apiUrl}/statistics`;
     
-    return this.http.get<any[]>(url).pipe(
-      map(data => data.map(item => CompanyStat.fromJson(item)))
+    return this.http.get<CompanyStat[]>(url).pipe(
+      map(data => data.map(item => CompanyStat.fromJson(item))),
     );
   }
 } 
