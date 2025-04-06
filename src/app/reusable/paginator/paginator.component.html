@@ -1,0 +1,25 @@
+<p class="page-indicator">Showing {{ start }} - {{ end }} of {{ total() }} results</p>
+<div class="actions">
+  <app-button
+    [isLink]="true"
+    [colorType]="'terniary'"
+    [fontWeight]="'medium'"
+    [fluid]="true"
+    [disabled]="pageIndex() === 0"
+    (click)="prevPage()"
+  >
+    <app-icon [iconName]="'left'"></app-icon>
+    Prev
+  </app-button>
+  <app-button
+    [isLink]="true"
+    [colorType]="'terniary'"
+    [fontWeight]="'medium'"
+    [fluid]="true"
+    [disabled]="end >= total()!"
+    (click)="nextPage()"
+  >
+    Next
+    <app-icon [iconName]="'right'"></app-icon>
+  </app-button>
+</div>

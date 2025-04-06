@@ -1,0 +1,30 @@
+@use 'variables' as *;
+
+:host {
+  background: $button-bg-secondary-hover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 16px;
+
+  app-paginator {
+    margin-top: 18px;
+  }
+
+  ::ng-deep table {
+    .mat-mdc-header-row {
+      margin-bottom: 8px;
+      border-bottom: $border-width solid $button-border-secondary;
+    }
+
+    &.interactive {
+      .mat-mdc-row {
+        cursor: pointer;
+
+        &:hover {
+          background: $sidenav-border;
+        }
+      }
+    }
+  }
+}

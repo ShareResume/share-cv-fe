@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  .actions {
+    display: flex;
+
+    app-button:first-child {
+      display: flex;
+      align-items: center;
+
+      &:after {
+        content: '';
+        display: block;
+        height: 16px;
+        width: 1px;
+        background: $button-text-secondary;
+        margin: 0 5px;
+      }
+    }
+  }
+}
