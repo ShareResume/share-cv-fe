@@ -1,0 +1,67 @@
+@use 'variables' as *;
+
+.mat-mdc-chip-set .mdc-evolution-chip {
+  margin: 0px;
+  padding: 4px 12px;
+  height: 24px;
+}
+
+::ng-deep .mat-mdc-standard-chip .mdc-evolution-chip__action.mdc-evolution-chip__action--primary {
+  padding: 0px;
+}
+
+::ng-deep {
+  .mdc-evolution-chip.active .mdc-evolution-chip__action .mdc-evolution-chip__text-label,
+  .mdc-evolution-chip.in-progress .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+    color: $chip-color-active;
+  }
+}
+
+::ng-deep .mdc-evolution-chip.pending .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+  color: $chip-color-pending;
+}
+
+::ng-deep .mdc-evolution-chip.on-hold .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+  color: $chip-color-on-hold;
+}
+
+::ng-deep {
+  .mdc-evolution-chip.deactivated .mdc-evolution-chip__action .mdc-evolution-chip__text-label,
+  .mdc-evolution-chip.cancelled .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+    color: $chip-color-cancelled;
+  }
+}
+
+::ng-deep .mdc-evolution-chip.not-started .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+  color: $chip-color-not-started;
+}
+
+::ng-deep .mdc-evolution-chip.completed .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+  color: $chip-color-completed;
+}
+
+.active.mat-mdc-chip,
+.in-progress.mat-mdc-chip {
+  background-color: $chip-bg-color-active;
+}
+
+.pending.mat-mdc-chip {
+  background-color: $chip-bg-color-pending;
+}
+
+.on-hold.mat-mdc-chip {
+  background-color: $chip-bg-color-on-hold;
+}
+
+.deactivated.mat-mdc-chip,
+.cancelled.mat-mdc-chip {
+  background-color: $chip-bg-color-cancelled;
+}
+
+.not-started.mat-mdc-chip {
+  background-color: $chip-bg-color-not-started;
+}
+
+.completed.mat-mdc-chip {
+  background-color: $chip-bg-color-completed;
+}
