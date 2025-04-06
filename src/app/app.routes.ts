@@ -26,14 +26,14 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [popupGuard]
+        canActivate: [popupGuard],
       },
       {
         path: 'profile',
         component: ProfileComponent,
-        canActivate: [popupGuard]
-      }
-    ]
+        canActivate: [popupGuard],
+      },
+    ],
   },
   {
     path: '',
@@ -65,12 +65,12 @@ export const routes: Routes = [
         path: 'reset-success',
         component: AuthComponent,
         data: { config: successfulPasswordResetConfig },
-      }
-    ]
+      },
+    ],
   },
   {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];

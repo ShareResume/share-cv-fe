@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../reusable/button/button.component';
 
 @Component({
@@ -7,7 +6,7 @@ import { ButtonComponent } from '../../../reusable/button/button.component';
   standalone: true,
   imports: [ButtonComponent],
   templateUrl: './top-section.component.html',
-  styleUrl: './top-section.component.scss'
+  styleUrl: './top-section.component.scss',
 })
 export class TopSectionComponent {
 

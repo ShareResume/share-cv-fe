@@ -12,15 +12,23 @@ import { CommonModule } from '@angular/common';
     ButtonComponent, 
     RouterLink, 
     RouterLinkActive, 
-    CommonModule
+    CommonModule,
   ],
 })
 export class HeaderComponent {
   navItems = [
-    { label: 'Overview', route: '/overview' },
-    { label: 'Browse', route: '/browse' },
-    { label: 'Insights', route: '/insights' },
-    { label: 'Forum', route: '/forum' }
+    {
+ label: 'Overview', route: '/overview', 
+},
+    {
+ label: 'Browse', route: '/browse', 
+},
+    {
+ label: 'Insights', route: '/insights', 
+},
+    {
+ label: 'Forum', route: '/forum', 
+},
   ];
 
   constructor() { }

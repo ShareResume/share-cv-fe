@@ -10,6 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (route.url.some(segment => segment.path === PATH.LOGIN) && accessToken) {
     router.navigate(['/']);
+
     return false;
   } else if (accessToken) {
     return true;
@@ -19,5 +20,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   authService.setRedirectUrl(state.url);
   
   router.navigate([PATH.LOGIN]);
+
   return false;
 };

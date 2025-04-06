@@ -7,6 +7,6 @@ import { ShellComponent } from '../shell/shell.component';
   standalone: true,
   imports: [ShellComponent, RouterOutlet],
   templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss']
+  styleUrls: ['./main-layout.component.scss'],
 })
 export class MainLayoutComponent {} 

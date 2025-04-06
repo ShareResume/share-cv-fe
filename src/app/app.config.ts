@@ -10,6 +10,7 @@ import { errorInterceptor } from './core/providers/error.interceptor';
 import { authInterceptor } from './core/providers/auth.interceptor';
 import { MockApiInterceptor } from './core/interceptors/mock-api.interceptor';
 import { environment } from '@environments/environment';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideAnimations(),
     provideHttpClient(withInterceptors([...interceptors])),
     importProvidersFrom([TranslateModule.forRoot({
       loader: {
