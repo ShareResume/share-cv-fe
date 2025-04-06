@@ -1,0 +1,103 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+
+
+  ::ng-deep {
+    .mat-mdc-select-arrow {
+      display: none;
+    }
+
+    .mat-mdc-form-field {
+      width: 100%;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mdc-notched-outline {
+      display: none;
+    }
+
+    .mat-mdc-form-field {
+      .mat-mdc-text-field-wrapper {
+        padding: 8px 16px;
+        background-color: $color-gray-100;
+        border: 1px solid $button-bg-primary;
+        border-radius: 20px;
+      }
+
+      .mat-mdc-select-placeholder {
+        color: $button-text-active;
+      }
+    }
+
+    .mdc-text-field--outlined .mat-mdc-form-field-infix,
+    .mdc-text-field--no-label .mat-mdc-form-field-infix {
+      padding-top: 0px;
+      padding-bottom: 0px;
+      min-height: auto;
+    }
+
+
+    .mat-icon svg {
+      stroke: $button-text-active;
+    }
+  }
+}
+
+::ng-deep .cdk-overlay-connected-position-bounding-box .cdk-overlay-pane .custom.mat-mdc-select-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  background-color: $color-gray-100;
+  border: $border-width solid $button-bg-primary;
+  border-radius: 20px;
+  padding: 16px 40px 16px 16px;
+  box-shadow: none;
+
+  .mat-ripple {
+    display: none;
+  }
+
+  mat-option:not(.mat-mdc-option-multiple) .mat-pseudo-checkbox {
+    display: none;
+  }
+
+  .mat-mdc-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    min-height: 24px;
+    border-radius: 5px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  .mat-mdc-option-active {
+    background: transparent;
+  }
+
+  .mdc-list-item__primary-text {
+    color: $sidebar-section-text-color;
+  }
+
+  .mat-pseudo-checkbox {
+    border: $border-width solid $button-bg-primary;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    margin: 0;
+
+    &.mat-pseudo-checkbox-checked {
+      background-color: $button-bg-primary;
+    }
+  }
+}
