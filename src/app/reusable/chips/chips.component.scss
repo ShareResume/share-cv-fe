@@ -10,6 +10,13 @@
   padding: 0px;
 }
 
+::ng-deep .mat-mdc-chip .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
+  font-family: $font-family-secondary;
+  font-weight: $font-weight-regular;
+  font-size: 14px;
+  line-height: 1.21;
+}
+
 ::ng-deep {
   .mdc-evolution-chip.active .mdc-evolution-chip__action .mdc-evolution-chip__text-label,
   .mdc-evolution-chip.in-progress .mdc-evolution-chip__action .mdc-evolution-chip__text-label {
