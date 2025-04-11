@@ -1,0 +1,51 @@
+@use 'variables' as *;
+
+.resume-page {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $resume-page-padding;
+  
+  h1 {
+    font-size: 24px;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+  }
+  
+  .error-message {
+    background-color: $resume-error-bg;
+    color: $resume-error-text;
+    padding: $spacing-md;
+    border-radius: $resume-border-radius;
+    margin: $spacing-md 0;
+    border: 1px solid $resume-error-border;
+  }
+  
+  .loading-indicator {
+    display: flex;
+    justify-content: center;
+    padding: $spacing-xl;
+    color: $color-gray-600;
+  }
+  
+  .no-results {
+    background-color: $color-gray-200;
+    padding: $spacing-lg;
+    border-radius: $resume-border-radius;
+    text-align: center;
+    color: $color-gray-700;
+    margin: $spacing-md 0;
+  }
+  
+  .pagination-info {
+    background-color: $color-gray-100;
+    padding: $spacing-md;
+    border-radius: $resume-border-radius $resume-border-radius 0 0;
+    font-size: 14px;
+    color: $color-gray-700;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid $color-gray-300;
+  }
+} 

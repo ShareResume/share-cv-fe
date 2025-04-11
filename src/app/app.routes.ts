@@ -33,6 +33,11 @@ export const routes: Routes = [
         component: ProfileComponent,
         canActivate: [popupGuard],
       },
+      {
+        path: 'resumes',
+        loadComponent: () => import('./features/resume/resume-page.component').then(m => m.ResumePageComponent),
+    //    canActivate: [popupGuard],
+      },
     ],
   },
   {

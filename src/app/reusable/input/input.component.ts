@@ -24,7 +24,7 @@ import { MatIconButton } from '@angular/material/button';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   standalone: true,
-  imports: [ NgIf, IconComponent, MatFormFieldModule, MatInput, MatIconButton ],
+  imports: [ IconComponent, MatFormFieldModule, MatInput, MatIconButton ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -41,6 +41,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() public pattern?: RegExp;
   @Input() public type = 'text';
   @Input() public errorMessages: Record<string, string> = {};
+  @Input() public options: string[] = [];
 
   @Output() public valueChange = new EventEmitter<string>();
 

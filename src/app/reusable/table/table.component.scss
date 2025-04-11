@@ -1,16 +1,15 @@
 @use 'variables' as *;
 
 :host {
-  background: $color-white;
+  background: $table-component-bg;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: $spacing-md;
-  border-radius: 12px;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  padding-bottom: $table-component-bottom-padding;
+  border-radius: $table-component-border-radius;
 
   app-paginator {
-    margin-top: 18px;
+    margin-top: $table-paginator-margin;
   }
 
   ::ng-deep table {
@@ -19,7 +18,7 @@
     border-spacing: 0;
 
     .mat-mdc-header-row {
-      background-color: $color-gray-50;
+      background-color: $table-header-bg;
       border-bottom: $border-width solid $color-gray-400;
       height: $table-header-height;
 
@@ -27,14 +26,14 @@
         color: $color-gray-600;
         font-family: $font-family-secondary;
         font-weight: $font-weight-bold;
-        font-size: 14px;
-        line-height: 1.21;
-        padding: 0 $spacing-md;
+        font-size: $table-header-font-size;
+        line-height: $table-cell-line-height;
+        padding: 0 $table-cell-padding;
       }
     }
 
     .mat-mdc-row {
-      background-color: $color-white;
+      background-color: $table-component-bg;
       border-bottom: $border-width solid $color-gray-400;
       height: $table-row-height;
 
@@ -42,9 +41,9 @@
         color: $color-text-primary;
         font-family: $font-family-secondary;
         font-weight: $font-weight-regular;
-        font-size: 16px;
-        line-height: 1.21;
-        padding: 0 $spacing-md;
+        font-size: $table-cell-font-size;
+        line-height: $table-cell-line-height;
+        padding: 0 $table-cell-padding;
       }
 
       &:last-child {
@@ -57,7 +56,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: $color-gray-200;
+          background-color: $table-hover-bg;
         }
       }
     }

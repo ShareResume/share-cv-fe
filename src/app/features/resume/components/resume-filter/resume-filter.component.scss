@@ -1,0 +1,74 @@
+@use 'variables' as *;
+
+.filter-section {
+  background-color: $filter-bg;
+  border-radius: $filter-border-radius;
+  box-shadow: $filter-shadow;
+  padding: $filter-padding;
+  margin-bottom: $filter-margin;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $filter-grid-gap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: $filter-item-gap;
+
+  label {
+    font-size: $filter-label-size;
+    font-weight: $font-weight-regular;
+    color: $filter-label-color;
+  }
+}
+
+.yoe-filter {
+  display: flex;
+  flex-direction: column;
+  gap: $filter-item-gap;
+}
+
+.yoe-inputs {
+  display: flex;
+  gap: $filter-inputs-gap;
+
+  app-input {
+    flex: 1;
+  }
+}
+
+.button-container {
+  justify-content: flex-end;
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.button-group {
+  display: flex;
+  gap: $filter-inputs-gap;
+  justify-content: flex-end;
+}
+
+@media (max-width: $filter-bp-desktop) {
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: $filter-bp-mobile) {
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .button-group {
+    width: 100%;
+    
+    app-button {
+      flex: 1;
+    }
+  }
+} 

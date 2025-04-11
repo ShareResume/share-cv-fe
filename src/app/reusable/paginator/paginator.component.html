@@ -1,10 +1,12 @@
-<p class="page-indicator">Showing {{ start }} - {{ end }} of {{ total() }} results</p>
-<div class="actions">
+<div class="paginator-counter">
+  Showing {{ start + 1 }} - {{ end }} of {{ total() }} results
+</div>
+
+<div class="paginator-controls">
   <app-button
     [isLink]="true"
     [colorType]="'terniary'"
     [fontWeight]="'medium'"
-    [fluid]="true"
     [disabled]="pageIndex() === 0"
     (click)="prevPage()"
   >
@@ -15,7 +17,6 @@
     [isLink]="true"
     [colorType]="'terniary'"
     [fontWeight]="'medium'"
-    [fluid]="true"
     [disabled]="end >= total()!"
     (click)="nextPage()"
   >

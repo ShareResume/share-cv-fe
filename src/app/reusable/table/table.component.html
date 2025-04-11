@@ -32,7 +32,8 @@
   ></tr>
 </table>
 
-@if (resultsLength < (total() ?? 0)) {
+<!-- Show paginator when enough items justify pagination -->
+@if (shouldShowPaginator()) {
   <app-paginator
     [total]="total() ?? 0"
     [pageSize]="pageSize()"

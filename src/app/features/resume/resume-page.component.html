@@ -1,0 +1,41 @@
+<div class="resume-page">
+  <h1>Resumes</h1>
+  
+  <!-- Filter component -->
+  <app-resume-filter 
+    [currentFilters]="filters()" 
+    (filterApplied)="onFilterApplied($event)">
+  </app-resume-filter>
+  
+  <!-- Error message -->
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+  
+  <!-- Loading indicator -->
+  @if (isLoading()) {
+    <div class="loading-indicator">
+      Loading resumes...
+    </div>
+  }
+  
+  <!-- No results message -->
+  @if (!isLoading() && resumes().length === 0) {
+    <div class="no-results">
+      No resumes found. Try adjusting your filters.
+    </div>
+  }
+  
+  @if (!isLoading() && resumes().length > 0) {
+    <app-resume-table 
+      [resumes]="resumes()" 
+      [isLoading]="isLoading()"
+      [totalCount]="totalCount()"
+      [pageSize]="filters().pageSize!"
+      [pageIndex]="(filters().page || 1) - 1"
+      (pageChanged)="onPageChanged($event)">
+    </app-resume-table>
+  }
+</div> 

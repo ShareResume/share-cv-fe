@@ -3,23 +3,24 @@
 :host {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-
-  .actions {
+  align-items: center;
+  padding: $paginator-padding;
+  background-color: $paginator-bg-color;
+  border-top: 1px solid $paginator-border-color;
+  border-radius: 0 0 $paginator-border-radius $paginator-border-radius;
+  color: $paginator-text-color;
+  font-size: $paginator-font-size;
+  
+  .paginator-counter {
+    font-weight: $font-weight-medium;
+  }
+  
+  .paginator-controls {
     display: flex;
-
-    app-button:first-child {
-      display: flex;
-      align-items: center;
-
-      &:after {
-        content: '';
-        display: block;
-        height: 16px;
-        width: 1px;
-        background: $button-text-secondary;
-        margin: 0 5px;
-      }
+    gap: $paginator-button-gap;
+    
+    app-button {
+      min-width: $paginator-button-min-width;
     }
   }
 }

@@ -84,6 +84,24 @@ export class TableComponent<T> implements AfterViewInit {
   public get resultsLength(): number {
     return this.dataSource().data.length;
   }
+  
+  /**
+   * Determines whether to show the paginator based on total count
+   * Shows paginator if the total count is greater than page size
+   * or if there are multiple pages worth of data
+   */
+  public shouldShowPaginator(): boolean {
+    const totalValue = this.total();
+    const pageSizeValue = this.pageSize();    
+    
+    // Show paginator if we have more items than can fit on one page
+    if (totalValue && pageSizeValue) {
+      return totalValue > pageSizeValue;
+    }
+    
+    // Fallback - show paginator if we have at least some data
+    return totalValue ? totalValue > 0 : false;
+  }
 
   public ngAfterViewInit(): void {
     let prevSort: Sort = {} as Sort;
@@ -121,6 +139,7 @@ export class TableComponent<T> implements AfterViewInit {
         });
       });
   }
+  
   public get columns(): string[] {
     return Object.keys(this.displayedColumns());
   }

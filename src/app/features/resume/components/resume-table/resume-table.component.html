@@ -1,0 +1,58 @@
+<section class="table-section">
+  <h2 class="table-title">Recent Submissions</h2>
+  
+  <!-- Main table component -->
+  <app-table 
+    [displayedColumns]="displayedColumns"
+    [dataSource]="dataSource"
+    [total]="totalCount()"
+    [pageSize]="pageSize()"
+    [pageIndex]="pageIndex()"
+    [customTemplate]="{
+      author: authorTemplate,
+      company: companyTemplate,
+      status: statusTemplate,
+      timestamp: timestampTemplate,
+      actions: actionsTemplate
+    }"
+    (selectionChange)="onPageChange($event.page)">
+  </app-table>
+
+  <!-- Custom templates for column cells -->
+  
+  <!-- Author template -->
+  <ng-template #authorTemplate let-value="value">
+    <div class="author-cell">
+      <img class="author-avatar" [src]="value.avatarUrl" alt="Author Avatar" />
+    </div>
+  </ng-template>
+  
+  <!-- Company template -->
+  <ng-template #companyTemplate let-value="value">
+    <div class="company-cell">
+      <img class="company-logo" [src]="value.logoUrl" alt="Company Logo" />
+      <span class="company-name">{{value.name}}</span>
+    </div>
+  </ng-template>
+  
+  <!-- Status template with chip component -->
+  <ng-template #statusTemplate let-value="value">
+    <app-chips [status]="value ?? ''"></app-chips>
+  </ng-template>
+  
+  <!-- Date template -->
+  <ng-template #timestampTemplate let-value="value">
+    <span>{{value | date:'MMM d, y'}}</span>
+  </ng-template>
+  
+  <!-- Actions template -->
+  <ng-template #actionsTemplate let-row="row">
+    <div class="actions-cell">
+      <app-button 
+        [colorType]="'primary'"
+        (click)="viewResume(row)">
+        View
+      </app-button>
+    </div>
+  </ng-template>
+</section> 

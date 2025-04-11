@@ -179,3 +179,68 @@ $border-light: $color-gray-500;
 $light-gray: $color-gray-500;
 $error: $color-error;
 
+/*=============================================
+=               RESUME PAGE                  =
+=============================================*/
+$resume-page-padding: $spacing-lg;
+$resume-border-radius: 8px;
+$resume-error-bg: transparentize($color-error-light, 0.85);
+$resume-error-text: $color-error;
+$resume-error-border: transparentize($color-error-light, 0.6);
+
+/*=============================================
+=              RESUME TABLE                  =
+=============================================*/
+$resume-table-bg: $color-white;
+$resume-table-border-radius: 12px;
+$resume-table-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+$resume-table-padding: $spacing-lg;
+$resume-table-title-size: 20px;
+$resume-table-title-margin: $spacing-lg;
+$resume-avatar-size: 32px;
+$resume-logo-size: 20px;
+$resume-text-size: 16px;
+
+/*=============================================
+=              RESUME FILTER                 =
+=============================================*/
+$filter-bg: $color-white;
+$filter-border-radius: 12px;
+$filter-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+$filter-padding: $spacing-lg;
+$filter-margin: $spacing-lg;
+$filter-grid-gap: $spacing-md;
+$filter-item-gap: $spacing-xs;
+$filter-label-size: 14px;
+$filter-label-color: $color-gray-600;
+$filter-inputs-gap: $spacing-sm;
+$filter-bp-desktop: 1200px;
+$filter-bp-mobile: 768px;
+
+/*=============================================
+=                PAGINATOR                   =
+=============================================*/
+$paginator-bg-color: $color-gray-50;
+$paginator-border-color: $color-gray-200;
+$paginator-text-color: $color-gray-700;
+$paginator-border-radius: 8px;
+$paginator-padding: $spacing-md;
+$paginator-font-size: 14px;
+$paginator-button-gap: $spacing-sm;
+$paginator-button-min-width: 32px;
+
+/*=============================================
+=              TABLE COMPONENT               =
+=============================================*/
+$table-component-bg: $color-white;
+$table-component-border-radius: 12px;
+$table-component-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+$table-component-bottom-padding: $spacing-md;
+$table-paginator-margin: 18px;
+$table-header-bg: $color-gray-50;
+$table-header-font-size: 14px;
+$table-cell-font-size: 16px;
+$table-cell-line-height: 1.21;
+$table-cell-padding: $spacing-md;
+$table-hover-bg: $color-gray-200;
+

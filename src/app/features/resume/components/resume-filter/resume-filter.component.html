@@ -1,0 +1,76 @@
+<section class="filter-section">
+  <form [formGroup]="filterForm" class="filter-grid">
+    <!-- Company filter -->
+    <div class="filter-item">
+      <label>Company</label>
+      <app-input 
+        placeholder="Search company..." 
+        formControlName="company">
+      </app-input>
+    </div>
+    
+    <!-- Specialization filter -->
+    <div class="filter-item">
+      <label>Spec</label>
+      <app-dropdown
+        [options]="SPECIALIZATION_OPTIONS"
+        [multiple]="false"
+        placeholder="All Roles"
+        formControlName="specialization">
+      </app-dropdown>
+    </div>
+    
+    <!-- Status filter -->
+    <div class="filter-item">
+      <label>Status</label>
+      <app-dropdown 
+        [options]="STATUS_OPTIONS"
+        [multiple]="false"
+        placeholder="All Status"
+        formControlName="status">
+      </app-dropdown>
+    </div>
+    
+    <!-- Years of Experience filter -->
+    <div class="filter-item yoe-filter">
+      <label>Years of Experience</label>
+      <div class="yoe-inputs">
+        <app-input 
+          type="number" 
+          placeholder="Min" 
+          formControlName="minYoe">
+        </app-input>
+        <app-input 
+          type="number" 
+          placeholder="Max" 
+          formControlName="maxYoe">
+        </app-input>
+      </div>
+    </div>
+    
+    <!-- Date filter -->
+    <div class="filter-item">
+      <label>Date</label>
+      <app-input 
+        type="date" 
+        formControlName="date">
+      </app-input>
+    </div>
+    
+    <!-- Action buttons -->
+    <div class="filter-item button-container">
+      <div class="button-group">
+        <app-button 
+          [colorType]="'secondary'"
+          (click)="resetFilters()">
+          Reset
+        </app-button>
+        <app-button 
+          [colorType]="'primary'"
+          (click)="applyFilters()">
+          Apply Filters
+        </app-button>
+      </div>
+    </div>
+  </form>
+</section> 
