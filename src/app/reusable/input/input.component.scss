@@ -9,11 +9,40 @@
     .mat-mdc-form-field-hint-wrapper {
       padding-left: 24px;
       font-size: 16px;
-      color: $input-additional-text-color;;
+      color: $input-additional-text-color;
     }
 
     .mat-mdc-form-field .mat-mdc-text-field-wrapper {
       padding-right: 8px;
+      border-radius: 8px;
+      background-color: #FFFFFF;
+    }
+
+    .mat-mdc-form-field-flex {
+      border-radius: 8px;
+    }
+
+    .mat-mdc-text-field-wrapper.mdc-text-field--filled .mat-mdc-form-field-flex {
+      border-radius: 8px;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: #FFFFFF;
+    }
+
+    .mat-mdc-input-element {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding: 12px 16px;
+    }
+
+    .mat-mdc-form-field .mdc-text-field--filled .mdc-text-field__input::placeholder {
+      color: #ADAEBC;
     }
 
     .mdc-icon-button {

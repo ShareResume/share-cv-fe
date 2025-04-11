@@ -33,6 +33,8 @@
     </button>
   }
 </mat-form-field>
-<div class="error-message" *ngIf="errorMessage">
-  {{ errorMessage }}
-</div>
+@if (errorMessage) {
+  <div class="error-message">
+    {{ errorMessage }}
+  </div>
+}
