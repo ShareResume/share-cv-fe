@@ -1,3 +1,5 @@
+name: Frontend CD Pipeline
+
 # Run when commits are pushed to master
 on:
   workflow_dispatch:
