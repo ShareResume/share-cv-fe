@@ -37,8 +37,8 @@ export const registerConfig: AuthPageConfig = {
     welcomePhrase: 'Start your professional journey with ShareCV today',
     fields: [
         {
-            type: 'username',
-            name: 'username',
+            type: 'email',
+            name: 'email',
             placeholder: 'Email',
             validators: [Validators.required, Validators.email],
             errorMessages: {
@@ -58,15 +58,15 @@ export const registerConfig: AuthPageConfig = {
                 noSpecial:   'Password must contain at least one special character.',
             },
         },
-        {
-            type: 'password',
-            name: 'confirmPassword',
-            placeholder: 'Repeat Password',
-            validators: [Validators.required],
-            errorMessages: {
-                required: 'Repeat Password is required.',
-            },
-        },
+        // {
+        //     type: 'password',
+        //     name: 'confirmPassword',
+        //     placeholder: 'Repeat Password',
+        //     validators: [Validators.required],
+        //     errorMessages: {
+        //         required: 'Repeat Password is required.',
+        //     },
+        // },
     ],
     confirmButtonText: 'Sign up',
     //isGoogleAuth: true,

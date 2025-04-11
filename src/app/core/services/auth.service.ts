@@ -10,7 +10,7 @@ import { TOKEN_KEY } from '../constants/user.constants';
   providedIn: 'root',
 })
 export class AuthService {
-  public PATH = '/auth';
+  public PATH = '';
   private readonly apiService: ApiService = inject(ApiService);
   private readonly router: Router = inject(Router);
   private isAuthenticatedSignal = signal<boolean>(false);
@@ -34,7 +34,7 @@ export class AuthService {
 
   public register(data: RegisterData): Observable<AuthResponse> {
     return this.apiService
-      .post<RegisterData, AuthResponse>(`${this.PATH}/register`, data)
+      .post<RegisterData, AuthResponse>(`${this.PATH}/users`, data)
       .pipe(tap(this.apiService.setAccessToken.bind(this)));
   }
 

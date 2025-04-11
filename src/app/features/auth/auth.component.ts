@@ -107,14 +107,11 @@ export class AuthComponent implements OnInit {
   }
 
   private handleRegister(): void {
-    const { firstName, lastName, username, password, confirmPassword } = this.authForm.value;
+    const { email, password } = this.authForm.value;
 
     const registerData = {
-      firstName,
-      lastName,
-      username,
-      password,
-      confirmPassword,
+      email,
+      password
     };
 
     this.authService.register(registerData).pipe(take(1)).subscribe({
