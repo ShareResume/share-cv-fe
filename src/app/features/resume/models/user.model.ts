@@ -24,7 +24,7 @@ export class User {
     return new User(
       data.id || '',
       data.name || '',
-      data.avatarUrl || 'assets/images/avatars/default.png'
+      data.avatarUrl || 'assets/images/avatars/default.png',
     );
   }
 
@@ -46,7 +46,7 @@ export class User {
     return {
       id: this.id,
       name: this.name,
-      avatarUrl: this.avatarUrl
+      avatarUrl: this.avatarUrl,
     };
   }
 } 

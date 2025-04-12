@@ -111,7 +111,7 @@ export class AuthComponent implements OnInit {
 
     const registerData = {
       email,
-      password
+      password,
     };
 
     this.authService.register(registerData).pipe(take(1)).subscribe({

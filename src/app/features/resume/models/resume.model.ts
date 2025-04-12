@@ -28,7 +28,7 @@ export class Resume {
     jobTitle: SpecializationEnum,
     status: 'Pending' | 'Accepted' | 'Rejected',
     yearsOfExperience: number,
-    timestamp: Date
+    timestamp: Date,
   ) {
     this.id = id;
     this.author = author;
@@ -52,7 +52,7 @@ export class Resume {
       data.jobTitle as SpecializationEnum || SpecializationEnum.FRONTEND,
       (data.status as 'Pending' | 'Accepted' | 'Rejected') || 'Pending',
       data.yearsOfExperience || 0,
-      data.timestamp ? new Date(data.timestamp) : new Date()
+      data.timestamp ? new Date(data.timestamp) : new Date(),
     );
   }
 
@@ -78,7 +78,7 @@ export class Resume {
       jobTitle: this.jobTitle,
       status: this.status,
       yearsOfExperience: this.yearsOfExperience,
-      timestamp: this.timestamp.toISOString()
+      timestamp: this.timestamp.toISOString(),
     };
   }
 } 

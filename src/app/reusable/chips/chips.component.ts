@@ -1,4 +1,4 @@
-import { Component, Input, signal, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 

@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
     </app-dropdown>
   `,
   standalone: true,
-  imports: [DropdownComponent]
+  imports: [DropdownComponent],
 })
 class TestHostComponent {
   options: Status[] = [];
@@ -85,7 +85,7 @@ describe('DropdownComponent with multiple selection', () => {
     hostFixture.detectChanges();
     
     dropdownComponent = hostFixture.debugElement.query(
-      By.directive(DropdownComponent)
+      By.directive(DropdownComponent),
     ).componentInstance;
   });
 
@@ -132,7 +132,7 @@ describe('DropdownComponent with single selection', () => {
     hostFixture.detectChanges();
     
     dropdownComponent = hostFixture.debugElement.query(
-      By.directive(DropdownComponent)
+      By.directive(DropdownComponent),
     ).componentInstance;
   });
 
@@ -152,6 +152,7 @@ describe('DropdownComponent with single selection', () => {
 
     // In single selection mode, the mat-pseudo-checkbox should not be displayed
     const pseudoCheckboxes = hostFixture.debugElement.queryAll(By.css('.mat-mdc-option:not(.mat-mdc-option-multiple) .mat-pseudo-checkbox'));
+
     expect(pseudoCheckboxes.length).toBe(0);
   });
 });

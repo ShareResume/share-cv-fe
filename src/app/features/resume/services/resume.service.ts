@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { Resume, ResumeData } from '../models/resume.model';
-import { QueryParamsModel } from '@app/core/models/query-params-model';
 import { GetResumeParamsModel } from '../models/get-resume-params.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
@@ -10,7 +9,7 @@ import { ResumeFilters } from '../models/resume-filters.model';
 import { ResumeResponse } from '../models/resume-response.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ResumeService {
   private apiService = inject(ApiService);
@@ -36,15 +35,17 @@ export class ResumeService {
     
     return this.httpClient.get<ResumeData[]>(
       `${this.baseUrl}${this.apiEndpoint}?${queryString}`,
-      { observe: 'response' }
+      { observe: 'response' },
     ).pipe(
       map(response => {
         let totalCount = response.body?.length || 0;
         
         // Try to get the total count from the X-Total-Count header
         const totalCountHeader = response.headers.get('X-Total-Count');
+
         if (totalCountHeader) {
           const count = parseInt(totalCountHeader, 10);
+
           if (!isNaN(count)) {
             totalCount = count;
           }
@@ -55,9 +56,9 @@ export class ResumeService {
         
         return {
           data,
-          totalCount
+          totalCount,
         };
-      })
+      }),
     );
   }
   
@@ -87,7 +88,7 @@ export class ResumeService {
       maxYoe: params.maxYoe !== undefined && !isNaN(Number(params.maxYoe))
         ? Number(params.maxYoe)
         : undefined,
-      date: params.date || undefined
+      date: params.date || undefined,
     };
   }
   
@@ -109,15 +110,18 @@ export class ResumeService {
    * Transforms the filters object into a flat query params object
    */
   private transformFiltersToQueryParams(filters?: ResumeFilters): GetResumeParamsModel {
-    if (!filters) return {};
+    if (!filters) {
+return {};
+}
     
     const { yearsOfExperience, ...basicFilters } = filters;
     
     const queryParams: GetResumeParamsModel = Object.entries(basicFilters)
       .reduce((params, [key, value]) => {
         if (value !== undefined && value !== null && value !== '') {
-          params[key as keyof GetResumeParamsModel] = value as any;
+          params[key as keyof GetResumeParamsModel] = value;
         }
+
         return params;
       }, {} as GetResumeParamsModel);
     

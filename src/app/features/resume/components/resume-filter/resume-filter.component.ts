@@ -17,8 +17,8 @@ import { Status } from '@app/reusable/models/dropdown.model';
     ButtonComponent, 
     ReactiveFormsModule, 
     CommonModule, 
-    DropdownComponent
-  ]
+    DropdownComponent,
+  ],
 })
 export class ResumeFilterComponent implements OnInit {
   @Output() filterApplied = new EventEmitter<ResumeFilters>();
@@ -30,29 +30,49 @@ export class ResumeFilterComponent implements OnInit {
     status: '',
     yearsOfExperience: {
       min: null,
-      max: null
+      max: null,
     },
-    date: ''
+    date: '',
   });
   
   // Specialization options for dropdown
   // TODO: Get from backend or SpecializationEnum
   readonly SPECIALIZATION_OPTIONS: Status[] = [
-    { viewValue: 'Frontend', value: 'Frontend' },
-    { viewValue: 'Backend', value: 'Backend' },
-    { viewValue: 'Full Stack', value: 'Full Stack' },
-    { viewValue: 'DevOps', value: 'DevOps' },
-    { viewValue: 'QA', value: 'QA' },
-    { viewValue: 'UI/UX', value: 'UI/UX' }
+    {
+ viewValue: 'Frontend', value: 'Frontend', 
+},
+    {
+ viewValue: 'Backend', value: 'Backend', 
+},
+    {
+ viewValue: 'Full Stack', value: 'Full Stack', 
+},
+    {
+ viewValue: 'DevOps', value: 'DevOps', 
+},
+    {
+ viewValue: 'QA', value: 'QA', 
+},
+    {
+ viewValue: 'UI/UX', value: 'UI/UX', 
+},
   ];
   
   // Status options for dropdown
   // TODO: Get from backend
   readonly STATUS_OPTIONS: Status[] = [
-    { viewValue: 'Active', value: 'Active' },
-    { viewValue: 'Pending', value: 'Pending' },
-    { viewValue: 'Approved', value: 'Approved' },
-    { viewValue: 'Rejected', value: 'Rejected' }
+    {
+ viewValue: 'Active', value: 'Active', 
+},
+    {
+ viewValue: 'Pending', value: 'Pending', 
+},
+    {
+ viewValue: 'Approved', value: 'Approved', 
+},
+    {
+ viewValue: 'Rejected', value: 'Rejected', 
+},
   ];
   
   // Form group for all filters
@@ -62,7 +82,7 @@ export class ResumeFilterComponent implements OnInit {
     status: new FormControl<string | string[] | null>(null),
     minYoe: new FormControl<number | null>(null),
     maxYoe: new FormControl<number | null>(null),
-    date: new FormControl('')
+    date: new FormControl(''),
   });
   
   ngOnInit(): void {
@@ -75,7 +95,7 @@ export class ResumeFilterComponent implements OnInit {
       status: filters.status || null,
       minYoe: filters.yearsOfExperience?.min || null,
       maxYoe: filters.yearsOfExperience?.max || null,
-      date: filters.date || ''
+      date: filters.date || '',
     }, { emitEvent: false });
   }
   
@@ -86,17 +106,17 @@ export class ResumeFilterComponent implements OnInit {
     // Create the filters object
     const filters: ResumeFilters = {
       company: formValue.company || '',
-      specialization: typeof formValue.specialization === 'string' ? formValue.specialization : 
-                    (Array.isArray(formValue.specialization) && formValue.specialization.length ? 
-                     formValue.specialization[0] : ''),
-      status: typeof formValue.status === 'string' ? formValue.status : 
-             (Array.isArray(formValue.status) && formValue.status.length ? 
-              formValue.status[0] : ''),
+      specialization: typeof formValue.specialization === 'string' ? formValue.specialization 
+                    : (Array.isArray(formValue.specialization) && formValue.specialization.length 
+                     ? formValue.specialization[0] : ''),
+      status: typeof formValue.status === 'string' ? formValue.status 
+             : (Array.isArray(formValue.status) && formValue.status.length 
+              ? formValue.status[0] : ''),
       yearsOfExperience: {
         min: formValue.minYoe,
-        max: formValue.maxYoe
+        max: formValue.maxYoe,
       },
-      date: formValue.date || ''
+      date: formValue.date || '',
     };
     
     // Remove empty properties
@@ -107,9 +127,9 @@ export class ResumeFilterComponent implements OnInit {
     });
     
     // If yearsOfExperience has no values, remove it
-    if (filters.yearsOfExperience && 
-        filters.yearsOfExperience.min === null && 
-        filters.yearsOfExperience.max === null) {
+    if (filters.yearsOfExperience 
+        && filters.yearsOfExperience.min === null 
+        && filters.yearsOfExperience.max === null) {
       delete filters.yearsOfExperience;
     }
     
@@ -124,7 +144,7 @@ export class ResumeFilterComponent implements OnInit {
       status: null,
       minYoe: null,
       maxYoe: null, 
-      date: ''
+      date: '',
     });
     
     this.applyFilters();

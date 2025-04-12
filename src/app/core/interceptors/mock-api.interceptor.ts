@@ -37,21 +37,22 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     
     // Apply filters if any
     let filteredData = allData;
+
     if (company) {
       filteredData = filteredData.filter(item => 
-        item.company.name.toLowerCase().includes(company.toLowerCase())
+        item.company.name.toLowerCase().includes(company.toLowerCase()),
       );
     }
     
     if (status) {
       filteredData = filteredData.filter(item => 
-        item.status.toLowerCase() === status.toLowerCase()
+        item.status.toLowerCase() === status.toLowerCase(),
       );
     }
     
     if (specialization) {
       filteredData = filteredData.filter(item => 
-        item.jobTitle.toLowerCase().includes(specialization.toLowerCase())
+        item.jobTitle.toLowerCase().includes(specialization.toLowerCase()),
       );
     }
     
@@ -66,7 +67,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     return of(new HttpResponse<ResumeData[]>({
       status: 200,
       body: paginatedData,
-      headers: req.headers.append('X-Total-Count', filteredData.length.toString())
+      headers: req.headers.append('X-Total-Count', filteredData.length.toString()),
     }));
   }
 
@@ -99,12 +100,24 @@ function getMockStatisticsData(): CompanyStat[] {
 function getMockResumeData(): ResumeData[] {
   // Company names to use in mock data
   const companies = [
-    { name: 'Google', logoUrl: 'assets/images/logos/google.png' },
-    { name: 'Meta', logoUrl: 'assets/images/logos/meta.png' },
-    { name: 'Microsoft', logoUrl: 'assets/images/logos/microsoft.png' },
-    { name: 'Apple', logoUrl: 'assets/images/logos/apple.png' },
-    { name: 'Amazon', logoUrl: 'assets/images/logos/amazon.png' },
-    { name: 'Netflix', logoUrl: 'assets/images/logos/netflix.png' }
+    {
+ name: 'Google', logoUrl: 'assets/images/logos/google.png', 
+},
+    {
+ name: 'Meta', logoUrl: 'assets/images/logos/meta.png', 
+},
+    {
+ name: 'Microsoft', logoUrl: 'assets/images/logos/microsoft.png', 
+},
+    {
+ name: 'Apple', logoUrl: 'assets/images/logos/apple.png', 
+},
+    {
+ name: 'Amazon', logoUrl: 'assets/images/logos/amazon.png', 
+},
+    {
+ name: 'Netflix', logoUrl: 'assets/images/logos/netflix.png', 
+},
   ];
   
   // Job titles to use in mock data
@@ -118,7 +131,7 @@ function getMockResumeData(): ResumeData[] {
     'Product Manager',
     'UI Designer',
     'Data Scientist',
-    'QA Engineer'
+    'QA Engineer',
   ];
   
   // Statuses to use in mock data
@@ -134,6 +147,7 @@ function getMockResumeData(): ResumeData[] {
     
     // Generate a random date within the last 30 days
     const date = new Date();
+
     date.setDate(date.getDate() - Math.floor(Math.random() * 30));
     
     return {
@@ -141,13 +155,13 @@ function getMockResumeData(): ResumeData[] {
       author: {
         id: `author${authorId}`,
         name: `User ${authorId}`,
-        avatarUrl: `assets/images/avatars/avatar${(authorId % 5) + 1}.png`
+        avatarUrl: `assets/images/avatars/avatar${(authorId % 5) + 1}.png`,
       },
       company: companies[companyIndex],
       jobTitle: jobTitles[jobTitleIndex],
       status: statuses[statusIndex],
       yearsOfExperience: yoe,
-      timestamp: date.toISOString().split('T')[0] // YYYY-MM-DD format
+      timestamp: date.toISOString().split('T')[0], // YYYY-MM-DD format
     };
   });
 } 

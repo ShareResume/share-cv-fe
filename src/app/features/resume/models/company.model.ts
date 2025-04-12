@@ -20,7 +20,7 @@ export class Company {
     
     return new Company(
       data.name || '',
-      data.logoUrl || `assets/images/logos/${data.name?.toLowerCase() || 'default'}.png`
+      data.logoUrl || `assets/images/logos/${data.name?.toLowerCase() || 'default'}.png`,
     );
   }
 
@@ -41,7 +41,7 @@ export class Company {
   toJson(): CompanyData {
     return {
       name: this.name,
-      logoUrl: this.logoUrl
+      logoUrl: this.logoUrl,
     };
   }
 } 

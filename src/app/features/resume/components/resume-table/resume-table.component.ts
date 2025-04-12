@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, input, model, signal } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@app/reusable/table/table.component';
 import { ChipsComponent } from '@app/reusable/chips/chips.component';
@@ -17,8 +17,8 @@ import { PageEvent } from '@angular/material/paginator';
     TableComponent,
     ChipsComponent,
     ButtonComponent,
-    DatePipe
-  ]
+    DatePipe,
+  ],
 })
 export class ResumeTableComponent {
   resumes = input<Resume[]>([]);
@@ -39,7 +39,7 @@ export class ResumeTableComponent {
     jobTitle: 'Job Title',
     status: 'Status',
     timestamp: 'Date',
-    actions: 'Actions'
+    actions: 'Actions',
   };
 
   constructor() {

@@ -5,7 +5,6 @@ import { ResumeService } from './services/resume.service';
 import { Resume } from './models/resume.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
-import { GetResumeParamsModel } from './models/get-resume-params.model';
 import { ResumeFilters } from './models/resume-filters.model';
 
 @Component({
@@ -13,7 +12,7 @@ import { ResumeFilters } from './models/resume-filters.model';
   templateUrl: './resume-page.component.html',
   styleUrl: './resume-page.component.scss',
   standalone: true,
-  imports: [ResumeFilterComponent, ResumeTableComponent]
+  imports: [ResumeFilterComponent, ResumeTableComponent],
 })
 export class ResumePageComponent {
   private resumeService = inject(ResumeService);
@@ -33,13 +32,13 @@ export class ResumePageComponent {
     status: '',
     yearsOfExperience: {
       min: null,
-      max: null
+      max: null,
     },
     date: '',
     page: 1,
     pageSize: 10,
     orderBy: 'Date',
-    sortOrder: 'Descending'
+    sortOrder: 'Descending',
   });
   
   constructor() {
@@ -47,6 +46,7 @@ export class ResumePageComponent {
     effect(() => {
       // The effect automatically tracks the filters signal
       const currentFilters = this.filters();
+
       this.loadResumes(currentFilters);
     });
   }
@@ -58,7 +58,7 @@ export class ResumePageComponent {
       ...current,
       ...newFilters,
       // Reset to page 1 when filters change
-      page: 1
+      page: 1,
     }));
   }
   
@@ -67,7 +67,7 @@ export class ResumePageComponent {
     this.filters.update(current => ({
       ...current,
       page: pageEvent.pageIndex + 1, // Convert from 0-based to 1-based index
-      pageSize: pageEvent.pageSize
+      pageSize: pageEvent.pageSize,
     }));
   }
   
@@ -79,7 +79,7 @@ export class ResumePageComponent {
     this.resumeService.getResumes(filters)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.isLoading.set(false))
+        finalize(() => this.isLoading.set(false)),
       )
       .subscribe({
         next: (response) => {
@@ -89,7 +89,7 @@ export class ResumePageComponent {
         error: (err) => {
           console.error('Error loading resumes:', err);
           this.error.set('Failed to load resumes. Please try again later.');
-        }
+        },
       });
   }
 } 

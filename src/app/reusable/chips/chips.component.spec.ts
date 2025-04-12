@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 @Component({
   template: `<app-chips [status]="testStatus"></app-chips>`,
   standalone: true,
-  imports: [ChipsComponent]
+  imports: [ChipsComponent],
 })
 class TestHostComponent {
   testStatus = '';
@@ -61,15 +61,33 @@ describe('ChipsComponent with TestHost', () => {
 
   it('should transform status correctly for class names', () => {
     const testCases = [
-      { status: 'Active', expected: 'active' },
-      { status: 'In Progress', expected: 'in-progress' },
-      { status: 'Pending', expected: 'pending' },
-      { status: 'On Hold', expected: 'on-hold' },
-      { status: 'Deactivated', expected: 'deactivated' },
-      { status: 'Cancelled', expected: 'cancelled' },
-      { status: 'Not Started', expected: 'not-started' },
-      { status: 'Completed', expected: 'completed' },
-      { status: '  Extra  Spaces  ', expected: 'extra-spaces' },
+      {
+ status: 'Active', expected: 'active', 
+},
+      {
+ status: 'In Progress', expected: 'in-progress', 
+},
+      {
+ status: 'Pending', expected: 'pending', 
+},
+      {
+ status: 'On Hold', expected: 'on-hold', 
+},
+      {
+ status: 'Deactivated', expected: 'deactivated', 
+},
+      {
+ status: 'Cancelled', expected: 'cancelled', 
+},
+      {
+ status: 'Not Started', expected: 'not-started', 
+},
+      {
+ status: 'Completed', expected: 'completed', 
+},
+      {
+ status: '  Extra  Spaces  ', expected: 'extra-spaces', 
+},
     ];
 
     testCases.forEach(({ status, expected }) => {
