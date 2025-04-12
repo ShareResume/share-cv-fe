@@ -38,16 +38,16 @@ export class AuthService {
       .pipe(tap(this.apiService.setAccessToken.bind(this)));
   }
 
-  public login(username: string, password: string): Observable<AuthResponse> {
+  public login(email: string, password: string): Observable<AuthResponse> {
     return this.apiService
       .post<
         {
-          username: string;
+          email: string;
           password: string;
         },
         AuthResponse
-      >(`${this.PATH}/login`, {
-        username,
+      >(`${this.PATH}/auth`, {
+        email,
         password,
       })
       .pipe(tap(this.apiService.setAccessToken.bind(this)));
