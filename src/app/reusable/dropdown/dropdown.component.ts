@@ -10,6 +10,7 @@ import {
   NG_VALUE_ACCESSOR,
   FormGroup,
   FormControl,
+  Validators
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { IconComponent } from '../icon/icon.component';
@@ -42,6 +43,8 @@ type SelectValue = string | string[] | null;
 export class DropdownComponent implements ControlValueAccessor, OnInit {
   public options = input<Status[]>([]);
   public multiple = input<boolean>(true);
+  public required = input<boolean>(false);
+  public errorMessage = input<string>('Please select a valid option');
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -54,12 +57,11 @@ export class DropdownComponent implements ControlValueAccessor, OnInit {
   private onTouched: () => void = () => {};
 
   public writeValue(value: SelectValue): void {
-    this.statusControl.setValue(value);
+    this.statusControl.setValue(value, { emitEvent: false });
   }
 
   public registerOnChange(fn: (value: SelectValue) => void): void {
     this.onChange = fn;
-    this.statusControl.valueChanges.subscribe(fn);
   }
 
   public registerOnTouched(fn: () => void): void {
@@ -74,21 +76,46 @@ export class DropdownComponent implements ControlValueAccessor, OnInit {
     }
   }
 
+  public hasValue(): boolean {
+    const value = this.statusControl.value;
+    if (this.multiple()) {
+      return Array.isArray(value) && value.length > 0;
+    }
+    return value !== null && value !== undefined && value !== '';
+  }
+
+  public clearSelection(event: MouseEvent): void {
+    event.stopPropagation();
+    
+    const newValue = this.multiple() ? [] : null;
+    
+    this.statusControl.setValue(newValue);
+    
+    this.onChange(newValue);
+    this.onTouched();
+    
+    if (this.form) {
+      this.form.get('status')?.updateValueAndValidity();
+      this.form.updateValueAndValidity();
+    }
+  }
+
   public ngOnInit(): void {
+    if (this.required()) {
+      this.statusControl.addValidators(Validators.required);
+    }
+    
     this.form = new FormGroup({
       status: this.statusControl,
     });
 
-    this.form.valueChanges
+    this.statusControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
-        if (value.status !== undefined) {
-          this.onChange(value.status);
-          this.onTouched();
-        }
+        this.onChange(value);
+        this.onTouched();
       });
       
-    // Initialize the form control with empty array if multiple is true
     if (this.multiple()) {
       this.statusControl.setValue([]);
     }

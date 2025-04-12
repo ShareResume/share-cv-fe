@@ -1,7 +1,15 @@
 <mat-form-field
   class="dropdown--form custom-select"
+  [class.has-error]="statusControl.invalid && statusControl.touched"
 >
-  <app-icon matSuffix [iconName]="!isOpen ? 'arrowDown' : 'arrowUp'"></app-icon>
+  <div matSuffix class="icon-container">
+    <div *ngIf="hasValue()" 
+         class="clear-button" 
+         (click)="clearSelection($event)">
+      <app-icon [iconName]="'close'"></app-icon>
+    </div>
+    <app-icon [iconName]="!isOpen ? 'arrowDown' : 'arrowUp'"></app-icon>
+  </div>
   <mat-select
     [multiple]="multiple()"
     placeholder="Select an option"
@@ -20,3 +28,6 @@
 
   </mat-select>
 </mat-form-field>
+<div *ngIf="statusControl.invalid && statusControl.touched" class="error-message">
+  {{ errorMessage() }}
+</div>

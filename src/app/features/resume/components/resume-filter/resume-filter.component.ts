@@ -103,28 +103,35 @@ export class ResumeFilterComponent implements OnInit {
   applyFilters(): void {
     const formValue = this.filterForm.value;
     
-    // Create the filters object
+    // Create the filters object with basic structure
     const filters: ResumeFilters = {
       company: formValue.company || '',
-      specialization: typeof formValue.specialization === 'string' ? formValue.specialization 
-                    : (Array.isArray(formValue.specialization) && formValue.specialization.length 
-                     ? formValue.specialization[0] : ''),
-      status: typeof formValue.status === 'string' ? formValue.status 
-             : (Array.isArray(formValue.status) && formValue.status.length 
-              ? formValue.status[0] : ''),
+      specialization: '',
+      status: '',
+      date: formValue.date || '',
       yearsOfExperience: {
         min: formValue.minYoe,
         max: formValue.maxYoe,
-      },
-      date: formValue.date || '',
+      }
     };
     
-    // Remove empty properties
-    Object.keys(filters).forEach(key => {
-      if (filters[key as keyof ResumeFilters] === '') {
-        delete filters[key as keyof ResumeFilters];
+    // Set specialization value if it exists
+    if (formValue.specialization) {
+      if (typeof formValue.specialization === 'string' && formValue.specialization !== '') {
+        filters.specialization = formValue.specialization;
+      } else if (Array.isArray(formValue.specialization) && formValue.specialization.length) {
+        filters.specialization = formValue.specialization[0];
       }
-    });
+    }
+    
+    // Set status value if it exists
+    if (formValue.status) {
+      if (typeof formValue.status === 'string' && formValue.status !== '') {
+        filters.status = formValue.status;
+      } else if (Array.isArray(formValue.status) && formValue.status.length) {
+        filters.status = formValue.status[0];
+      }
+    }
     
     // If yearsOfExperience has no values, remove it
     if (filters.yearsOfExperience 
