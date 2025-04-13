@@ -10,6 +10,7 @@ import { errorInterceptor } from './core/providers/error.interceptor';
 import { authInterceptor } from './core/providers/auth.interceptor';
 import { mockApiInterceptor } from './core/interceptors/mock-api.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -23,13 +24,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(withInterceptors([...interceptors])),
-    importProvidersFrom([TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient],
-      },
-    })]),
+    importProvidersFrom([
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: httpLoaderFactory,
+          deps: [HttpClient],
+        },
+      }),
+      MatDialogModule
+    ]),
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {

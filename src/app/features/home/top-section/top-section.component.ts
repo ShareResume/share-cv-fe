@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ButtonComponent } from '../../../reusable/button/button.component';
 
 @Component({
@@ -9,9 +9,10 @@ import { ButtonComponent } from '../../../reusable/button/button.component';
   styleUrl: './top-section.component.scss',
 })
 export class TopSectionComponent {
+  @Output() uploadResumeClick = new EventEmitter<void>();
 
   public uploadResume(): void {
-    console.log('Upload resume button clicked');
+    this.uploadResumeClick.emit();
   }
 
   public browseResumes(): void {

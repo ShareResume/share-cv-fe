@@ -6,6 +6,8 @@ import { CompanyStat } from '../../core/models/company-stat.model';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { UploadResumePopupComponent } from '../../core/popups/upload-resume-popup/upload-resume-popup.component';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class HomeComponent implements OnInit {
   private homeService = inject(HomeService);
   private destroyRef = inject(DestroyRef);
+  private dialog = inject(MatDialog);
   
   statisticsData = signal<CompanyStat[]>([]);
   isLoadingStatistics = signal<boolean>(true);
@@ -24,6 +27,19 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     this.loadStatistics();
+  }
+  
+  openUploadResumePopup(): void {
+    const dialogRef = this.dialog.open(UploadResumePopupComponent, {
+      width: '600px',
+      disableClose: true
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // TODO: Handle the resume data submission
+      }
+    });
   }
   
   private loadStatistics(): void {

@@ -1,3 +1,11 @@
+@if (label()) {
+  <div class="dropdown-label">
+    {{ label() }}
+    @if (required()) {
+      <span class="required-marker">*</span>
+    }
+  </div>
+}
 <mat-form-field
   class="dropdown--form custom-select"
   [class.has-error]="statusControl.invalid && statusControl.touched"

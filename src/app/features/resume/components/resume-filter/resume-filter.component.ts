@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ResumeFilters } from '../../models/resume-filters.model';
 import { DropdownComponent } from '@app/reusable/dropdown/dropdown.component';
 import { Status } from '@app/reusable/models/dropdown.model';
+import { SpecializationEnum } from '@app/core/enums/specialization.enum';
+import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
 
 @Component({
   selector: 'app-resume-filter',
@@ -36,44 +38,16 @@ export class ResumeFilterComponent implements OnInit {
   });
   
   // Specialization options for dropdown
-  // TODO: Get from backend or SpecializationEnum
-  readonly SPECIALIZATION_OPTIONS: Status[] = [
-    {
- viewValue: 'Frontend', value: 'Frontend', 
-},
-    {
- viewValue: 'Backend', value: 'Backend', 
-},
-    {
- viewValue: 'Full Stack', value: 'Full Stack', 
-},
-    {
- viewValue: 'DevOps', value: 'DevOps', 
-},
-    {
- viewValue: 'QA', value: 'QA', 
-},
-    {
- viewValue: 'UI/UX', value: 'UI/UX', 
-},
-  ];
+  readonly SPECIALIZATION_OPTIONS: Status[] = Object.keys(SpecializationEnum).map(key => ({
+    value: SpecializationEnum[key as keyof typeof SpecializationEnum],
+    viewValue: SpecializationEnum[key as keyof typeof SpecializationEnum]
+  }));
   
   // Status options for dropdown
-  // TODO: Get from backend
-  readonly STATUS_OPTIONS: Status[] = [
-    {
- viewValue: 'Active', value: 'Active', 
-},
-    {
- viewValue: 'Pending', value: 'Pending', 
-},
-    {
- viewValue: 'Approved', value: 'Approved', 
-},
-    {
- viewValue: 'Rejected', value: 'Rejected', 
-},
-  ];
+  readonly STATUS_OPTIONS: Status[] = Object.keys(ResumeStatusEnum).map(key => ({
+    value: ResumeStatusEnum[key as keyof typeof ResumeStatusEnum],
+    viewValue: ResumeStatusEnum[key as keyof typeof ResumeStatusEnum]
+  }));
   
   // Form group for all filters
   filterForm = new FormGroup({

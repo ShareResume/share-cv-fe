@@ -159,3 +159,15 @@
     }
   }
 }
+
+.dropdown-label {
+  font-family: $font-family-secondary;
+  font-size: 16px;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  
+  .required-marker {
+    color: $color-gray-600;
+    margin-left: 2px;
+  }
+}

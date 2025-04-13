@@ -42,9 +42,10 @@ type SelectValue = string | string[] | null;
 })
 export class DropdownComponent implements ControlValueAccessor, OnInit {
   public options = input<Status[]>([]);
-  public multiple = input<boolean>(true);
+  public multiple = input<boolean>(false);
   public required = input<boolean>(false);
   public errorMessage = input<string>('Please select a valid option');
+  public label = input<string | undefined>(undefined);
 
   private readonly destroyRef = inject(DestroyRef);
 

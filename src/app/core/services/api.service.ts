@@ -45,6 +45,44 @@ export class ApiService {
     return params.toString();
   }
   
+  /**
+   * Helper method to convert an object to FormData
+   * Handles different data types appropriately
+   */
+  public createFormData<T extends Record<string, any>>(data: T): FormData {
+    const formData = new FormData();
+    
+    Object.entries(data).forEach(([key, value]) => {
+      // Skip null or undefined values
+      if (value === null || value === undefined) {
+        return;
+      }
+      
+      // Handle booleans - convert to string
+      if (typeof value === 'boolean') {
+        formData.append(key, value.toString());
+        return;
+      }
+      
+      // Handle numbers - convert to string
+      if (typeof value === 'number') {
+        formData.append(key, value.toString());
+        return;
+      }
+      
+      // Handle files and blobs directly
+      if (value instanceof File || value instanceof Blob) {
+        formData.append(key, value);
+        return;
+      }
+      
+      // Handle other types (strings, etc.)
+      formData.append(key, value);
+    });
+    
+    return formData;
+  }
+  
   public get<T>(
     route: string,
     options?: { headers?: HttpHeaders | Record<string, string | string[]> },

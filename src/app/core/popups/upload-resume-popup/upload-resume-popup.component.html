@@ -1,0 +1,90 @@
+<div class="popup-container">
+  <div class="popup-header">
+    <h2 class="popup-title">Add New Application</h2>
+    <button class="close-button" (click)="onCancel()">
+      <span class="close-icon">×</span>
+    </button>
+  </div>
+
+  <div class="popup-content">
+    <form [formGroup]="resumeForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <!-- Company Name Input -->
+        <div class="form-field">
+          <app-input
+            label="Company Name"
+            formControlName="companyName"
+            placeholder="e.g. Google, Meta"
+            [required]="true"
+          ></app-input>
+        </div>
+
+        <!-- Position / Role Input - REMOVED -->
+
+        <!-- Years of Experience Input -->
+        <div class="form-field">
+          <app-input
+            label="Years of Experience"
+            formControlName="yearsOfExperience"
+            placeholder="e.g. 3"
+            type="number"
+            [required]="true"
+          ></app-input>
+        </div>
+
+        <!-- Status Dropdown -->
+        <div class="form-field">
+          <app-dropdown
+            label="Status"
+            formControlName="status"
+            [options]="statusOptions"
+            [required]="true"
+          ></app-dropdown>
+        </div>
+
+        <!-- Specialization Dropdown -->
+        <div class="form-field">
+          <app-dropdown
+            label="Specialization"
+            formControlName="specialization"
+            [options]="specializationOptions"
+            [required]="true"
+          ></app-dropdown>
+        </div>
+
+        <!-- Document Upload -->
+        <div class="form-field document-upload">
+          <label class="upload-label">Attach CV</label>
+          <div class="upload-container" [class.has-file]="selectedFile">
+            @if (selectedFile) {
+              <div class="selected-file">
+                <input type="checkbox" checked disabled>
+                <label class="file-name">{{ selectedFile.name }}</label>
+              </div>
+            }
+            <div class="upload-area">
+              <label for="file-upload" class="custom-file-upload">
+                <span class="upload-icon">↑</span>
+                <span class="upload-text">Upload New CV</span>
+              </label>
+              <input 
+                type="file" 
+                id="file-upload" 
+                (change)="onFileSelected($event)" 
+                accept=".pdf,.doc,.docx"
+                style="display:none;"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="popup-footer">
+    <button class="cancel-button" (click)="onCancel()">Cancel</button>
+    <button class="save-button" (click)="onSubmit()" [disabled]="resumeForm.invalid || !selectedFile || isSubmitting">
+      {{ isSubmitting ? 'Saving...' : 'Save Application' }}
+    </button>
+  </div>
+</div> 
