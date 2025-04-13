@@ -35,6 +35,27 @@ export class ApiService {
     return null;
   }
 
+  public refreshAccessToken(): Observable<{ accessToken: string }> {
+    const authData = this.getAccessToken();
+    if (!authData?.refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    const headers = new HttpHeaders().set('refreshToken', authData.refreshToken);
+    return this.httpClient.get<{ accessToken: string }>(`${this.baseUrl}/auth/access-token`, { headers });
+  }
+
+  public updateAccessToken(newAccessToken: string): void {
+    const authData = this.getAccessToken();
+    if (authData) {
+      const updatedAuthData = {
+        ...authData,
+        accessToken: newAccessToken
+      };
+      localStorage.setItem(TOKEN_KEY, JSON.stringify(updatedAuthData));
+    }
+  }
+
   generateQueryParams(paramsObj: QueryParamsModel): string {
     let params = new HttpParams();
 

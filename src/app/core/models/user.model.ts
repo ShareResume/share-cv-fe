@@ -6,5 +6,5 @@ export interface RegisterData {
 
 export interface AuthResponse {
   accessToken: string;
-  expiresIn: number;
+  refreshToken: string;
 }
