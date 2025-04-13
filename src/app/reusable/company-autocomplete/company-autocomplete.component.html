@@ -1,0 +1,90 @@
+@if (label) {
+  <div class="dropdown-label">
+    {{ label }}
+    @if (required) {
+      <span class="required-marker">*</span>
+    }
+  </div>
+}
+
+<mat-form-field
+  class="company-autocomplete--form custom-select"
+  [class.has-error]="hasError()"
+>
+  <input
+    type="text"
+    matInput
+    #autocompleteTrigger
+    [formControl]="searchControl"
+    [matAutocomplete]="auto"
+    placeholder="Search for a company"
+    (input)="onSearchInputChange($event)"
+    (blur)="markAsTouched()"
+  />
+  <div matSuffix class="icon-container">
+    @if (hasValue()) {
+      <div class="clear-button" (click)="clearSelection($event)">
+        <app-icon [iconName]="'close'"></app-icon>
+      </div>
+    }
+    <app-icon [iconName]="!isOpen() ? 'arrowDown' : 'arrowUp'"></app-icon>
+  </div>
+
+  <mat-autocomplete 
+    #auto="matAutocomplete" 
+    (opened)="onPanelOpened()" 
+    (closed)="onPanelClosed()"
+  >
+    <!-- Loading state -->
+    @if (companiesResource.isLoading()) {
+      <mat-option disabled>
+        <div class="loading-state">Loading...</div>
+      </mat-option>
+    }
+    
+    <!-- Companies list -->
+    @if (!companiesResource.isLoading() && companiesResource.hasValue()) {
+      @for (company of companiesResource.value(); track company.id) {
+        <mat-option [value]="company.name" (click)="selectCompany(company)">
+          <div class="company-option">
+            <img class="company-logo" [src]="company.logoUrl" [alt]="company.name" />
+            <span>{{ company.name }}</span>
+          </div>
+        </mat-option>
+      }
+    }
+    
+    <!-- Error state -->
+    @if (companiesResource.error()) {
+      <mat-option disabled>
+        <div class="error-state">
+          Failed to load companies
+          <button (click)="refreshCompanies()">Retry</button>
+        </div>
+      </mat-option>
+    }
+    
+    <!-- Empty state messages -->
+    @if (!companiesResource.isLoading() && !companiesResource.error()) {
+      @if (companiesResource.hasValue() && companiesResource.value().length === 0 && searchTerm() && searchTerm().length > 2) {
+        <mat-option disabled>
+          No companies found
+        </mat-option>
+      } @else if (searchTerm() && searchTerm().length <= 2) {
+        <mat-option disabled>
+          Type at least 3 characters to search
+        </mat-option>
+      } @else if (!searchTerm()) {
+        <mat-option disabled>
+          Start typing to search companies
+        </mat-option>
+      }
+    }
+  </mat-autocomplete>
+</mat-form-field>
+
+@if (hasError()) {
+  <div class="error-message">
+    {{ errorMessage }}
+  </div>
+} 
