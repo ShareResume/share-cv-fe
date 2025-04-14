@@ -8,7 +8,6 @@ import {
   successfulPasswordResetConfig,
 } from './core/constants/auth-page-configs.constants';
 import { HomeComponent } from './features/home/home.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { popupGuard } from './core/providers/popup.guard';
 import { MainLayoutComponent } from './core/components/main-layout/main-layout.component';
@@ -22,11 +21,6 @@ export const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [popupGuard],
       },
       {
         path: 'profile',
