@@ -1,0 +1,127 @@
+@use 'variables' as *;
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color-black, 0.5);
+    z-index: -1;
+  }
+
+  &__container {
+    background-color: $color-white;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba($color-black, 0.1);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $color-gray-300;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: $font-family-primary;
+    font-size: 18px;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-xs;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-gray-600;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+
+  &__close-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  &__content {
+    padding: $spacing-lg;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  &__footer {
+    padding: $spacing-md $spacing-lg;
+    border-top: 1px solid $color-gray-300;
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+  }
+}
+
+.btn {
+  padding: $spacing-xs $spacing-lg;
+  border-radius: 4px;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-medium;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+
+  &--primary {
+    background-color: $button-bg-primary;
+    color: $button-text-primary;
+
+    &:hover {
+      background-color: $button-bg-primary-hover;
+    }
+  }
+
+  &--secondary {
+    background-color: $button-bg-secondary;
+    color: $button-text-secondary;
+    border: 1px solid $button-border-secondary;
+
+    &:hover {
+      background-color: $button-bg-secondary-hover;
+    }
+  }
+
+  &--terniary {
+    background-color: transparent;
+    color: $color-text-primary;
+
+    &:hover {
+      background-color: $color-gray-250;
+    }
+  }
+} 

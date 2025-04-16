@@ -1,0 +1,28 @@
+@if (isVisible()) {
+  <div class="popup">
+    <div class="popup__container">
+      <div class="popup__header">
+        <h2 class="popup__title">{{ title() }}</h2>
+        <button class="popup__close" (click)="onCloseClick()">
+          <span class="popup__close-icon">×</span>
+        </button>
+      </div>
+      <div class="popup__content">
+        <ng-content></ng-content>
+      </div>
+      @if (buttons().length > 0) {
+        <div class="popup__footer">
+          @for (button of buttons(); track button.label) {
+            <button 
+              class="btn" 
+              [class]="'btn--' + button.type"
+              (click)="onButtonClick(button.action ?? button.label)">
+              {{ button.label }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+    <div class="popup__overlay" (click)="onCloseClick()"></div>
+  </div>
+} 
