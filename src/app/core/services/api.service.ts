@@ -42,7 +42,7 @@ export class ApiService {
     }
 
     const headers = new HttpHeaders().set('refreshToken', authData.refreshToken);
-    return this.httpClient.get<{ accessToken: string }>(`${this.baseUrl}/auth/access-token`, { headers });
+    return this.httpClient.post<{ accessToken: string }>(`${this.baseUrl}/auth/access-token`, {}, { headers });
   }
 
   public updateAccessToken(newAccessToken: string): void {
