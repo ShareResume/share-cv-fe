@@ -112,6 +112,7 @@ export class ResumeService {
         ? params.sortOrder
         : this.DEFAULT_SORT_ORDER,
       company: params.company || undefined,
+      companyId: params.companyId || undefined,
       specialization: params.specialization || undefined,
       status: params.status || undefined,
       minYoe: params.minYoe !== undefined && !isNaN(Number(params.minYoe))
@@ -143,10 +144,10 @@ export class ResumeService {
    */
   private transformFiltersToQueryParams(filters?: ResumeFilters): GetResumeParamsModel {
     if (!filters) {
-return {};
-}
+      return {};
+    }
     
-    const { yearsOfExperience, ...basicFilters } = filters;
+    const { yearsOfExperience, company, ...basicFilters } = filters;
     
     const queryParams: GetResumeParamsModel = Object.entries(basicFilters)
       .reduce((params, [key, value]) => {
@@ -156,6 +157,16 @@ return {};
 
         return params;
       }, {} as GetResumeParamsModel);
+    
+    // Add company or companyId if it exists
+    if (company) {
+      if (typeof company === 'string') {
+        queryParams.company = company;
+      } else {
+        // If company is an object, use its ID
+        queryParams['companyId'] = company.id;
+      }
+    }
     
     // Add min/max years of experience if they exist
     if (yearsOfExperience?.min !== undefined && yearsOfExperience.min !== null) {

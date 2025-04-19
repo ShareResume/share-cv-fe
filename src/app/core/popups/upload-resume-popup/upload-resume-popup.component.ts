@@ -10,6 +10,8 @@ import { ResumeService, ResumeFormData } from '../../../features/resume/services
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
+import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
+import { Company } from '@app/core/models/company.model';
 
 @Component({
   selector: 'app-upload-resume-popup',
@@ -21,7 +23,8 @@ import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
     FormsModule,
     ReactiveFormsModule,
     InputComponent,
-    DropdownComponent
+    DropdownComponent,
+    CompanyAutocompleteComponent
   ]
 })
 export class UploadResumePopupComponent implements OnInit {
@@ -47,7 +50,7 @@ export class UploadResumePopupComponent implements OnInit {
 
   private initForm(): void {
     this.resumeForm = this.fb.group({
-      companyName: ['', Validators.required],
+      company: [null, Validators.required],
       yearsOfExperience: ['', [Validators.required, Validators.min(0)]],
       status: ['', Validators.required],
       specialization: ['', Validators.required]
@@ -79,8 +82,14 @@ export class UploadResumePopupComponent implements OnInit {
     if (this.resumeForm.valid && this.selectedFile) {
       this.isSubmitting = true;
       
+      const formValues = this.resumeForm.value;
+      const selectedCompany = formValues.company as Company;
+      
       const formData: ResumeFormData = {
-        ...this.resumeForm.value,
+        companyName: selectedCompany.id, // Use company ID from the selected company
+        yearsOfExperience: formValues.yearsOfExperience,
+        status: formValues.status,
+        specialization: formValues.specialization,
         file: this.selectedFile
       };
       

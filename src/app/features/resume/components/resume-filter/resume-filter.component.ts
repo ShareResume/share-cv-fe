@@ -8,6 +8,8 @@ import { DropdownComponent } from '@app/reusable/dropdown/dropdown.component';
 import { Status } from '@app/reusable/models/dropdown.model';
 import { SpecializationEnum } from '@app/core/enums/specialization.enum';
 import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
+import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
+import { Company } from '@app/core/models/company.model';
 
 @Component({
   selector: 'app-resume-filter',
@@ -20,6 +22,7 @@ import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
     ReactiveFormsModule, 
     CommonModule, 
     DropdownComponent,
+    CompanyAutocompleteComponent,
   ],
 })
 export class ResumeFilterComponent implements OnInit {
@@ -51,7 +54,7 @@ export class ResumeFilterComponent implements OnInit {
   
   // Form group for all filters
   filterForm = new FormGroup({
-    company: new FormControl(''),
+    company: new FormControl<Company | null>(null),
     specialization: new FormControl<string | string[] | null>(null),
     status: new FormControl<string | string[] | null>(null),
     minYoe: new FormControl<number | null>(null),
@@ -64,7 +67,7 @@ export class ResumeFilterComponent implements OnInit {
     const filters = this.currentFilters();
     
     this.filterForm.setValue({
-      company: filters.company || '',
+      company: typeof filters.company === 'object' ? filters.company : null,
       specialization: filters.specialization || null,
       status: filters.status || null,
       minYoe: filters.yearsOfExperience?.min || null,
@@ -120,7 +123,7 @@ export class ResumeFilterComponent implements OnInit {
   // Reset the form
   resetFilters(): void {
     this.filterForm.reset({
-      company: '',
+      company: null,
       specialization: null,
       status: null,
       minYoe: null,

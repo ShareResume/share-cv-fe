@@ -9,14 +9,13 @@
   <div class="popup-content">
     <form [formGroup]="resumeForm" (ngSubmit)="onSubmit()">
       <div class="form-grid">
-        <!-- Company Name Input -->
+        <!-- Company Autocomplete -->
         <div class="form-field">
-          <app-input
-            label="Company Name"
-            formControlName="companyName"
-            placeholder="e.g. Google, Meta"
+          <app-company-autocomplete
+            label="Company"
+            formControlName="company"
             [required]="true"
-          ></app-input>
+          ></app-company-autocomplete>
         </div>
 
         <!-- Position / Role Input - REMOVED -->

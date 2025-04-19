@@ -1,5 +1,7 @@
+import { Company } from '@app/core/models/company.model';
+
 export interface ResumeFilters {
-  company?: string;
+  company?: Company | string;
   specialization?: string;
   status?: string;
   yearsOfExperience?: {
