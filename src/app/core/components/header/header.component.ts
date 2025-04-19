@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonComponent } from '../../../reusable/button/button.component';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,8 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class HeaderComponent {
+  private authService = inject(AuthService);
+  
   navItems = [
     {
  label: 'Overview', route: '/overview', 
@@ -31,5 +34,7 @@ export class HeaderComponent {
 },
   ];
 
-  constructor() { }
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
 }
