@@ -8,11 +8,12 @@ import { of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadResumePopupComponent } from '../../core/popups/upload-resume-popup/upload-resume-popup.component';
+import { CompanyAutocompleteComponent } from "../../reusable/company-autocomplete/company-autocomplete.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TopSectionComponent, StatisticsSectionComponent],
+  imports: [TopSectionComponent, StatisticsSectionComponent, CompanyAutocompleteComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

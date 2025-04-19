@@ -1,57 +1,58 @@
 import { 
- // ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, inject, 
-  Injectable } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { AuthService } from './auth.service';
+  Injectable, inject, TemplateRef, Type 
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent, PopupData } from '../../reusable/popup/popup.component';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PopupService {
-  //private loginPopupRef: ComponentRef<LoginPopupComponent> | null = null;
-  // private appRef = inject(ApplicationRef);
-  // private injector = inject(EnvironmentInjector);
-  // private router = inject(Router);
-  // private authService = inject(AuthService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
-  showLoginPopup(targetUrl: string) {
-    // // Store the target URL for redirect after login
-    // this.authService.setRedirectUrl(targetUrl);
+  showLoginPopup(returnUrl?: string) {
+    const currentUrl = this.router.url;
+    this.authService.setRedirectUrl(returnUrl || currentUrl);
+    
+    const dialogData: PopupData = {
+      title: 'Authentication Required',
+      content: 'To upload resume you need to login to system',
+      buttons: [
+        {
+          label: 'Cancel',
+          type: 'secondary',
+          action: 'cancel'
+        },
+        {
+          label: 'Go to Login',
+          type: 'primary',
+          action: 'login'
+        }
+      ]
+    };
 
-    // return new Promise<boolean>((resolve) => {
-    //   // Create popup component
-    //   this.loginPopupRef = createComponent(LoginPopupComponent, {
-    //     environmentInjector: this.injector
-    //   });
+    const dialogRef = this.dialog.open(PopupComponent, {
+      width: '400px',
+      data: dialogData,
+      disableClose: true
+    });
 
-    //   // Add to DOM
-    //   document.body.appendChild(this.loginPopupRef.location.nativeElement);
-
-    //   // Attach to application
-    //   this.appRef.attachView(this.loginPopupRef.hostView);
-
-    //   // Handle close event
-    //   this.loginPopupRef.instance.close.subscribe((shouldLogin: boolean) => {
-    //     if (shouldLogin) {
-    //       // User chose to login, redirect handled by login component
-    //       resolve(true);
-    //     } else {
-    //       // User canceled, navigate back to home
-    //       this.router.navigate(['']);
-    //       resolve(false);
-    //     }
-
-    //     this.closePopup();
-    //   });
-    // });
+    return dialogRef.afterClosed().subscribe(result => {
+      if (result === 'login') {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
-  private closePopup(): void {
-    // if (this.loginPopupRef) {
-    //   // Clean up component
-    //   this.appRef.detachView(this.loginPopupRef.hostView);
-    //   this.loginPopupRef.destroy();
-    //   this.loginPopupRef = null;
-    // }
+  openPopup(data: PopupData) {
+    return this.dialog.open(PopupComponent, {
+      width: '400px',
+      data,
+      disableClose: true
+    });
   }
 } 

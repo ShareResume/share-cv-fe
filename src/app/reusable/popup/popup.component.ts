@@ -1,4 +1,7 @@
-import { Component, ElementRef, HostListener, input, output } from '@angular/core';
+import { Component, Inject, TemplateRef, Type, signal } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { PopupContentComponent } from './popup-content.component';
 
 export interface PopupButton {
   label: string;
@@ -6,34 +9,38 @@ export interface PopupButton {
   action?: string;
 }
 
+export interface PopupData {
+  title: string;
+  buttons: PopupButton[];
+  content: string | TemplateRef<any> | Type<any>;
+}
+
 @Component({
   selector: 'app-popup',
   standalone: true,
+  imports: [CommonModule, MatDialogModule, PopupContentComponent],
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.scss',
 })
 export class PopupComponent {
-  public title = input<string>('');
-  public buttons = input<PopupButton[]>([]);
-  public isVisible = input<boolean>(true);
+  title = signal<string>('');
+  buttons = signal<PopupButton[]>([]);
+  content = signal<string | TemplateRef<any> | Type<any> | undefined>(undefined);
   
-  public close = output<void>();
-  public buttonClick = output<string>();
-  
-  constructor(private elementRef: ElementRef) {}
-  
-  @HostListener('document:click', ['$event'])
-  public onClickOutside(event: MouseEvent): void {
-    if (!this.elementRef.nativeElement.contains(event.target) && this.isVisible()) {
-      this.close.emit();
-    }
+  constructor(
+    public dialogRef: MatDialogRef<PopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: PopupData
+  ) {
+    this.title.set(data.title);
+    this.buttons.set(data.buttons || []);
+    this.content.set(data.content);
   }
   
-  public onCloseClick(): void {
-    this.close.emit();
+  onCloseClick(): void {
+    this.dialogRef.close();
   }
   
-  public onButtonClick(action: string | undefined): void {
-    this.buttonClick.emit(action || '');
+  onButtonClick(action: string | undefined): void {
+    this.dialogRef.close(action || '');
   }
 } 

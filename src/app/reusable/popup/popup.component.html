@@ -1,28 +1,23 @@
-@if (isVisible()) {
-  <div class="popup">
-    <div class="popup__container">
-      <div class="popup__header">
-        <h2 class="popup__title">{{ title() }}</h2>
-        <button class="popup__close" (click)="onCloseClick()">
-          <span class="popup__close-icon">×</span>
+<div class="popup__container mat-dialog-container">
+  <div class="popup__header">
+    <h2 class="popup__title mat-dialog-title">{{ title() }}</h2>
+    <button class="popup__close" (click)="onCloseClick()" mat-dialog-close>
+      <span class="popup__close-icon">×</span>
+    </button>
+  </div>
+  <div class="popup__content mat-dialog-content">
+    <app-popup-content [content]="content()"></app-popup-content>
+  </div>
+  @if (buttons().length > 0) {
+    <div class="popup__footer mat-dialog-actions">
+      @for (button of buttons(); track button.label) {
+        <button 
+          class="btn" 
+          [class]="'btn--' + button.type"
+          (click)="onButtonClick(button.action ?? button.label)">
+          {{ button.label }}
         </button>
-      </div>
-      <div class="popup__content">
-        <ng-content></ng-content>
-      </div>
-      @if (buttons().length > 0) {
-        <div class="popup__footer">
-          @for (button of buttons(); track button.label) {
-            <button 
-              class="btn" 
-              [class]="'btn--' + button.type"
-              (click)="onButtonClick(button.action ?? button.label)">
-              {{ button.label }}
-            </button>
-          }
-        </div>
       }
     </div>
-    <div class="popup__overlay" (click)="onCloseClick()"></div>
-  </div>
-} 
+  }
+</div> 

@@ -23,16 +23,11 @@
 
   &__container {
     background-color: $color-white;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba($color-black, 0.1);
     width: 100%;
     max-width: 500px;
-    max-height: 90vh;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
-    z-index: 1;
   }
 
   &__header {
@@ -75,7 +70,6 @@
   &__content {
     padding: $spacing-lg;
     overflow-y: auto;
-    flex-grow: 1;
   }
 
   &__footer {

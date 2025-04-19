@@ -4,6 +4,19 @@
   background-color: $header-bg-color;
   border-bottom: 1px solid $header-border-color;
   width: 100%;
+
+  .auth-status {
+    margin-right: 15px;
+    padding: 15px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: $warning-color;
+    color: white;
+    
+    &.authenticated {
+      background-color: $success-color;
+    }
+  }
 }
 
 .container {

@@ -13,8 +13,17 @@ export class AuthService {
   public PATH = '';
   private readonly apiService: ApiService = inject(ApiService);
   private readonly router: Router = inject(Router);
-  private isAuthenticatedSignal = signal<boolean>(false);
+  private isAuthenticatedSignal = signal<boolean>(this.hasValidToken());
   private redirectUrlSignal = signal<string | null>(null);
+
+  constructor() {
+    // Initialize authentication state based on token presence
+    this.setAuthenticated(this.hasValidToken());
+  }
+
+  private hasValidToken(): boolean {
+    return !!this.apiService.getAccessToken()?.accessToken;
+  }
 
   get isAuthenticated() {
     return this.isAuthenticatedSignal();
@@ -33,12 +42,14 @@ export class AuthService {
   }
 
   public register(data: RegisterData): Observable<AuthResponse> {
+    localStorage.removeItem(TOKEN_KEY);
     return this.apiService
       .post<RegisterData, AuthResponse>(`${this.PATH}/users`, data)
       .pipe(tap(this.apiService.setAccessToken.bind(this)));
   }
 
   public login(email: string, password: string): Observable<AuthResponse> {
+    localStorage.removeItem(TOKEN_KEY);
     return this.apiService
       .post<
         {
@@ -50,7 +61,12 @@ export class AuthService {
         email,
         password,
       })
-      .pipe(tap(this.apiService.setAccessToken.bind(this)));
+      .pipe(
+        tap((response) => {
+          this.apiService.setAccessToken(response);
+          this.setAuthenticated(true);
+        })
+      );
   }
 
   public logout(): void {

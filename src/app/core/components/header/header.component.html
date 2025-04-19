@@ -20,6 +20,9 @@
           >
           Upload Resume
         </app-button>
+        <div class="auth-status" [class.authenticated]="isAuthenticated">
+          {{ isAuthenticated ? 'User is authenticated' : 'User is not authenticated' }}
+        </div>
         <button class="profile-button">
           <img src="/user-icon.svg" alt="User profile" class="profile-icon">
         </button>
