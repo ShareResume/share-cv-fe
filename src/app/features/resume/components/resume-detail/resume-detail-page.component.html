@@ -1,0 +1,74 @@
+@if (error()) {
+  <div class="error-container">
+    <p class="error-message">{{ error() }}</p>
+    <app-button [colorType]="'primary'" (click)="navigateBack()">
+      Return to Resumes
+    </app-button>
+  </div>
+} @else {
+  <div class="resume-detail-page">
+    <!-- Resume section -->
+    <div class="container">
+      <div class="resume-section">
+        <!-- Resume Header -->
+        <div class="resume-header">
+          <div class="resume-title-container">
+            <h1 class="resume-title">{{ resume()?.jobTitle }}</h1>
+            <div class="resume-meta">
+              <span class="resume-meta-item">Published: {{ resume()?.timestamp | date:'MMM d, y' }}</span>
+              <span class="resume-meta-divider">•</span>
+              <span class="resume-meta-item">Resume Details</span>
+            </div>
+          </div>
+          <div class="resume-actions">
+            <app-button [colorType]="'secondary'" (click)="navigateBack()">
+              <i class="icon-back"></i> Back
+            </app-button>
+            <app-button [colorType]="'primary'">
+              <i class="icon-save"></i> Save
+            </app-button>
+            <app-button [colorType]="'secondary'">
+              <i class="icon-report"></i> Report Issue
+            </app-button>
+          </div>
+        </div>
+
+        <!-- Resume Content -->
+        <div class="resume-content">
+          <div class="pdf-container">
+            @if (resumeUrl()) {
+              <iframe [src]="safePdfUrl()" class="pdf-viewer" title="Resume PDF"></iframe>
+            } @else {
+              <div class="pdf-loading">
+                <p>Resume document is loading or unavailable...</p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Application Status -->
+        <div class="application-status-section">
+          <h2 class="section-title">Application Status</h2>
+          <div class="status-cards">
+            <div class="status-card">
+              <div class="status-info">
+                <span class="company-name">{{ resume()?.company?.name || 'Company' }}</span>
+                <span class="status-label">{{ resume()?.status }}</span>
+              </div>
+              <div class="status-progress">
+                <div class="progress-bar" [style.width.%]="50"></div>
+              </div>
+            </div>
+            
+            @if (!resume()?.company?.name) {
+              <div class="no-applications">No application status available</div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments section -->
+      <app-resume-detail-comments [resumeId]="resume()?.id || null"></app-resume-detail-comments>
+    </div>
+  </div>
+} 

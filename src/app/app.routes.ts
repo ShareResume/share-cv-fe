@@ -32,6 +32,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/resume/resume-page.component').then(m => m.ResumePageComponent),
     //    canActivate: [popupGuard],
       },
+      {
+        path: 'resumes/:id',
+        loadComponent: () => import('./features/resume/components/resume-detail/resume-detail-page.component').then(m => m.ResumeDetailPageComponent),
+      },
     ],
   },
   {

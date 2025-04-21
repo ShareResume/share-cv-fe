@@ -6,12 +6,13 @@ import { InputComponent } from '../../../reusable/input/input.component';
 import { DropdownComponent } from '../../../reusable/dropdown/dropdown.component';
 import { Status } from '../../../reusable/models/dropdown.model';
 import { SpecializationEnum } from '../../enums/specialization.enum';
-import { ResumeService, ResumeFormData } from '../../../features/resume/services/resume.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
 import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
 import { Company } from '@app/core/models/company.model';
+import { UserResumesService } from '@app/features/resume/services/user-resumes.service';
+import { ResumeFormData } from '@app/features/resume/models/resume-form-data';
 
 @Component({
   selector: 'app-upload-resume-popup',
@@ -30,7 +31,7 @@ import { Company } from '@app/core/models/company.model';
 export class UploadResumePopupComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<UploadResumePopupComponent>);
   private fb = inject(FormBuilder);
-  private resumeService = inject(ResumeService);
+  private usersResumeService = inject(UserResumesService);
   private destroyRef = inject(DestroyRef);
 
   resumeForm!: FormGroup;
@@ -93,7 +94,7 @@ export class UploadResumePopupComponent implements OnInit {
         file: this.selectedFile
       };
       
-      this.resumeService.addResume(formData)
+      this.usersResumeService.addResume(formData)
         .pipe(
           takeUntilDestroyed(this.destroyRef),
           finalize(() => this.isSubmitting = false)

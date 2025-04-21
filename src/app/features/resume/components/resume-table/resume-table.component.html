@@ -1,7 +1,7 @@
 <section class="table-section">
   <h2 class="table-title">Recent Submissions</h2>
   
-  <!-- Main table component -->
+  <!-- Main table component with ID column -->
   <app-table 
     [displayedColumns]="displayedColumns"
     [dataSource]="dataSource"
@@ -13,8 +13,8 @@
       company: companyTemplate,
       status: statusTemplate,
       timestamp: timestampTemplate,
-      actions: actionsTemplate
     }"
+    (itemClicked)="viewResume($event)"
     (selectionChange)="onPageChange($event.page)">
   </app-table>
 
@@ -45,14 +45,18 @@
     <span>{{value | date:'MMM d, y'}}</span>
   </ng-template>
   
-  <!-- Actions template -->
-  <ng-template #actionsTemplate let-row="row">
+  <!-- ID template (hidden) -->
+  <ng-template #idTemplate let-value="value">
+    <span>{{value}}</span>
+  </ng-template>
+  
+  <!-- Actions template
+  <ng-template #actionsTemplate let-value="value">
     <div class="actions-cell">
       <app-button 
-        [colorType]="'primary'"
-        (click)="viewResume(row)">
+        [colorType]="'primary'">
         View
       </app-button>
     </div>
-  </ng-template>
+  </ng-template> -->
 </section> 

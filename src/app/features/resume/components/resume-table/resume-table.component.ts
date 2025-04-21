@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@app/reusable/table/table.component';
 import { ChipsComponent } from '@app/reusable/chips/chips.component';
@@ -7,6 +7,8 @@ import { Resume } from '../../models/resume.model';
 import { DatePipe } from '@angular/common';
 import { effect } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { ResumeStateService } from '../../services/resume-state.service';
 
 @Component({
   selector: 'app-resume-table',
@@ -16,11 +18,13 @@ import { PageEvent } from '@angular/material/paginator';
   imports: [
     TableComponent,
     ChipsComponent,
-    ButtonComponent,
     DatePipe,
   ],
 })
 export class ResumeTableComponent {
+  private router = inject(Router);
+  private resumeStateService = inject(ResumeStateService);
+
   resumes = input<Resume[]>([]);
   isLoading = input<boolean>(false);
   totalCount = input<number>(0);
@@ -50,7 +54,17 @@ export class ResumeTableComponent {
   }
   
   viewResume(resume: Resume): void {
-    console.log('View resume:', resume);
+    // Add null check to prevent errors
+    if (!resume) {
+      console.error('Resume is undefined');
+      return;
+    }
+    
+    // Store the selected resume in the shared service
+    this.resumeStateService.setSelectedResume(resume);
+    
+    // Navigate to the detail page
+    this.router.navigate(['/resumes', resume.id]);
   }
   
   onPageChange(event: PageEvent): void {
