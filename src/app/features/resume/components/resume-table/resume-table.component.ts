@@ -10,6 +10,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ResumeStateService } from '../../services/resume-state.service';
 
+interface ResumeTableItem extends Resume {
+  statusObject: Resume; 
+}
+
 @Component({
   selector: 'app-resume-table',
   templateUrl: './resume-table.component.html',
@@ -17,7 +21,6 @@ import { ResumeStateService } from '../../services/resume-state.service';
   standalone: true,
   imports: [
     TableComponent,
-    ChipsComponent,
     DatePipe,
   ],
 })
@@ -38,15 +41,15 @@ export class ResumeTableComponent {
   @Output() pageChanged = new EventEmitter<PageEvent>();
   
   // Table data source as a regular property, not a computed signal
-  dataSource = new MatTableDataSource<Resume>([]);
+  dataSource = new MatTableDataSource<ResumeTableItem>([]);
   
   // Table columns configuration
   displayedColumns: Record<string, string> = {
     company: 'Company',
     speciality: 'Specialization',
     yearsOfExperience: 'Years of Experience',
-    status: 'Status',
-    timestamp: 'Date',
+    statusObject: 'Status',
+    date: 'Date',
   };
 
   constructor() {
@@ -54,7 +57,20 @@ export class ResumeTableComponent {
     effect(() => {
       const data = this.resumes();
       console.log('[ResumeTableComponent] Updating data source with', data.length, 'items');
-      this.dataSource.data = data;
+      
+      // Create proper ResumeTableItem objects
+      this.dataSource.data = data.map(resume => {
+        // Create a new object that has all Resume properties and methods
+        const item = Object.create(Object.getPrototypeOf(resume));
+        
+        // Copy all properties from the original resume
+        Object.assign(item, resume);
+        
+        // Add the statusObject property
+        item.statusObject = resume;
+        
+        return item;
+      });
       
       // Wait for all data to be loaded and allow a little delay
       // before enabling page events to avoid initialization loop
@@ -100,5 +116,17 @@ export class ResumeTableComponent {
     } else {
       console.log('[ResumeTableComponent] Skipping redundant page change');
     }
+  }
+  
+  /**
+   * Get the status display text for a resume
+   */
+  getStatusText(resume: Resume | null): string {
+    if (!resume) {
+      return 'N/A';
+    }
+    
+    const counts = resume.getHrScreeningStatusCounts();
+    return `Passed: ${counts.passed} / Not passed: ${counts.notPassed}`;
   }
 }

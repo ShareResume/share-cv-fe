@@ -26,7 +26,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   // Mock the resumes API response with pagination
-  if (req.url.includes('/api/resumes')) {
+  if (req.url.includes('/api/public-users-resumes')) {
     // Get pagination parameters from query string
     const url = new URL(req.url);
     const page = parseInt(url.searchParams.get('page') || '1', 10);
@@ -50,8 +50,9 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     }
 
     if (status) {
-      filteredData = filteredData.filter(
-        item => item.isHrScreeningPassed === (status.toLowerCase() === 'accepted'),
+      const statusIsAccepted = status.toLowerCase() === 'accepted';
+      filteredData = filteredData.filter(item =>
+        item.companies.some(c => c.isHrScreeningPassed === statusIsAccepted)
       );
     }
 
@@ -189,7 +190,6 @@ function getMockResumeData(): ResumeData[] {
     const authorId = i + 1;
     const companyIndex = i % companies.length;
     const specializationIndex = i % specializations.length;
-    const isHrScreeningPassed = i % 2 === 0; // Alternate between passed and not passed
     const yoe = Math.floor(Math.random() * 10) + 1; // 1-10 years
 
     // Generate a random date within the last 30 days
@@ -201,7 +201,12 @@ function getMockResumeData(): ResumeData[] {
     const resumeCompanies = [];
     for (let j = 0; j < numCompanies; j++) {
       const randomCompanyIndex = (companyIndex + j) % companies.length;
-      resumeCompanies.push(companies[randomCompanyIndex]);
+      const isHrScreeningPassed = Math.random() > 0.5; // Random boolean
+      
+      resumeCompanies.push({
+        ...companies[randomCompanyIndex],
+        isHrScreeningPassed
+      });
     }
 
     return {
@@ -213,7 +218,6 @@ function getMockResumeData(): ResumeData[] {
       },
       companies: resumeCompanies,
       speciality: specializations[specializationIndex],
-      isHrScreeningPassed: isHrScreeningPassed,
       yearsOfExperience: yoe,
       date: date.toISOString().split('T')[0], // YYYY-MM-DD format
     };

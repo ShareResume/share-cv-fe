@@ -10,8 +10,8 @@
     [pageIndex]="pageIndex()"
     [customTemplate]="{
       company: companyTemplate,
-      status: statusTemplate,
-      timestamp: timestampTemplate,
+      statusObject: statusTemplate,
+      date: dateTemplate,
       speciality: specialityTemplate,
       yearsOfExperience: yearsOfExperienceTemplate
     }"
@@ -44,13 +44,13 @@
     <span>{{value || 'N/A'}} {{value === 1 ? 'year' : 'years'}}</span>
   </ng-template>
   
-  <!-- Status template with chip component -->
+  <!-- Status template with status text -->
   <ng-template #statusTemplate let-value="value">
-    <app-chips [status]="value ?? ''"></app-chips>
+    <span class="status-text">{{ getStatusText(value) }}</span>
   </ng-template>
   
   <!-- Date template -->
-  <ng-template #timestampTemplate let-value="value">
+  <ng-template #dateTemplate let-value="value">
     <span>{{value | date:'MMM d, y'}}</span>
   </ng-template>
   

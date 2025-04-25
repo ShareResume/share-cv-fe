@@ -2,17 +2,20 @@ export interface CompanyData {
   id: string;
   name: string;
   logoUrl: string;
+  isHrScreeningPassed?: boolean;
 }
 
 export class Company {
   id: string;
   name: string;
   logoUrl: string;
+  isHrScreeningPassed: boolean;
 
-  constructor(id: string, name: string, logoUrl: string) {
+  constructor(id: string, name: string, logoUrl: string, isHrScreeningPassed: boolean = false) {
     this.id = id;
     this.name = name;
     this.logoUrl = logoUrl;
+    this.isHrScreeningPassed = isHrScreeningPassed;
   }
 
   /**
@@ -25,6 +28,7 @@ export class Company {
       data.id || '',
       data.name || '',
       data.logoUrl || `assets/images/logos/${data.name?.toLowerCase() || 'default'}.png`,
+      data.isHrScreeningPassed || false
     );
   }
 
@@ -47,6 +51,7 @@ export class Company {
       id: this.id,
       name: this.name,
       logoUrl: this.logoUrl,
+      isHrScreeningPassed: this.isHrScreeningPassed
     };
   }
 } 

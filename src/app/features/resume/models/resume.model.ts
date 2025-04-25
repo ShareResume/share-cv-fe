@@ -13,7 +13,6 @@ export interface ResumeData {
   document: DocumentData;
   companies: CompanyData[];
   speciality: string;
-  isHrScreeningPassed: boolean;
   yearsOfExperience: number;
   date: string;
 }
@@ -27,7 +26,6 @@ export class Resume {
   };
   companies: Company[];
   speciality: SpecializationEnum;
-  isHrScreeningPassed: boolean;
   yearsOfExperience: number;
   date: Date;
 
@@ -40,7 +38,6 @@ export class Resume {
     },
     companies: Company[],
     speciality: SpecializationEnum,
-    isHrScreeningPassed: boolean,
     yearsOfExperience: number,
     date: Date,
   ) {
@@ -48,7 +45,6 @@ export class Resume {
     this.document = document;
     this.companies = companies;
     this.speciality = speciality;
-    this.isHrScreeningPassed = isHrScreeningPassed;
     this.yearsOfExperience = yearsOfExperience;
     this.date = date;
   }
@@ -66,7 +62,6 @@ export class Resume {
         ? data.companies.map(company => Company.fromJson(company))
         : [],
       (data.speciality as SpecializationEnum) || SpecializationEnum.FRONTEND,
-      data.isHrScreeningPassed || false,
       data.yearsOfExperience || 0,
       data.date ? new Date(data.date) : new Date(),
     );
@@ -92,9 +87,17 @@ export class Resume {
       document: this.document,
       companies: this.companies.map(company => company.toJson()),
       speciality: this.speciality,
-      isHrScreeningPassed: this.isHrScreeningPassed,
       yearsOfExperience: this.yearsOfExperience,
       date: this.date.toISOString().split('T')[0],
     };
+  }
+
+  /**
+   * Get HR screening status counts
+   */
+  getHrScreeningStatusCounts(): { passed: number; notPassed: number } {
+    const passed = this.companies.filter(company => company.isHrScreeningPassed).length;
+    const notPassed = this.companies.length - passed;
+    return { passed, notPassed };
   }
 }

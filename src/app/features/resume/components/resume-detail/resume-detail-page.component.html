@@ -55,10 +55,10 @@
                 <div class="status-card">
                   <div class="status-info">
                     <span class="company-name">{{ company.name }}</span>
-                    <span class="status-label">{{ resume()!.isHrScreeningPassed ? 'Passed' : 'In Review' }}</span>
+                    <span class="status-label">{{ company.isHrScreeningPassed ? 'Passed' : 'Rejected' }}</span>
                   </div>
                   <div class="status-progress">
-                    <div class="progress-bar" [style.width.%]="resume()!.isHrScreeningPassed ? 100 : 50"></div>
+                    <div class="progress-bar" [style.width.%]="company.isHrScreeningPassed ? 100 : 50"></div>
                   </div>
                 </div>
               }

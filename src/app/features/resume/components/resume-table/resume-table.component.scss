@@ -57,6 +57,13 @@
   }
 }
 
+.status-text {
+  display: inline-block;
+  font-size: $resume-text-size;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
 .actions-cell {
   display: flex;
   justify-content: flex-start;
