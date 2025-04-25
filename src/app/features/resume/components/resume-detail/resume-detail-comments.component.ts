@@ -1,10 +1,11 @@
 import { Component, DestroyRef, Input, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Comment, CommentCreateRequest, CommentsService } from '../../services/comments.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { ButtonComponent } from '../../../../reusable/button/button.component';
+import { CommentsService } from '../../services/comments.service';
+import { Comment, CommentCreateRequest, CommentVoteRequest } from '../../models/comment.model';
 
 interface CommentForm {
   text: FormControl<string>;
@@ -153,7 +154,7 @@ export class ResumeDetailCommentsComponent implements OnChanges {
     this.comments.update(comments => {
       return [...comments].sort((a, b) => {
         if (this.selectedSort() === 'Most Helpful') {
-          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+          return b.reactionsRate - a.reactionsRate;
         } else if (this.selectedSort() === 'Newest') {
           return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         } else { // Oldest

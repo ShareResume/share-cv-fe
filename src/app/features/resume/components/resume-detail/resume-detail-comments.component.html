@@ -37,13 +37,14 @@
             </div>
             <div class="comment-text">{{ comment.text }}</div>
             <div class="comment-actions">
-              <button class="vote-button" [class.active]="comment.userVoteState === 'UP'" (click)="voteOnComment(comment, 'UP')">
+              <button class="vote-button up" [class.active]="comment.userVoteState === 'UP'" (click)="voteOnComment(comment, 'UP')">
                 <i class="icon-upvote"></i>
-                <span>{{ comment.upvotes }}</span>
               </button>
-              <button class="vote-button" [class.active]="comment.userVoteState === 'DOWN'" (click)="voteOnComment(comment, 'DOWN')">
+              <span class="reaction-count" [class.positive]="comment.reactionsRate > 0" [class.negative]="comment.reactionsRate < 0">
+                {{ comment.reactionsRate }}
+              </span>
+              <button class="vote-button down" [class.active]="comment.userVoteState === 'DOWN'" (click)="voteOnComment(comment, 'DOWN')">
                 <i class="icon-downvote"></i>
-                <span>{{ comment.downvotes }}</span>
               </button>
               <button class="reply-button" (click)="replyToComment(comment)">Reply</button>
             </div>
@@ -65,13 +66,14 @@
                   </div>
                   <div class="comment-text">{{ reply.text }}</div>
                   <div class="comment-actions">
-                    <button class="vote-button" [class.active]="reply.userVoteState === 'UP'" (click)="voteOnComment(reply, 'UP')">
+                    <button class="vote-button up" [class.active]="reply.userVoteState === 'UP'" (click)="voteOnComment(reply, 'UP')">
                       <i class="icon-upvote"></i>
-                      <span>{{ reply.upvotes }}</span>
                     </button>
-                    <button class="vote-button" [class.active]="reply.userVoteState === 'DOWN'" (click)="voteOnComment(reply, 'DOWN')">
+                    <span class="reaction-count" [class.positive]="reply.reactionsRate > 0" [class.negative]="reply.reactionsRate < 0">
+                      {{ reply.reactionsRate }}
+                    </span>
+                    <button class="vote-button down" [class.active]="reply.userVoteState === 'DOWN'" (click)="voteOnComment(reply, 'DOWN')">
                       <i class="icon-downvote"></i>
-                      <span>{{ reply.downvotes }}</span>
                     </button>
                   </div>
                 </div>

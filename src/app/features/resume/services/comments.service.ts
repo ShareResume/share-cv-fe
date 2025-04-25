@@ -2,36 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-
-export interface Comment {
-  id: string;
-  resumeId: string;
-  parentCommentId?: string;
-  text: string;
-  authorName: string;
-  authorAvatarUrl: string;
-  createdAt: string;
-  upvotes: number;
-  downvotes: number;
-  userVoteState?: 'UP' | 'DOWN' | null;
-  replies?: Comment[];
-}
-
-export interface CommentCreateRequest {
-  resumeId: string;
-  parentCommentId?: string;
-  text: string;
-}
-
-export interface CommentVoteRequest {
-  commentId: string;
-  voteState: 'UP' | 'DOWN';
-}
-
-export interface CommentsResponse {
-  data: Comment[];
-  totalCount: number;
-}
+import { Comment, CommentCreateRequest, CommentsResponse, CommentVoteRequest } from '../models/comment.model';
 
 @Injectable({
   providedIn: 'root'

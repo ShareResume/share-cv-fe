@@ -10,6 +10,7 @@ $gray-500: $color-gray-500;
 $gray-600: $color-gray-600;
 $gray-900: #1a1a1a;
 $red-600: $color-error-light;
+$green-600: $color-success;
 
 .comments-section {
   background-color: $white;
@@ -118,7 +119,8 @@ $red-600: $color-error-light;
 
 .comment-actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  align-items: center;
 }
 
 .vote-button, .reply-button {
@@ -143,7 +145,31 @@ $red-600: $color-error-light;
   }
 
   i {
-    margin-right: 4px;
+    margin-right: 0;
+  }
+}
+
+.vote-button.up.active {
+  color: $green-600;
+}
+
+.vote-button.down.active {
+  color: $red-600;
+}
+
+.reaction-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray-600;
+  min-width: 24px;
+  text-align: center;
+  
+  &.positive {
+    color: $green-600;
+  }
+  
+  &.negative {
+    color: $red-600;
   }
 }
 
