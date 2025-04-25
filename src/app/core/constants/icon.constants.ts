@@ -4,4 +4,6 @@ export const icons: Record<string, string> = {
   eye: 'assets/icons/eye.svg',
   arrowUp: 'assets/icons/arrow-up.svg',
   arrowDown: 'assets/icons/arrow-down.svg',
+  trash: 'assets/icons/trash.svg',
+  close: 'assets/icons/close.svg',
 };

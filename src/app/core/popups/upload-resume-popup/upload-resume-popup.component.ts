@@ -1,6 +1,6 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../../reusable/input/input.component';
 import { DropdownComponent } from '../../../reusable/dropdown/dropdown.component';
@@ -12,7 +12,14 @@ import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
 import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
 import { Company } from '@app/core/models/company.model';
 import { UserResumesService } from '@app/features/resume/services/user-resumes.service';
-import { ResumeFormData } from '@app/features/resume/models/resume-form-data';
+import { ResumeFormData, CompanyStatusInfo } from '@app/features/resume/models/resume-form-data';
+import { IconComponent } from '@app/reusable/icon/icon.component';
+import { ButtonComponent } from '@app/reusable/button/button.component';
+
+interface CompanyStatus {
+  company: Company | null;
+  status: string;
+}
 
 @Component({
   selector: 'app-upload-resume-popup',
@@ -25,7 +32,9 @@ import { ResumeFormData } from '@app/features/resume/models/resume-form-data';
     ReactiveFormsModule,
     InputComponent,
     DropdownComponent,
-    CompanyAutocompleteComponent
+    CompanyAutocompleteComponent,
+    IconComponent,
+    ButtonComponent
   ]
 })
 export class UploadResumePopupComponent implements OnInit {
@@ -51,11 +60,33 @@ export class UploadResumePopupComponent implements OnInit {
 
   private initForm(): void {
     this.resumeForm = this.fb.group({
-      company: [null, Validators.required],
+      companiesData: this.fb.array([
+        this.createCompanyStatusGroup()
+      ]),
       yearsOfExperience: ['', [Validators.required, Validators.min(0)]],
-      status: ['', Validators.required],
       specialization: ['', Validators.required]
     });
+  }
+
+  private createCompanyStatusGroup(): FormGroup {
+    return this.fb.group({
+      company: [null, Validators.required],
+      status: ['', Validators.required]
+    });
+  }
+
+  get companiesArray(): FormArray {
+    return this.resumeForm.get('companiesData') as FormArray;
+  }
+
+  addCompany(): void {
+    this.companiesArray.push(this.createCompanyStatusGroup());
+  }
+
+  removeCompany(index: number): void {
+    if (this.companiesArray.length > 1) {
+      this.companiesArray.removeAt(index);
+    }
   }
 
   private loadStatusOptions(): void {
@@ -84,12 +115,17 @@ export class UploadResumePopupComponent implements OnInit {
       this.isSubmitting = true;
       
       const formValues = this.resumeForm.value;
-      const selectedCompany = formValues.company as Company;
+      const companiesData = formValues.companiesData as CompanyStatus[];
+      
+      // Map company data to the format expected by the service
+      const companiesInfo: CompanyStatusInfo[] = companiesData.map(item => ({
+        companyId: item.company!.id,
+        status: item.status
+      }));
       
       const formData: ResumeFormData = {
-        companyName: selectedCompany.id, // Use company ID from the selected company
+        companies: companiesInfo,
         yearsOfExperience: formValues.yearsOfExperience,
-        status: formValues.status,
         specialization: formValues.specialization,
         file: this.selectedFile
       };

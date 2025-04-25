@@ -45,12 +45,14 @@ $color-error: #A94442;
 $color-error-light: #FF5353;
 $color-success: #4CAF50;
 $color-info: #4C54AF;
+$color-text-danger: $color-error-light;
 
 // Feedback Colors
 $color-text-primary: $color-black;
 $color-text-secondary: #5E5F5F;
 $color-text-tertiary: #767777;
 $color-text-disabled: #C8C9C9;
+$color-background-light: $color-white;
 
 /*=============================================
 =                  BUTTONS                    =
@@ -60,6 +62,7 @@ $button-bg-primary: $color-black;
 $button-bg-primary-hover: $color-gray-800;
 $button-bg-primary-active: $color-black;
 $button-text-primary: $color-white;
+$button-text-default: $color-white;
 
 // Secondary Button
 $button-bg-secondary: $color-gray-250;

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { ResumeFormData } from '../models/resume-form-data';
+import { ResumeFormData, CompanyStatusInfo } from '../models/resume-form-data';
 import { Observable } from 'rxjs';
-import { CreateResumeModel } from '../models/create-resume.model';
+import { CreateResumeModel, CompanyResumeInfo } from '../models/create-resume.model';
 import { ApiService } from '@app/core/services/api.service';
 
 @Injectable({
@@ -13,13 +13,18 @@ export class UserResumesService {
   constructor() {}
 
   /**
-   * Add a new resume with file attachment
+   * Add a new resume with file attachment and multiple companies
    */
   addResume(resumeData: ResumeFormData): Observable<any> {
+    // Map each company and its status to the API format
+    const companiesInfo: CompanyResumeInfo[] = resumeData.companies.map(company => ({
+      companyId: company.companyId,
+      isHrScreeningPassed: company.status === 'Approved'
+    }));
+
     // Transform form data to match API requirements
     const apiRequest: CreateResumeModel = {
-      isHrScreeningPassed: resumeData.status === 'Approved',
-      companyId: resumeData.companyName,
+      companies: companiesInfo,
       yearsOfExperience: resumeData.yearsOfExperience,
       speciality: resumeData.specialization,
       document: resumeData.file,

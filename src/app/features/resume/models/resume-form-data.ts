@@ -1,10 +1,11 @@
-export class ResumeFormData {
+export interface CompanyStatusInfo {
+  companyId: string | number;
+  status: string;
 }
-// Interface for the form data received from the component
+
 export interface ResumeFormData {
-    companyName: string;
-    yearsOfExperience: number;
-    status: string;
-    specialization: string;
-    file: File;
-  }
+  companies: CompanyStatusInfo[];
+  yearsOfExperience: number;
+  specialization: string;
+  file: File;
+}

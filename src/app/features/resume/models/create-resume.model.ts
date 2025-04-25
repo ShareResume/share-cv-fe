@@ -1,9 +1,13 @@
 /**
  * Interface representing the API request structure for creating a new resume
  */
-export interface CreateResumeModel {
+export interface CompanyResumeInfo {
+  companyId: string | number;
   isHrScreeningPassed: boolean;
-  companyId: string;
+}
+
+export interface CreateResumeModel {
+  companies: CompanyResumeInfo[];
   yearsOfExperience: number;
   speciality: string;
   document: File;

@@ -1,179 +1,117 @@
 @use 'variables' as *;
 
-.popup-container {
-  display: flex;
-  flex-direction: column;
-  width: 600px;
-  max-width: 90vw;
-  background-color: $color-white;
-  border-radius: $resume-border-radius;
-  box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1), 0px 8px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.popup-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $spacing-lg;
-  border-bottom: 1px solid $color-gray-500;
-}
-
-.popup-title {
-  font-family: $font-family-secondary;
-  font-size: 20px;
-  font-weight: $font-weight-regular;
-  margin: 0;
-}
-
-.close-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  
-  .close-icon {
-    font-size: 24px;
-    color: $color-gray-700;
-    line-height: 1;
-  }
-}
-
-.popup-content {
-  padding: $spacing-lg;
-  overflow-y: auto;
-  max-height: 70vh;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: $spacing-md;
-}
-
-.form-field {
+.upload-resume-popup {
+  max-width: 600px;
   width: 100%;
-}
+  padding: $spacing-lg;
+  background-color: $color-background-light;
+  border-radius: $resume-border-radius;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 
-.document-upload {
-  margin-top: $spacing-sm;
-}
+  &__header {
+    margin-bottom: $spacing-lg;
+    
+    h2 {
+      font-family: $font-family-primary;
+      font-size: 24px;
+      color: $color-text-primary;
+      margin: 0;
+    }
+  }
 
-.upload-label {
-  display: block;
-  font-family: $font-family-secondary;
-  font-size: 16px;
-  font-weight: $font-weight-regular;
-  margin-bottom: $spacing-xs;
-}
-
-.upload-container {
-  border: 1px solid $input-border-color;
-  border-radius: 6px;
-  overflow: hidden;
-  
-  &.has-file {
-    .upload-area {
-      border-top: 1px solid $color-gray-400;
+  &__content {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
     }
   }
 }
 
-.selected-file {
+.form-group {
+  width: 100%;
+}
+
+.file-upload-section {
   display: flex;
-  align-items: center;
-  padding: $spacing-sm $spacing-md;
+  flex-direction: column;
+  gap: $spacing-xs;
   
-  input[type="checkbox"] {
-    margin-right: $spacing-sm;
-  }
-  
-  .file-name {
+  label {
     font-family: $font-family-secondary;
     font-size: 16px;
     color: $color-text-primary;
   }
 }
 
-.upload-area {
+.file-upload {
+  border: 1px dashed $color-gray-400;
+  border-radius: $spacing-xs;
   padding: $spacing-md;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px dashed $color-gray-400;
-  border-radius: 6px;
-  margin: $spacing-sm;
+  background-color: $color-gray-100;
+  
+  input[type="file"] {
+    width: 100%;
+  }
 }
 
-.custom-file-upload {
+.selected-file {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
   
-  .upload-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 24px;
-    color: $color-gray-700;
-    margin-right: $spacing-xs;
-    font-size: 20px;
-  }
-  
-  .upload-text {
+  span {
     font-family: $font-family-secondary;
-    font-size: 14px;
-    color: $color-gray-600;
+    color: $color-text-secondary;
   }
 }
 
-.popup-footer {
+.multiple-companies-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h3 {
+      font-family: $font-family-primary;
+      font-size: 18px;
+      color: $color-text-primary;
+      margin: 0;
+    }
+  }
+  
+  .company-status-group {
+    display: flex;
+    gap: $spacing-md;
+    align-items: flex-start;
+    padding: $spacing-md;
+    border: 1px solid $color-gray-300;
+    border-radius: $spacing-xs;
+    background-color: $color-gray-50;
+    
+    .company-status-fields {
+      display: flex;
+      gap: $spacing-md;
+      flex: 1;
+      
+      .company-field {
+        flex: 2;
+      }
+      
+      .status-field {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.form-actions {
   display: flex;
   justify-content: flex-end;
-  padding: $spacing-lg;
-  border-top: 1px solid $color-gray-500;
   gap: $spacing-md;
-}
-
-.cancel-button {
-  padding: $spacing-sm $spacing-lg;
-  background-color: transparent;
-  border: 1px solid $color-gray-400;
-  border-radius: 6px;
-  font-family: $font-family-secondary;
-  font-size: 16px;
-  color: $color-text-primary;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: $color-gray-200;
-  }
-}
-
-.save-button {
-  padding: $spacing-sm $spacing-lg;
-  background-color: $color-black;
-  color: $color-white;
-  border: none;
-  border-radius: 6px;
-  font-family: $font-family-secondary;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: $color-gray-800;
-  }
-  
-  &:disabled {
-    background-color: $color-gray-400;
-    cursor: not-allowed;
-  }
+  margin-top: $spacing-xs;
 } 

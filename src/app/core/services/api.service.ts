@@ -79,6 +79,30 @@ export class ApiService {
         return;
       }
       
+      // Handle arrays - handle each item as its own entry
+      if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          if (typeof item === 'object' && item !== null && !(item instanceof File) && !(item instanceof Blob)) {
+            // Handle nested objects within arrays
+            Object.entries(item).forEach(([nestedKey, nestedValue]) => {
+              formData.append(`${key}[${index}][${nestedKey}]`, nestedValue?.toString() || '');
+            });
+          } else {
+            // Handle primitive values within arrays
+            formData.append(`${key}[${index}]`, item?.toString() || '');
+          }
+        });
+        return;
+      }
+      
+      // Handle objects (but not File/Blob)
+      if (typeof value === 'object' && value !== null && !(value instanceof File) && !(value instanceof Blob)) {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          formData.append(`${key}[${nestedKey}]`, nestedValue?.toString() || '');
+        });
+        return;
+      }
+      
       // Handle booleans - convert to string
       if (typeof value === 'boolean') {
         formData.append(key, value.toString());
