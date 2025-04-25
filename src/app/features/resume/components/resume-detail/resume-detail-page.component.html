@@ -58,7 +58,10 @@
                     <span class="status-label">{{ company.isHrScreeningPassed ? 'Passed' : 'Rejected' }}</span>
                   </div>
                   <div class="status-progress">
-                    <div class="progress-bar" [style.width.%]="company.isHrScreeningPassed ? 100 : 50"></div>
+                    <div class="progress-bar" 
+                         [class.rejected]="!company.isHrScreeningPassed"
+                         [class.passed]="company.isHrScreeningPassed"
+                         [style.width.%]="company.isHrScreeningPassed ? 100 : 50"></div>
                   </div>
                 </div>
               }

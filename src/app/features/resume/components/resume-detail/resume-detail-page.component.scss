@@ -170,6 +170,14 @@ $gray-900: #1a1a1a;
   height: 100%;
   background-color: $gray-800;
   border-radius: 9999px;
+  
+  &.rejected {
+    background-color: $color-error;
+  }
+  
+  &.passed {
+    background-color: $color-success;
+  }
 }
 
 .no-applications {
