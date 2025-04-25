@@ -9,30 +9,39 @@
     [pageSize]="pageSize()"
     [pageIndex]="pageIndex()"
     [customTemplate]="{
-      author: authorTemplate,
       company: companyTemplate,
       status: statusTemplate,
       timestamp: timestampTemplate,
+      speciality: specialityTemplate,
+      yearsOfExperience: yearsOfExperienceTemplate
     }"
     (itemClicked)="viewResume($event)"
-    (selectionChange)="onPageChange($event.page)">
+    (selectionChange)="$event.page ? onPageChange($event.page) : null">
   </app-table>
 
   <!-- Custom templates for column cells -->
   
-  <!-- Author template -->
-  <ng-template #authorTemplate let-value="value">
-    <div class="author-cell">
-      <img class="author-avatar" [src]="value.avatarUrl" alt="Author Avatar" />
-    </div>
-  </ng-template>
-  
   <!-- Company template -->
   <ng-template #companyTemplate let-value="value">
     <div class="company-cell">
-      <img class="company-logo" [src]="value.logoUrl" alt="Company Logo" />
-      <span class="company-name">{{value.name}}</span>
+      @if (value) {
+        <img class="company-logo" [src]="value.logoUrl" alt="Company Logo" />
+        <span class="company-name">{{value.name}}</span>
+      } @else {
+        <div class="company-logo placeholder-logo"></div>
+        <span class="company-name">Unknown</span>
+      }
     </div>
+  </ng-template>
+  
+  <!-- Speciality template -->
+  <ng-template #specialityTemplate let-value="value">
+    <span>{{value || 'Not specified'}}</span>
+  </ng-template>
+  
+  <!-- Years of Experience template -->
+  <ng-template #yearsOfExperienceTemplate let-value="value">
+    <span>{{value || 'N/A'}} {{value === 1 ? 'year' : 'years'}}</span>
   </ng-template>
   
   <!-- Status template with chip component -->

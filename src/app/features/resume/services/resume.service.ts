@@ -14,7 +14,7 @@ import { ResumeResponse } from '../models/resume-response.model';
 export class ResumeService {
   private apiService = inject(ApiService);
   private httpClient = inject(HttpClient);
-  private readonly apiEndpoint = '/users-resumes';
+  private readonly apiEndpoint = '/public-users-resumes';
   private readonly baseUrl = environment.apiBaseUrl;
 
   /**

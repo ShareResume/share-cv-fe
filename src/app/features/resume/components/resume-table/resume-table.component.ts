@@ -5,7 +5,7 @@ import { ChipsComponent } from '@app/reusable/chips/chips.component';
 import { ButtonComponent } from '@app/reusable/button/button.component';
 import { Resume } from '../../models/resume.model';
 import { DatePipe } from '@angular/common';
-import { effect } from '@angular/core';
+import { effect, signal } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ResumeStateService } from '../../services/resume-state.service';
@@ -24,7 +24,11 @@ import { ResumeStateService } from '../../services/resume-state.service';
 export class ResumeTableComponent {
   private router = inject(Router);
   private resumeStateService = inject(ResumeStateService);
+  
+  // Signal to track if we should process page events
+  private enablePageEvents = signal<boolean>(false);
 
+  // Accept signal values from parent component
   resumes = input<Resume[]>([]);
   isLoading = input<boolean>(false);
   totalCount = input<number>(0);
@@ -38,18 +42,29 @@ export class ResumeTableComponent {
   
   // Table columns configuration
   displayedColumns: Record<string, string> = {
-    author: 'Author',
     company: 'Company',
-    jobTitle: 'Job Title',
+    speciality: 'Specialization',
+    yearsOfExperience: 'Years of Experience',
     status: 'Status',
     timestamp: 'Date',
-    actions: 'Actions',
   };
 
   constructor() {
     // Set up effect to update the data source when resumes change
     effect(() => {
-      this.dataSource.data = this.resumes();
+      const data = this.resumes();
+      console.log('[ResumeTableComponent] Updating data source with', data.length, 'items');
+      this.dataSource.data = data;
+      
+      // Wait for all data to be loaded and allow a little delay
+      // before enabling page events to avoid initialization loop
+      if (data.length > 0 && !this.enablePageEvents()) {
+        console.log('[ResumeTableComponent] Data loaded, enabling page events after delay');
+        setTimeout(() => {
+          console.log('[ResumeTableComponent] Page events now enabled');
+          this.enablePageEvents.set(true);
+        }, 500);
+      }
     });
   }
   
@@ -68,6 +83,22 @@ export class ResumeTableComponent {
   }
   
   onPageChange(event: PageEvent): void {
-    this.pageChanged.emit(event);
+    // Completely block page change events during initialization
+    if (!this.enablePageEvents()) {
+      console.log('[ResumeTableComponent] Page events disabled, ignoring event');
+      return;
+    }
+    
+    // Additional check to prevent redundant events
+    const isRedundantEvent = 
+      event.pageIndex === this.pageIndex() && 
+      event.pageSize === this.pageSize();
+      
+    if (!isRedundantEvent) {
+      console.log('[ResumeTableComponent] Emitting genuine page change:', event);
+      this.pageChanged.emit(event);
+    } else {
+      console.log('[ResumeTableComponent] Skipping redundant page change');
+    }
   }
-} 
+}

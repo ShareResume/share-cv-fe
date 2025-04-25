@@ -1,13 +1,16 @@
 export interface CompanyData {
+  id: string;
   name: string;
   logoUrl: string;
 }
 
 export class Company {
+  id: string;
   name: string;
   logoUrl: string;
 
-  constructor(name: string, logoUrl: string) {
+  constructor(id: string, name: string, logoUrl: string) {
+    this.id = id;
     this.name = name;
     this.logoUrl = logoUrl;
   }
@@ -19,6 +22,7 @@ export class Company {
     const data = json as CompanyData;
     
     return new Company(
+      data.id || '',
       data.name || '',
       data.logoUrl || `assets/images/logos/${data.name?.toLowerCase() || 'default'}.png`,
     );
@@ -40,6 +44,7 @@ export class Company {
    */
   toJson(): CompanyData {
     return {
+      id: this.id,
       name: this.name,
       logoUrl: this.logoUrl,
     };
