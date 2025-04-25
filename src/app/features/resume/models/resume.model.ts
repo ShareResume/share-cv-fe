@@ -2,41 +2,51 @@ import { User, UserData } from './user.model';
 import { Company, CompanyData } from './company.model';
 import { SpecializationEnum } from './specialization.enum';
 
+export interface DocumentData {
+  accessType: string;
+  url: string;
+  name: string;
+}
+
 export interface ResumeData {
   id: string;
-  author: UserData;
-  company: CompanyData;
-  jobTitle: string;
-  status: string;
+  document: DocumentData;
+  companies: CompanyData[];
+  speciality: string;
   yearsOfExperience: number;
-  timestamp: string | Date;
+  date: string;
 }
 
 export class Resume {
   id: string;
-  author: User;
-  company: Company;
-  jobTitle: SpecializationEnum;
-  status: 'Pending' | 'Accepted' | 'Rejected';
+  document: {
+    accessType: string;
+    url: string;
+    name: string;
+  };
+  companies: Company[];
+  speciality: SpecializationEnum;
   yearsOfExperience: number;
-  timestamp: Date;
+  date: Date;
 
   constructor(
     id: string,
-    author: User,
-    company: Company,
-    jobTitle: SpecializationEnum,
-    status: 'Pending' | 'Accepted' | 'Rejected',
+    document: {
+      accessType: string;
+      url: string;
+      name: string;
+    },
+    companies: Company[],
+    speciality: SpecializationEnum,
     yearsOfExperience: number,
-    timestamp: Date,
+    date: Date,
   ) {
     this.id = id;
-    this.author = author;
-    this.company = company;
-    this.jobTitle = jobTitle;
-    this.status = status;
+    this.document = document;
+    this.companies = companies;
+    this.speciality = speciality;
     this.yearsOfExperience = yearsOfExperience;
-    this.timestamp = timestamp;
+    this.date = date;
   }
 
   /**
@@ -44,15 +54,16 @@ export class Resume {
    */
   static fromJson(json: unknown): Resume {
     const data = json as ResumeData;
-    
+
     return new Resume(
       data.id || '',
-      User.fromJson(data.author),
-      Company.fromJson(data.company),
-      data.jobTitle as SpecializationEnum || SpecializationEnum.FRONTEND,
-      (data.status as 'Pending' | 'Accepted' | 'Rejected') || 'Pending',
+      data.document || { accessType: '', url: '', name: '' },
+      data.companies
+        ? data.companies.map(company => Company.fromJson(company))
+        : [],
+      (data.speciality as SpecializationEnum) || SpecializationEnum.FRONTEND,
       data.yearsOfExperience || 0,
-      data.timestamp ? new Date(data.timestamp) : new Date(),
+      data.date ? new Date(data.date) : new Date(),
     );
   }
 
@@ -73,12 +84,20 @@ export class Resume {
   toJson(): ResumeData {
     return {
       id: this.id,
-      author: this.author.toJson(),
-      company: this.company.toJson(),
-      jobTitle: this.jobTitle,
-      status: this.status,
+      document: this.document,
+      companies: this.companies.map(company => company.toJson()),
+      speciality: this.speciality,
       yearsOfExperience: this.yearsOfExperience,
-      timestamp: this.timestamp.toISOString(),
+      date: this.date.toISOString().split('T')[0],
     };
   }
-} 
+
+  /**
+   * Get HR screening status counts
+   */
+  getHrScreeningStatusCounts(): { passed: number; notPassed: number } {
+    const passed = this.companies.filter(company => company.isHrScreeningPassed).length;
+    const notPassed = this.companies.length - passed;
+    return { passed, notPassed };
+  }
+}

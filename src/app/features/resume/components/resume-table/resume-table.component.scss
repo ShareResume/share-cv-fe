@@ -24,6 +24,13 @@
     border-radius: 50%;
     object-fit: cover;
   }
+  
+  .placeholder-avatar {
+    width: $resume-avatar-size;
+    height: $resume-avatar-size;
+    border-radius: 50%;
+    background-color: $color-gray-300;
+  }
 }
 
 .company-cell {
@@ -37,10 +44,24 @@
     object-fit: contain;
   }
   
+  .placeholder-logo {
+    width: $resume-logo-size;
+    height: $resume-logo-size;
+    background-color: $color-gray-300;
+    border-radius: 4px;
+  }
+  
   .company-name {
     font-size: $resume-text-size;
     font-weight: $font-weight-regular;
   }
+}
+
+.status-text {
+  display: inline-block;
+  font-size: $resume-text-size;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
 }
 
 .actions-cell {

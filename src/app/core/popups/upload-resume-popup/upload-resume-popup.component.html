@@ -1,89 +1,126 @@
-<div class="popup-container">
-  <div class="popup-header">
-    <h2 class="popup-title">Add New Application</h2>
-    <button class="close-button" (click)="onCancel()">
-      <span class="close-icon">×</span>
-    </button>
+<div class="upload-resume-popup">
+  <div class="upload-resume-popup__header">
+    <h2>Upload Resume</h2>
   </div>
-
-  <div class="popup-content">
+  
+  <div class="upload-resume-popup__content">
     <form [formGroup]="resumeForm" (ngSubmit)="onSubmit()">
-      <div class="form-grid">
-        <!-- Company Autocomplete -->
-        <div class="form-field">
-          <app-company-autocomplete
-            label="Company"
-            formControlName="company"
-            [required]="true"
-          ></app-company-autocomplete>
-        </div>
-
-        <!-- Position / Role Input - REMOVED -->
-
-        <!-- Years of Experience Input -->
-        <div class="form-field">
-          <app-input
-            label="Years of Experience"
-            formControlName="yearsOfExperience"
-            placeholder="e.g. 3"
-            type="number"
-            [required]="true"
-          ></app-input>
-        </div>
-
-        <!-- Status Dropdown -->
-        <div class="form-field">
-          <app-dropdown
-            label="Status"
-            formControlName="status"
-            [options]="statusOptions"
-            [required]="true"
-          ></app-dropdown>
-        </div>
-
-        <!-- Specialization Dropdown -->
-        <div class="form-field">
-          <app-dropdown
-            label="Specialization"
-            formControlName="specialization"
-            [options]="specializationOptions"
-            [required]="true"
-          ></app-dropdown>
-        </div>
-
-        <!-- Document Upload -->
-        <div class="form-field document-upload">
-          <label class="upload-label">Attach CV</label>
-          <div class="upload-container" [class.has-file]="selectedFile">
-            @if (selectedFile) {
-              <div class="selected-file">
-                <input type="checkbox" checked disabled>
-                <label class="file-name">{{ selectedFile.name }}</label>
-              </div>
-            }
-            <div class="upload-area">
-              <label for="file-upload" class="custom-file-upload">
-                <span class="upload-icon">↑</span>
-                <span class="upload-text">Upload New CV</span>
-              </label>
+      <div class="form-group">
+        <div class="file-upload-section">
+          <label for="resume-file">Upload Resume (PDF or Word)</label>
+          <div class="file-upload">
+            @if (!selectedFile) {
               <input 
                 type="file" 
-                id="file-upload" 
-                (change)="onFileSelected($event)" 
+                id="resume-file" 
+                (change)="onFileSelected($event)"
                 accept=".pdf,.doc,.docx"
-                style="display:none;"
               >
-            </div>
+            } @else {
+              <div class="selected-file">
+                <span>{{ selectedFile.name }}</span>
+                <app-button 
+                  (click)="removeFile()" 
+                  [colorType]="'terniary'" 
+                  [size]="'small'"
+                >
+                  Remove
+                </app-button>
+              </div>
+            }
           </div>
         </div>
       </div>
+      
+      <div class="form-group">
+        <app-input
+          label="Years of Experience"
+          type="number"
+          formControlName="yearsOfExperience"
+          [required]="true"
+          placeholder="Enter years of experience"
+        ></app-input>
+      </div>
+      
+      <div class="form-group">
+        <app-dropdown
+          label="Specialization"
+          formControlName="specialization"
+          [options]="specializationOptions"
+          [required]="true"
+          placeholder="Select specialization"
+        ></app-dropdown>
+      </div>
+      
+      <div class="multiple-companies-section">
+        <div class="section-header">
+          <h3>Companies</h3>
+          <app-button 
+            (click)="addCompany()" 
+            [colorType]="'secondary'" 
+            [size]="'small'"
+            class="add-company-btn"
+          >
+            Add company +
+          </app-button>
+        </div>
+        
+        <div formArrayName="companiesData">
+          @for (companyGroup of companiesArray.controls; track $index) {
+            <div [formGroupName]="$index" class="company-status-group">
+              <div class="company-status-fields">
+                <div class="form-group company-field">
+                  <app-company-autocomplete
+                    label="Company"
+                    formControlName="company"
+                    [required]="true"
+                  ></app-company-autocomplete>
+                </div>
+                
+                <div class="form-group status-field">
+                  <app-dropdown
+                    label="Status"
+                    formControlName="status"
+                    [options]="statusOptions"
+                    [required]="true"
+                    placeholder="Select status"
+                  ></app-dropdown>
+                </div>
+              </div>
+              
+              <div class="remove-company">
+                @if (companiesArray.length > 1) {
+                  <app-button 
+                    (click)="removeCompany($index)" 
+                    [colorType]="'terniary'" 
+                    [size]="'small'"
+                    class="remove-btn"
+                  >
+                    <app-icon [iconName]="'trash'"></app-icon>
+                  </app-button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <app-button 
+          (click)="onCancel()" 
+          [colorType]="'secondary'" 
+          type="button"
+        >
+          Cancel
+        </app-button>
+        <app-button 
+          type="submit" 
+          [colorType]="'primary'" 
+          [disabled]="resumeForm.invalid || !selectedFile || isSubmitting"
+        >
+          {{ isSubmitting ? 'Uploading...' : 'Upload' }}
+        </app-button>
+      </div>
     </form>
-  </div>
-
-  <div class="popup-footer">
-    <button class="cancel-button" (click)="onCancel()">Cancel</button>
-    <button class="save-button" (click)="onSubmit()" [disabled]="resumeForm.invalid || !selectedFile || isSubmitting">
-      {{ isSubmitting ? 'Saving...' : 'Save Application' }}
-    </button>
   </div>
 </div> 

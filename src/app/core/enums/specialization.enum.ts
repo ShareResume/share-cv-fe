@@ -1,8 +1,8 @@
 export enum SpecializationEnum {
-  Frontend = 'Frontend',
-  Backend = 'Backend',
-  FullStack = 'Full Stack',
-  DevOps = 'DevOps',
+  Frontend = 'FRONTEND',
+  Backend = 'BACKEND',
+  FullStack = 'FULL_STACK',
+  DevOps = 'DEV_OPS',
   QA = 'QA',
-  UIUX = 'UI/UX'
+  UIUX = 'UI_UX',
 } 

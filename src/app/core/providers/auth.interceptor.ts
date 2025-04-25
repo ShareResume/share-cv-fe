@@ -8,9 +8,9 @@ import { PATH } from '../constants/path.constants';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Skip interceptor for public routes
-  if (req.url.includes('public')) {
-    return next(req);
-  }
+  // if (req.url.includes('public')) {
+  //   return next(req);
+  // }
 
   // Skip token refresh endpoint to avoid infinite loop
   if (req.url.includes('auth/access-token')) {

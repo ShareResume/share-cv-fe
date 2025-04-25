@@ -7,16 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { ResumeFilters } from '../models/resume-filters.model';
 import { ResumeResponse } from '../models/resume-response.model';
-import { CreateResumeModel } from '../models/create-resume.model';
-
-// Interface for the form data received from the component
-export interface ResumeFormData {
-  companyName: string;
-  yearsOfExperience: number;
-  status: string;
-  specialization: string;
-  file: File;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +14,7 @@ export interface ResumeFormData {
 export class ResumeService {
   private apiService = inject(ApiService);
   private httpClient = inject(HttpClient);
-  private readonly apiEndpoint = '/resumes';
+  private readonly apiEndpoint = '/public-users-resumes';
   private readonly baseUrl = environment.apiBaseUrl;
 
   /**
@@ -72,27 +62,7 @@ export class ResumeService {
     );
   }
   
-  /**
-   * Add a new resume with file attachment
-   */
-  addResume(resumeData: ResumeFormData): Observable<any> {
-    // Transform form data to match API requirements
-    const apiRequest: CreateResumeModel = {
-      isHrScreeningPassed: resumeData.status === 'Approved',
-      companyId: resumeData.companyName,
-      yearsOfExperience: resumeData.yearsOfExperience,
-      speciality: resumeData.specialization,
-      document: resumeData.file
-    };
-    
-    // Convert request object to FormData using ApiService's helper method
-    const formData = this.apiService.createFormData(apiRequest);
-    
-    return this.apiService.post<FormData, any>(
-      this.apiEndpoint,
-      formData
-    );
-  }
+
   
   /**
    * Validates and normalizes the params to ensure they meet expected formats

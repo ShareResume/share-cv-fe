@@ -1,0 +1,207 @@
+@use 'variables' as *;
+
+//TODO: Remove this in future
+$white: $color-white;
+$gray-50: $color-gray-50;
+$gray-100: $color-gray-100;
+$gray-200: $color-gray-200;
+$gray-400: $color-gray-400;
+$gray-500: $color-gray-500;
+$gray-600: $color-gray-600;
+$gray-800: $color-gray-800;
+$gray-900: #1a1a1a;
+
+.error-container {
+  max-width: 600px;
+  margin: 48px auto;
+  padding: 32px;
+  text-align: center;
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  
+  .error-message {
+    font-size: 18px;
+    margin-bottom: 24px;
+    color: $color-error;
+  }
+  
+  app-button {
+    margin-top: 16px;
+  }
+}
+
+.resume-detail-page {
+  width: 100%;
+  padding: 24px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.resume-section {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+// Resume Header
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+  border-bottom: 1px solid $gray-200;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.resume-title-container {
+  flex: 1;
+  min-width: 280px;
+}
+
+.resume-title {
+  font-size: 24px;
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: $gray-900;
+}
+
+.resume-meta {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: $gray-600;
+}
+
+.resume-meta-divider {
+  margin: 0 8px;
+}
+
+.resume-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+// Resume Content
+.resume-content {
+  padding: 24px;
+  border-bottom: 1px solid $gray-200;
+}
+
+// PDF Viewer Styles
+.pdf-container {
+  width: 100%;
+  height: 800px;
+  background-color: $gray-100;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.pdf-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: $gray-600;
+  font-style: italic;
+}
+
+// Application Status
+.application-status-section {
+  padding: 24px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: $gray-900;
+}
+
+.status-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.status-card {
+  border: 1px solid $gray-200;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.status-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.company-name {
+  font-weight: 500;
+  color: $gray-900;
+}
+
+.status-label {
+  color: $gray-600;
+}
+
+.status-progress {
+  height: 8px;
+  background-color: $gray-200;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: $gray-800;
+  border-radius: 9999px;
+  
+  &.rejected {
+    background-color: $color-error;
+  }
+  
+  &.passed {
+    background-color: $color-success;
+  }
+}
+
+.no-applications {
+  color: $gray-500;
+  font-style: italic;
+}
+
+// Icon styles (placeholders for actual icons)
+.icon-back:before { content: "←"; }
+.icon-save:before { content: "♥"; }
+.icon-report:before { content: "!"; }
+
+// Responsive styles
+@media (max-width: 768px) {
+  .resume-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .resume-actions {
+    justify-content: flex-start;
+  }
+  
+  .pdf-container {
+    height: 500px;
+  }
+} 

@@ -1,0 +1,268 @@
+@use 'variables' as *;
+
+//TODO: Remove this in future
+$white: $color-white;
+$gray-50: $color-gray-50;
+$gray-100: $color-gray-100;
+$gray-200: $color-gray-200;
+$gray-400: $color-gray-400;
+$gray-500: $color-gray-500;
+$gray-600: $color-gray-600;
+$gray-900: #1a1a1a;
+$red-600: $color-error-light;
+$green-600: $color-success;
+
+.comments-section {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.comments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid $gray-200;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: $gray-900;
+}
+
+.comments-sort {
+  position: relative;
+}
+
+.sort-dropdown {
+  appearance: none;
+  background-color: $white;
+  border: 1px solid $gray-200;
+  border-radius: 8px;
+  padding: 8px 32px 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    border-color: $gray-400;
+  }
+}
+
+.comments-list {
+  padding: 24px;
+}
+
+// Comment Styling
+.comment {
+  margin-bottom: 24px;
+  border-left: 4px solid transparent;
+  transition: all 0.2s ease;
+
+  &.highlighted {
+    border-left-color: $gray-900;
+    background-color: $gray-50;
+    border-radius: 0 8px 8px 0;
+    padding-left: 12px;
+  }
+}
+
+.comment-container {
+  display: flex;
+  gap: 16px;
+}
+
+.comment-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-weight: 500;
+  color: $gray-900;
+  margin-right: 12px;
+}
+
+.comment-date {
+  font-size: 14px;
+  color: $gray-500;
+}
+
+.comment-text {
+  margin-bottom: 12px;
+  color: $gray-600;
+  line-height: 1.5;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.vote-button, .reply-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: $gray-600;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $gray-100;
+  }
+
+  &.active {
+    color: $gray-900;
+    font-weight: 500;
+  }
+
+  i {
+    margin-right: 0;
+  }
+}
+
+.vote-button.up.active {
+  color: $green-600;
+}
+
+.vote-button.down.active {
+  color: $red-600;
+}
+
+.reaction-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray-600;
+  min-width: 24px;
+  text-align: center;
+  
+  &.positive {
+    color: $green-600;
+  }
+  
+  &.negative {
+    color: $red-600;
+  }
+}
+
+// Replies styling
+.replies {
+  margin-left: 56px;
+  margin-top: 16px;
+  
+  .reply {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+// Reply form
+.reply-form {
+  margin-left: 56px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+
+  textarea {
+    width: 100%;
+    border: 1px solid $gray-200;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    resize: vertical;
+    margin-bottom: 12px;
+    
+    &:focus {
+      outline: none;
+      border-color: $gray-400;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+// New comment form
+.new-comment {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  
+  .new-comment-form {
+    flex: 1;
+    
+    textarea {
+      width: 100%;
+      border: 1px solid $gray-200;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 16px;
+      resize: vertical;
+      margin-bottom: 12px;
+      
+      &:focus {
+        outline: none;
+        border-color: $gray-400;
+      }
+    }
+  }
+}
+
+// Loading and error states
+.loading-comments,
+.comments-error,
+.no-comments {
+  text-align: center;
+  padding: 24px;
+  color: $gray-600;
+}
+
+.comments-error {
+  color: $red-600;
+}
+
+// Icon styles (placeholders for actual icons)
+.icon-upvote:before { content: "↑"; }
+.icon-downvote:before { content: "↓"; }
+
+// Responsive styles
+@media (max-width: 768px) {
+  .replies {
+    margin-left: 24px;
+  }
+  
+  .reply-form {
+    margin-left: 24px;
+  }
+} 

@@ -1,17 +1,25 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../../reusable/input/input.component';
 import { DropdownComponent } from '../../../reusable/dropdown/dropdown.component';
 import { Status } from '../../../reusable/models/dropdown.model';
 import { SpecializationEnum } from '../../enums/specialization.enum';
-import { ResumeService, ResumeFormData } from '../../../features/resume/services/resume.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
 import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
 import { Company } from '@app/core/models/company.model';
+import { UserResumesService } from '@app/features/resume/services/user-resumes.service';
+import { ResumeFormData, CompanyStatusInfo } from '@app/features/resume/models/resume-form-data';
+import { IconComponent } from '@app/reusable/icon/icon.component';
+import { ButtonComponent } from '@app/reusable/button/button.component';
+
+interface CompanyStatus {
+  company: Company | null;
+  status: string;
+}
 
 @Component({
   selector: 'app-upload-resume-popup',
@@ -24,13 +32,15 @@ import { Company } from '@app/core/models/company.model';
     ReactiveFormsModule,
     InputComponent,
     DropdownComponent,
-    CompanyAutocompleteComponent
+    CompanyAutocompleteComponent,
+    IconComponent,
+    ButtonComponent
   ]
 })
 export class UploadResumePopupComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<UploadResumePopupComponent>);
   private fb = inject(FormBuilder);
-  private resumeService = inject(ResumeService);
+  private usersResumeService = inject(UserResumesService);
   private destroyRef = inject(DestroyRef);
 
   resumeForm!: FormGroup;
@@ -50,11 +60,33 @@ export class UploadResumePopupComponent implements OnInit {
 
   private initForm(): void {
     this.resumeForm = this.fb.group({
-      company: [null, Validators.required],
+      companiesData: this.fb.array([
+        this.createCompanyStatusGroup()
+      ]),
       yearsOfExperience: ['', [Validators.required, Validators.min(0)]],
-      status: ['', Validators.required],
       specialization: ['', Validators.required]
     });
+  }
+
+  private createCompanyStatusGroup(): FormGroup {
+    return this.fb.group({
+      company: [null, Validators.required],
+      status: ['', Validators.required]
+    });
+  }
+
+  get companiesArray(): FormArray {
+    return this.resumeForm.get('companiesData') as FormArray;
+  }
+
+  addCompany(): void {
+    this.companiesArray.push(this.createCompanyStatusGroup());
+  }
+
+  removeCompany(index: number): void {
+    if (this.companiesArray.length > 1) {
+      this.companiesArray.removeAt(index);
+    }
   }
 
   private loadStatusOptions(): void {
@@ -83,17 +115,22 @@ export class UploadResumePopupComponent implements OnInit {
       this.isSubmitting = true;
       
       const formValues = this.resumeForm.value;
-      const selectedCompany = formValues.company as Company;
+      const companiesData = formValues.companiesData as CompanyStatus[];
+      
+      // Map company data to the format expected by the service
+      const companiesInfo: CompanyStatusInfo[] = companiesData.map(item => ({
+        companyId: item.company!.id,
+        status: item.status
+      }));
       
       const formData: ResumeFormData = {
-        companyName: selectedCompany.id, // Use company ID from the selected company
+        companies: companiesInfo,
         yearsOfExperience: formValues.yearsOfExperience,
-        status: formValues.status,
         specialization: formValues.specialization,
         file: this.selectedFile
       };
       
-      this.resumeService.addResume(formData)
+      this.usersResumeService.addResume(formData)
         .pipe(
           takeUntilDestroyed(this.destroyRef),
           finalize(() => this.isSubmitting = false)
