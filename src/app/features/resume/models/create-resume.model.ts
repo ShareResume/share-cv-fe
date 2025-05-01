@@ -2,7 +2,7 @@
  * Interface representing the API request structure for creating a new resume
  */
 export interface CompanyResumeInfo {
-  companyId: string | number;
+  id: string | number;
   isHrScreeningPassed: boolean;
 }
 

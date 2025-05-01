@@ -18,7 +18,7 @@ export class UserResumesService {
   addResume(resumeData: ResumeFormData): Observable<any> {
     // Map each company and its status to the API format
     const companiesInfo: CompanyResumeInfo[] = resumeData.companies.map(company => ({
-      companyId: company.companyId,
+      id: company.companyId,
       isHrScreeningPassed: company.status === 'Approved'
     }));
 

@@ -15,6 +15,7 @@ import { UserResumesService } from '@app/features/resume/services/user-resumes.s
 import { ResumeFormData, CompanyStatusInfo } from '@app/features/resume/models/resume-form-data';
 import { IconComponent } from '@app/reusable/icon/icon.component';
 import { ButtonComponent } from '@app/reusable/button/button.component';
+import { ToasterService } from '@app/core/services/toaster.service';
 
 interface CompanyStatus {
   company: Company | null;
@@ -42,6 +43,7 @@ export class UploadResumePopupComponent implements OnInit {
   private fb = inject(FormBuilder);
   private usersResumeService = inject(UserResumesService);
   private destroyRef = inject(DestroyRef);
+  private toasterService = inject(ToasterService);
 
   resumeForm!: FormGroup;
   statusOptions: Status[] = [];
@@ -137,6 +139,7 @@ export class UploadResumePopupComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
+            this.toasterService.showSuccess('Resume uploaded successfully');
             this.dialogRef.close(response);
           },
           error: (error) => {

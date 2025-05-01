@@ -1,4 +1,4 @@
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToasterComponent } from '../components/toaster/toaster.component';
 import { ToasterData, ToasterResult } from '../models/toaster.model';
@@ -9,7 +9,6 @@ import { ToasterStatus } from '../constants/toaster.constants';
 })
 export class ToasterService {
   private readonly toasterService: MatSnackBar = inject(MatSnackBar);
-  private readonly platformId: object = inject(PLATFORM_ID);
 
   private panelClasses: Record<ToasterStatus, string> = {
     [ToasterStatus.SUCCESS]: 'success',
@@ -43,7 +42,7 @@ export class ToasterService {
   }
 
   public showSuccess(message: string, action?: string): ToasterResult | null {
-    return this.showToaster(message, ToasterStatus.SUCCESS, action);
+    return this.showToaster(message, ToasterStatus.SUCCESS, action, 4000);
   }
 
   public showError(message: string, action?: string): ToasterResult | null {
@@ -51,6 +50,6 @@ export class ToasterService {
   }
 
   public showInfo(message: string, action?: string): ToasterResult | null {
-    return this.showToaster(message, ToasterStatus.INFO, action);
+    return this.showToaster(message, ToasterStatus.INFO, action, 4000);
   }
 }

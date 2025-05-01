@@ -87,7 +87,7 @@ export class ApiService {
           if (typeof item === 'object' && item !== null && !(item instanceof File) && !(item instanceof Blob)) {
             // Handle nested objects within arrays
             Object.entries(item).forEach(([nestedKey, nestedValue]) => {
-              formData.append(`${key}[${index}][${nestedKey}]`, nestedValue?.toString() || '');
+              formData.append(`${key}[${index}].${nestedKey}`, nestedValue?.toString() || '');
             });
           } else {
             // Handle primitive values within arrays
