@@ -15,6 +15,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { ToasterService } from '../../core/services/toaster.service';
 import { forgotPasswordConfig, loginConfig, registerConfig } from '../../core/constants/auth-page-configs.constants';
 import { AuthPageConfig } from '../../core/models/auth-page-config.model';
+import { UserRoleEnum } from '../../core/enums/user-role.enum';
 
 @Component({
   selector: 'app-auth',
@@ -91,17 +92,23 @@ export class AuthComponent implements OnInit {
     const { email, password } = this.authForm.value;
 
     this.authService.login(email, password).pipe(take(1)).subscribe({
-      next: () => {
-        this.authService.setAuthenticated(true);
+      next: (response) => {
+        const userRole = this.authService.userRole;
         
-        const redirectUrl = this.authService.redirectUrl;
-
-        if (redirectUrl) {
-          this.router.navigateByUrl(redirectUrl);
-          this.authService.setRedirectUrl(null);
+        // Check if user is admin and redirect accordingly
+        if (userRole === UserRoleEnum.ADMIN) {
+          this.router.navigate(['/admin']);
         } else {
-          this.router.navigate(['/mentor']);
+          const redirectUrl = this.authService.redirectUrl;
+          if (redirectUrl && !redirectUrl.includes('/admin')) {
+            this.router.navigateByUrl(redirectUrl);
+          } else {
+            this.router.navigate(['/']);
+          }
         }
+        
+        // Clear any stored redirectUrl
+        this.authService.setRedirectUrl(null);
       },
     });
   }

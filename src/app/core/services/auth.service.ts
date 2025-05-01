@@ -5,6 +5,7 @@ import { AuthResponse, RegisterData } from '../models/user.model';
 import { Router } from '@angular/router';
 import { PATH } from '../constants/path.constants';
 import { TOKEN_KEY } from '../constants/user.constants';
+import { UserRoleEnum } from '../enums/user-role.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class AuthService implements OnDestroy {
   private readonly router: Router = inject(Router);
   private readonly ngZone: NgZone = inject(NgZone);
   private isAuthenticatedSignal = signal<boolean>(this.hasValidToken());
+  private userRoleSignal = signal<UserRoleEnum | null>(this.getUserRole());
   private redirectUrlSignal = signal<string | null>(null);
   private destroy$ = new Subject<void>();
   private tokenRefreshSubscription?: Subscription;
@@ -41,9 +43,22 @@ export class AuthService implements OnDestroy {
   private hasValidToken(): boolean {
     return !!this.apiService.getAccessToken()?.accessToken;
   }
+  
+  private getUserRole(): UserRoleEnum | null {
+    const authResponse = this.apiService.getAccessToken();
+    return authResponse?.role || null;
+  }
 
   get isAuthenticated() {
     return this.isAuthenticatedSignal();
+  }
+  
+  get userRole(): UserRoleEnum | null {
+    return this.userRoleSignal();
+  }
+  
+  get isAdmin(): boolean {
+    return this.userRoleSignal() === UserRoleEnum.ADMIN;
   }
 
   setAuthenticated(value: boolean): void {
@@ -51,8 +66,10 @@ export class AuthService implements OnDestroy {
     
     if (value) {
       this.setupTokenRefreshTimer();
+      this.userRoleSignal.set(this.getUserRole());
     } else {
       this.clearTokenRefreshTimer();
+      this.userRoleSignal.set(null);
     }
   }
 
@@ -117,7 +134,8 @@ export class AuthService implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          this.apiService.updateAccessToken(response.accessToken);
+          this.apiService.updateAccessToken(response.accessToken, response.role);
+          this.userRoleSignal.set(response.role);
           this.setupTokenRefreshTimer(); // Set up the next refresh timer
         },
         error: () => {
@@ -131,7 +149,12 @@ export class AuthService implements OnDestroy {
     localStorage.removeItem(TOKEN_KEY);
     return this.apiService
       .post<RegisterData, AuthResponse>(`${this.PATH}/users`, data)
-      .pipe(tap(this.apiService.setAccessToken.bind(this)));
+      .pipe(
+        tap((response) => {
+          this.apiService.setAccessToken(response);
+          this.userRoleSignal.set(response.role);
+        })
+      );
   }
 
   public login(email: string, password: string): Observable<AuthResponse> {
@@ -150,7 +173,9 @@ export class AuthService implements OnDestroy {
       .pipe(
         tap((response) => {
           this.apiService.setAccessToken(response);
+          this.userRoleSignal.set(response.role);
           this.setAuthenticated(true);
+          // Removed navigation logic to prevent conflicts with AuthComponent
         })
       );
   }
@@ -159,6 +184,7 @@ export class AuthService implements OnDestroy {
     localStorage.removeItem(TOKEN_KEY);
     this.router.navigate([PATH.LOGIN]);
     this.setAuthenticated(false);
+    this.userRoleSignal.set(null);
     this.setRedirectUrl(null);
     this.clearTokenRefreshTimer();
   }

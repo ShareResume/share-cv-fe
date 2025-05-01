@@ -12,6 +12,7 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { popupGuard } from './core/providers/popup.guard';
 import { MainLayoutComponent } from './core/components/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './core/components/auth-layout/auth-layout.component';
+import { adminGuard } from './core/providers/admin.guard';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,11 @@ export const routes: Routes = [
       {
         path: 'resumes/:id',
         loadComponent: () => import('./features/resume/components/resume-detail/resume-detail-page.component').then(m => m.ResumeDetailPageComponent),
+      },
+      {
+        path: 'admin',
+        loadComponent: () => import('./features/admin/components/admin-table/admin-table.component').then(m => m.AdminTableComponent),
+        canActivate: [adminGuard],
       },
     ],
   },

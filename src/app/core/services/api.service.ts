@@ -9,6 +9,7 @@ import { AuthResponse } from '../models/user.model';
 import { QueryParamsModel } from '../models/query-params-model';
 import { TOKEN_KEY } from '../constants/user.constants';
 import { environment } from '../../../environments/environment';
+import { UserRoleEnum } from '../enums/user-role.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -35,22 +36,23 @@ export class ApiService {
     return null;
   }
 
-  public refreshAccessToken(): Observable<{ accessToken: string }> {
+  public refreshAccessToken(): Observable<{ accessToken: string; role: UserRoleEnum }> {
     const authData = this.getAccessToken();
     if (!authData?.refreshToken) {
       throw new Error('No refresh token available');
     }
 
     const headers = new HttpHeaders().set('refreshToken', authData.refreshToken);
-    return this.httpClient.post<{ accessToken: string }>(`${this.baseUrl}/auth/access-token`, {}, { headers });
+    return this.httpClient.post<{ accessToken: string; role: UserRoleEnum }>(`${this.baseUrl}/auth/access-token`, {}, { headers });
   }
 
-  public updateAccessToken(newAccessToken: string): void {
+  public updateAccessToken(newAccessToken: string, role?: UserRoleEnum): void {
     const authData = this.getAccessToken();
     if (authData) {
       const updatedAuthData = {
         ...authData,
-        accessToken: newAccessToken
+        accessToken: newAccessToken,
+        ...(role && { role })
       };
       localStorage.setItem(TOKEN_KEY, JSON.stringify(updatedAuthData));
     }

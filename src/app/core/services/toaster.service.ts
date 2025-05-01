@@ -21,6 +21,7 @@ export class ToasterService {
     message: string,
     status: ToasterStatus,
     action?: string,
+    duration?: number,
   ): ToasterResult | null {
 
     const toaster = this.toasterService.openFromComponent<
@@ -33,6 +34,7 @@ export class ToasterService {
         status,
       },
       panelClass: this.panelClasses[status],
+      duration: duration,
     });
 
     return {
@@ -45,7 +47,7 @@ export class ToasterService {
   }
 
   public showError(message: string, action?: string): ToasterResult | null {
-    return this.showToaster(message, ToasterStatus.ERROR, action);
+    return this.showToaster(message, ToasterStatus.ERROR, action, 4000);
   }
 
   public showInfo(message: string, action?: string): ToasterResult | null {
