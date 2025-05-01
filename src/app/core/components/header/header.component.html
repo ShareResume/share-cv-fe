@@ -4,27 +4,43 @@
       <div class="header-left">
         <div class="logo">ResumeShare</div>
         <nav class="nav-menu">
-          <a *ngFor="let item of navItems" 
-             [routerLink]="item.route" 
-             routerLinkActive="active" 
-             class="nav-link">
-            {{ item.label }}
-          </a>
+          @for (item of navItems; track item.route) {
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              class="nav-link"
+            >
+              {{ item.label }}
+            </a>
+          }
+          @if (isAdmin) {
+            <a
+              routerLink="/admin"
+              routerLinkActive="active"
+              class="nav-link admin-link"
+            >
+              Admin Dashboard
+            </a>
+          }
         </nav>
       </div>
       <div class="header-right">
-        <app-button 
-          colorType="primary" 
+        <app-button
+          colorType="primary"
           class="upload-button"
           fontWeight="regular"
-          >
+        >
           Upload Resume
         </app-button>
         <div class="auth-status" [class.authenticated]="isAuthenticated">
-          {{ isAuthenticated ? 'User is authenticated' : 'User is not authenticated' }}
+          {{
+            isAuthenticated
+              ? 'User is authenticated'
+              : 'User is not authenticated'
+          }}
         </div>
         <button class="profile-button">
-          <img src="/user-icon.svg" alt="User profile" class="profile-icon">
+          <img src="/user-icon.svg" alt="User profile" class="profile-icon" />
         </button>
       </div>
     </div>
