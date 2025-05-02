@@ -1,12 +1,20 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
-import { Resume, ResumeData } from '../models/resume.model';
+import { PublicResume, PublicResumeData } from '../models/resume.model';
 import { GetResumeParamsModel } from '../models/get-resume-params.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { ResumeFilters } from '../models/resume-filters.model';
 import { ResumeResponse } from '../models/resume-response.model';
+
+/**
+ * Update ResumeResponse to work with PublicResume
+ */
+interface PublicResumeResponse {
+  data: PublicResume[];
+  totalCount: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +36,12 @@ export class ResumeService {
   /**
    * Get resumes with optional filters
    */
-  getResumes(filters?: ResumeFilters): Observable<ResumeResponse> {
+  getResumes(filters?: ResumeFilters): Observable<PublicResumeResponse> {
     const queryParams = this.transformFiltersToQueryParams(filters);
     const validParams = this.validateParams(queryParams);
     const queryString = this.apiService.generateQueryParams(validParams);
     
-    return this.httpClient.get<ResumeData[]>(
+    return this.httpClient.get<PublicResumeData[]>(
       `${this.baseUrl}${this.apiEndpoint}?${queryString}`,
       { observe: 'response' },
     ).pipe(
@@ -51,8 +59,10 @@ export class ResumeService {
           }
         }
         
-        // Transform the data
-        const data = response.body ? Resume.fromJsonArray(response.body) : [];
+        // Transform the data - explicitly use PublicResume.fromJson instead of the generic Resume.fromJson
+        const data = response.body 
+          ? response.body.map(item => PublicResume.fromJson(item))
+          : [];
         
         return {
           data,

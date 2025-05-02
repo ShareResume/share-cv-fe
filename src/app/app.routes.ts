@@ -39,7 +39,7 @@ export const routes: Routes = [
       },
       {
         path: 'admin',
-        loadComponent: () => import('./features/admin/components/admin-table/admin-table.component').then(m => m.AdminTableComponent),
+        loadComponent: () => import('./features/admin/pages/admin-page.component').then(m => m.AdminPageComponent),
         canActivate: [adminGuard],
       },
     ],

@@ -18,20 +18,13 @@ export class HeaderComponent {
   navItems = [
     {
       label: 'Overview',
-      route: '/overview',
+      route: '',
     },
     {
-      label: 'Browse',
-      route: '/browse',
+      label: 'Resumes',
+      route: '/resumes',
     },
-    {
-      label: 'Insights',
-      route: '/insights',
-    },
-    {
-      label: 'Forum',
-      route: '/forum',
-    },
+
   ];
 
   get isAuthenticated(): boolean {

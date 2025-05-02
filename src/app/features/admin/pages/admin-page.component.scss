@@ -1,0 +1,22 @@
+@use 'variables' as *;
+
+.admin-page {
+  padding: $spacing-lg;
+  
+  .page-header {
+    margin-bottom: $spacing-lg;
+    
+    h1 {
+      color: $color-black;
+      font-size: 24px;
+      font-weight: $font-weight-medium;
+    }
+  }
+  
+  .resume-table-container {
+    background-color: $color-white;
+    border-radius: $resume-table-border-radius;
+    box-shadow: $resume-table-shadow;
+    overflow: hidden;
+  }
+} 

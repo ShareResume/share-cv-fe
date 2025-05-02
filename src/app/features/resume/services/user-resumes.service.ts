@@ -3,6 +3,7 @@ import { ResumeFormData, CompanyStatusInfo } from '../models/resume-form-data';
 import { Observable } from 'rxjs';
 import { CreateResumeModel, CompanyResumeInfo } from '../models/create-resume.model';
 import { ApiService } from '@app/core/services/api.service';
+import { PrivateResume } from '../models/resume.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +35,12 @@ export class UserResumesService {
     const formData = this.apiService.createFormData(apiRequest);
 
     return this.apiService.post<FormData, any>(this.apiEndpoint, formData);
+  }
+
+  /**
+   * Get all resumes for admin view
+   */
+  getResumes(): Observable<PrivateResume[]> {
+    return this.apiService.get<PrivateResume[]>(this.apiEndpoint);
   }
 }

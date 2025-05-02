@@ -1,18 +1,18 @@
 import { Injectable, signal } from '@angular/core';
-import { Resume } from '../models/resume.model';
+import { PublicResume } from '../models/resume.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResumeStateService {
   private readonly STORAGE_KEY = 'selectedResume';
-  private selectedResumeSignal = signal<Resume | null>(this.getStoredResume());
+  private selectedResumeSignal = signal<PublicResume | null>(this.getStoredResume());
 
   get selectedResume() {
     return this.selectedResumeSignal;
   }
 
-  setSelectedResume(resume: Resume) {
+  setSelectedResume(resume: PublicResume) {
     this.selectedResumeSignal.set(resume);
     this.storeResume(resume);
   }
@@ -22,18 +22,20 @@ export class ResumeStateService {
     localStorage.removeItem(this.STORAGE_KEY);
   }
 
-  private storeResume(resume: Resume): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(resume));
+  private storeResume(resume: PublicResume): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(resume.toJson()));
   }
 
-  private getStoredResume(): Resume | null {
+  private getStoredResume(): PublicResume | null {
     const storedResume = localStorage.getItem(this.STORAGE_KEY);
     if (!storedResume) {
       return null;
     }
     
     try {
-      return JSON.parse(storedResume) as Resume;
+      const resumeData = JSON.parse(storedResume);
+      // Use PublicResume.fromJson to create the appropriate resume type
+      return PublicResume.fromJson(resumeData);
     } catch (e) {
       console.error('Error parsing stored resume:', e);
       localStorage.removeItem(this.STORAGE_KEY);

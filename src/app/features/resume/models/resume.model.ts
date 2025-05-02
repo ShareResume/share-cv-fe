@@ -1,6 +1,6 @@
 import { User, UserData } from './user.model';
 import { Company, CompanyData } from './company.model';
-import { SpecializationEnum } from './specialization.enum';
+import { SpecializationEnum } from '@app/core/enums/specialization.enum';
 
 export interface DocumentData {
   accessType: string;
@@ -8,63 +8,76 @@ export interface DocumentData {
   name: string;
 }
 
-export interface ResumeData {
+export enum ResumeStatusEnum {
+  WAITING_FOR_APPROVE = 'WAITING_FOR_APPROVE',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED'
+}
+
+export interface BaseResumeData {
   id: string;
-  document: DocumentData;
   companies: CompanyData[];
   speciality: string;
   yearsOfExperience: number;
+}
+
+export interface PublicResumeData extends BaseResumeData {
+  document: DocumentData;
   date: string;
 }
 
-export class Resume {
+export interface PrivateResumeData extends BaseResumeData {
+  documents: DocumentData[];
+  createdAt: string;
+  resumeStatus: ResumeStatusEnum;
+  hidden: boolean;
+}
+
+/**
+ * Abstract base class for all resume types
+ */
+export abstract class Resume {
   id: string;
-  document: {
-    accessType: string;
-    url: string;
-    name: string;
-  };
   companies: Company[];
   speciality: SpecializationEnum;
   yearsOfExperience: number;
-  date: Date;
 
   constructor(
     id: string,
-    document: {
-      accessType: string;
-      url: string;
-      name: string;
-    },
     companies: Company[],
     speciality: SpecializationEnum,
     yearsOfExperience: number,
-    date: Date,
   ) {
     this.id = id;
-    this.document = document;
     this.companies = companies;
     this.speciality = speciality;
     this.yearsOfExperience = yearsOfExperience;
-    this.date = date;
   }
 
   /**
-   * Creates a Resume instance from JSON data
+   * Get HR screening status counts
+   */
+  getHrScreeningStatusCounts(): { passed: number; notPassed: number } {
+    const passed = this.companies.filter(company => company.isHrScreeningPassed).length;
+    const notPassed = this.companies.length - passed;
+    return { passed, notPassed };
+  }
+
+  /**
+   * Factory method to create the appropriate resume type from JSON
    */
   static fromJson(json: unknown): Resume {
-    const data = json as ResumeData;
-
-    return new Resume(
-      data.id || '',
-      data.document || { accessType: '', url: '', name: '' },
-      data.companies
-        ? data.companies.map(company => Company.fromJson(company))
-        : [],
-      (data.speciality as SpecializationEnum) || SpecializationEnum.FRONTEND,
-      data.yearsOfExperience || 0,
-      data.date ? new Date(data.date) : new Date(),
-    );
+    // Determine which type of resume this is
+    const data = json as any;
+    
+    if (data.documents && Array.isArray(data.documents) && data.resumeStatus) {
+      return PrivateResume.fromJson(data);
+    } else if (data.document && data.date) {
+      return PublicResume.fromJson(data);
+    }
+    
+    // Default to PrivateResume if can't determine
+    return PrivateResume.fromJson(data);
   }
 
   /**
@@ -75,13 +88,67 @@ export class Resume {
       return [];
     }
 
-    return jsonArray.map(json => this.fromJson(json));
+    return jsonArray.map(json => Resume.fromJson(json));
   }
 
   /**
-   * Converts the Resume instance to a JSON object
+   * Get document URL
    */
-  toJson(): ResumeData {
+  abstract getPublicDocumentUrl(): string | null;
+  
+  /**
+   * Get private document URL
+   */
+  abstract getPrivateDocumentUrl(): string | null;
+  
+  /**
+   * Convert to JSON representation
+   */
+  abstract toJson(): BaseResumeData;
+}
+
+/**
+ * Public resume with a single document
+ */
+export class PublicResume extends Resume {
+  document: DocumentData;
+  date: Date;
+
+  constructor(
+    id: string,
+    document: DocumentData,
+    companies: Company[],
+    speciality: SpecializationEnum,
+    yearsOfExperience: number,
+    date: Date,
+  ) {
+    super(id, companies, speciality, yearsOfExperience);
+    this.document = document;
+    this.date = date;
+  }
+
+  /**
+   * Creates a PublicResume instance from JSON data
+   */
+  static override fromJson(json: unknown): PublicResume {
+    const data = json as PublicResumeData;
+
+    return new PublicResume(
+      data.id || '',
+      data.document || { accessType: '', url: '', name: '' },
+      data.companies
+        ? data.companies.map(company => Company.fromJson(company))
+        : [],
+      (data.speciality as SpecializationEnum) || SpecializationEnum.Frontend,
+      data.yearsOfExperience || 0,
+      data.date ? new Date(data.date) : new Date(),
+    );
+  }
+
+  /**
+   * Converts the PublicResume instance to a JSON object
+   */
+  override toJson(): PublicResumeData {
     return {
       id: this.id,
       document: this.document,
@@ -93,11 +160,95 @@ export class Resume {
   }
 
   /**
-   * Get HR screening status counts
+   * Get public document URL
    */
-  getHrScreeningStatusCounts(): { passed: number; notPassed: number } {
-    const passed = this.companies.filter(company => company.isHrScreeningPassed).length;
-    const notPassed = this.companies.length - passed;
-    return { passed, notPassed };
+  override getPublicDocumentUrl(): string | null {
+    return this.document?.url || null;
+  }
+
+  /**
+   * Get private document URL - not available for PublicResume
+   */
+  override getPrivateDocumentUrl(): string | null {
+    return null;
+  }
+}
+
+/**
+ * Private resume with multiple documents and admin status
+ */
+export class PrivateResume extends Resume {
+  documents: DocumentData[];
+  createdAt: Date;
+  resumeStatus: ResumeStatusEnum;
+  hidden: boolean;
+
+  constructor(
+    id: string,
+    documents: DocumentData[],
+    companies: Company[],
+    speciality: SpecializationEnum,
+    yearsOfExperience: number,
+    createdAt: Date,
+    resumeStatus: ResumeStatusEnum,
+    hidden: boolean,
+  ) {
+    super(id, companies, speciality, yearsOfExperience);
+    this.documents = documents;
+    this.createdAt = createdAt;
+    this.resumeStatus = resumeStatus;
+    this.hidden = hidden;
+  }
+
+  /**
+   * Creates a PrivateResume instance from JSON data
+   */
+  static override fromJson(json: unknown): PrivateResume {
+    const data = json as PrivateResumeData;
+
+    return new PrivateResume(
+      data.id || '',
+      data.documents || [],
+      data.companies
+        ? data.companies.map(company => Company.fromJson(company))
+        : [],
+      (data.speciality as SpecializationEnum) || SpecializationEnum.Frontend,
+      data.yearsOfExperience || 0,
+      data.createdAt ? new Date(data.createdAt) : new Date(),
+      (data.resumeStatus as ResumeStatusEnum) || ResumeStatusEnum.WAITING_FOR_APPROVE,
+      data.hidden !== undefined ? data.hidden : false,
+    );
+  }
+
+  /**
+   * Converts the PrivateResume instance to a JSON object
+   */
+  override toJson(): PrivateResumeData {
+    return {
+      id: this.id,
+      documents: this.documents,
+      companies: this.companies.map(company => company.toJson()),
+      speciality: this.speciality,
+      yearsOfExperience: this.yearsOfExperience,
+      createdAt: this.createdAt.toISOString(),
+      resumeStatus: this.resumeStatus,
+      hidden: this.hidden,
+    };
+  }
+
+  /**
+   * Get public document URL
+   */
+  override getPublicDocumentUrl(): string | null {
+    const publicDoc = this.documents.find(doc => doc.accessType === 'PUBLIC');
+    return publicDoc ? publicDoc.url : null;
+  }
+
+  /**
+   * Get private document URL
+   */
+  override getPrivateDocumentUrl(): string | null {
+    const privateDoc = this.documents.find(doc => doc.accessType === 'PRIVATE');
+    return privateDoc ? privateDoc.url : null;
   }
 }

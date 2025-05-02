@@ -51,7 +51,7 @@
   
   <!-- Date template -->
   <ng-template #dateTemplate let-value="value">
-    <span>{{value | date:'MMM d, y'}}</span>
+    <span>{{ formatDate(value) }}</span>
   </ng-template>
   
   <!-- ID template (hidden) -->

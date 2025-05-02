@@ -1,3 +1,57 @@
-<p>
-  admin-table works!
-</p>
+<app-table
+  [dataSource]="dataSource"
+  [displayedColumns]="displayedColumns"
+  [total]="totalCount()"
+  [pageSize]="pageSize()"
+  [pageIndex]="pageIndex()"
+  (selectionChange)="onPageChange($event.page)"
+  [customTemplate]="{
+    'speciality': specialityTemplate,
+    'resumeStatus': statusTemplate,
+    'createdAt': dateTemplate,
+    'companies': companiesTemplate,
+    'documents': documentsTemplate,
+    'actions': actionsTemplate
+  }"
+></app-table>
+
+<!-- Templates for custom columns -->
+<ng-template #specialityTemplate let-value="value">
+  {{ value }}
+</ng-template>
+
+<ng-template #statusTemplate let-value="value">
+  <div class="status-badge" [ngClass]="getStatusClass(value)">
+    {{ formatStatusText(value) }}
+  </div>
+</ng-template>
+
+<ng-template #dateTemplate let-value="value">
+  {{ value | date:'medium' }}
+</ng-template>
+
+<ng-template #companiesTemplate let-value="value">
+  <div class="companies-count">
+    {{ getCompanyCount(value) }} companies
+  </div>
+</ng-template>
+
+<ng-template #documentsTemplate let-value="value">
+  <div class="documents-count">
+    {{ getDocumentCount(value) }} documents
+    <button *ngIf="hasPublicDocument(value)" class="view-button" 
+            (click)="viewDocument(getPublicDocumentUrlFromDocs(value))">
+      <app-icon name="document"></app-icon>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #actionsTemplate let-value="value">
+  <div class="action-buttons">
+    <app-button variant="outline" size="small" 
+                (click)="viewDocument(getPublicDocumentUrl(value))" 
+                [disabled]="!getPublicDocumentUrl(value)">
+      View
+    </app-button>
+  </div>
+</ng-template>

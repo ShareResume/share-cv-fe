@@ -15,7 +15,7 @@
           <div class="resume-title-container">
             <h1 class="resume-title">{{ resume()?.speciality }}</h1>
             <div class="resume-meta">
-              <span class="resume-meta-item">Published: {{ resume()?.date | date:'MMM d, y' }}</span>
+              <span class="resume-meta-item">Published: {{ getPublishedDate() }}</span>
               <span class="resume-meta-divider">•</span>
               <span class="resume-meta-item">Resume Details</span>
             </div>

@@ -3,15 +3,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableComponent } from '@app/reusable/table/table.component';
 import { ChipsComponent } from '@app/reusable/chips/chips.component';
 import { ButtonComponent } from '@app/reusable/button/button.component';
-import { Resume } from '../../models/resume.model';
+import { PublicResume } from '../../models/resume.model';
 import { DatePipe } from '@angular/common';
 import { effect, signal } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ResumeStateService } from '../../services/resume-state.service';
 
-interface ResumeTableItem extends Resume {
-  statusObject: Resume; 
+interface ResumeTableItem extends PublicResume {
+  statusObject: PublicResume; 
 }
 
 @Component({
@@ -32,7 +32,7 @@ export class ResumeTableComponent {
   private enablePageEvents = signal<boolean>(false);
 
   // Accept signal values from parent component
-  resumes = input<Resume[]>([]);
+  resumes = input<PublicResume[]>([]);
   isLoading = input<boolean>(false);
   totalCount = input<number>(0);
   pageSize = input<number>(10);
@@ -60,7 +60,7 @@ export class ResumeTableComponent {
       
       // Create proper ResumeTableItem objects
       this.dataSource.data = data.map(resume => {
-        // Create a new object that has all Resume properties and methods
+        // Create a new object that has all PublicResume properties and methods
         const item = Object.create(Object.getPrototypeOf(resume));
         
         // Copy all properties from the original resume
@@ -84,7 +84,7 @@ export class ResumeTableComponent {
     });
   }
   
-  viewResume(resume: Resume): void {
+  viewResume(resume: PublicResume): void {
     // Add null check to prevent errors
     if (!resume) {
       console.error('Resume is undefined');
@@ -121,12 +121,27 @@ export class ResumeTableComponent {
   /**
    * Get the status display text for a resume
    */
-  getStatusText(resume: Resume | null): string {
+  getStatusText(resume: PublicResume | null): string {
     if (!resume) {
       return 'N/A';
     }
     
     const counts = resume.getHrScreeningStatusCounts();
     return `Passed: ${counts.passed} / Not passed: ${counts.notPassed}`;
+  }
+
+  /**
+   * Format the date for display
+   */
+  formatDate(date: Date | null): string {
+    if (!date) return 'N/A';
+    
+    const options: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    };
+    
+    return date.toLocaleDateString('en-US', options);
   }
 }

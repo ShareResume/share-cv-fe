@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResumeStateService } from '../../services/resume-state.service';
-import { Resume } from '../../models/resume.model';
+import { PublicResume } from '../../models/resume.model';
 import { ButtonComponent } from '../../../../reusable/button/button.component';
 import { DatePipe, NgClass } from '@angular/common';
 import { ChipsComponent } from '../../../../reusable/chips/chips.component';
@@ -25,7 +25,7 @@ export class ResumeDetailPageComponent implements OnInit {
   private resumeStateService = inject(ResumeStateService);
   private sanitizer = inject(DomSanitizer);
   
-  resume = signal<Resume | null>(null);
+  resume = signal<PublicResume | null>(null);
   resumeUrl = signal<string | null>(null);
   error = signal<string | null>(null);
   
@@ -39,9 +39,13 @@ export class ResumeDetailPageComponent implements OnInit {
     const selectedResume = this.resumeStateService.selectedResume();
     
     if (selectedResume && selectedResume.id === resumeId) {
-      this.resume.set(selectedResume);
-      //TODO: retrieve from BE
-      this.resumeUrl.set(`https://s29.q4cdn.com/175625835/files/doc_downloads/test.pdf`);
+      // Ensure we're working with a PublicResume
+      if (this.isPublicResume(selectedResume)) {
+        this.resume.set(selectedResume);
+        this.resumeUrl.set(selectedResume.document?.url || null);
+      } else {
+        this.error.set('Invalid resume format');
+      }
     } else if (resumeId) {
       // If we don't have the resume or it doesn't match the ID, redirect back to the list
       this.error.set('Resume not found');
@@ -60,5 +64,28 @@ export class ResumeDetailPageComponent implements OnInit {
     return this.resumeUrl() 
       ? this.sanitizer.bypassSecurityTrustResourceUrl(this.resumeUrl()!)
       : this.sanitizer.bypassSecurityTrustResourceUrl('');
+  }
+
+  /**
+   * Get the formatted published date
+   */
+  getPublishedDate(): string {
+    if (!this.resume()) return 'N/A';
+    return this.resume()!.date ? this.formatDate(this.resume()!.date) : 'N/A';
+  }
+
+  /**
+   * Format date as MMM d, y
+   */
+  private formatDate(date: Date): string {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  }
+
+  /**
+   * Type guard to check if a resume is a PublicResume
+   */
+  private isPublicResume(resume: any): resume is PublicResume {
+    return resume && 'document' in resume && 'date' in resume;
   }
 } 

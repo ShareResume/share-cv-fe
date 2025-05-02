@@ -2,8 +2,8 @@ import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { environment } from '@environments/environment';
 import { CompanyStat, StatCategoryEnum } from '../models/company-stat.model';
-import { ResumeData } from '@app/features/resume/models/resume.model';
-import { SpecializationEnum } from '@app/features/resume/models/specialization.enum';
+import { PrivateResumeData, ResumeStatusEnum } from '@app/features/resume/models/resume.model';
+import { SpecializationEnum } from '@app/core/enums/specialization.enum';
 import { Comment, CommentCreateRequest, CommentsResponse, CommentVoteRequest } from '@app/features/resume/models/comment.model';
 
 /**
@@ -44,7 +44,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
     if (company) {
       filteredData = filteredData.filter(item =>
-        item.companies.some(c =>
+        item.companies.some((c: any) =>
           c.name.toLowerCase().includes(company.toLowerCase()),
         ),
       );
@@ -53,7 +53,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     if (status) {
       const statusIsAccepted = status.toLowerCase() === 'accepted';
       filteredData = filteredData.filter(item =>
-        item.companies.some(c => c.isHrScreeningPassed === statusIsAccepted),
+        item.companies.some((c: any) => c.isHrScreeningPassed === statusIsAccepted),
       );
     }
 
@@ -72,7 +72,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
     // Return the paginated response
     return of(
-      new HttpResponse<ResumeData[]>({
+      new HttpResponse<PrivateResumeData[]>({
         status: 200,
         body: paginatedData,
         headers: req.headers.append(
@@ -192,7 +192,7 @@ function getMockStatisticsData(): CompanyStat[] {
 /**
  * Get mock resume data for the API
  */
-function getMockResumeData(): ResumeData[] {
+function getMockResumeData(): PrivateResumeData[] {
   // Company names to use in mock data
   const companies = [
     {
@@ -229,14 +229,12 @@ function getMockResumeData(): ResumeData[] {
 
   // Specializations to use in mock data
   const specializations = [
-    SpecializationEnum.FRONTEND,
-    SpecializationEnum.BACKEND,
-    SpecializationEnum.FULLSTACK,
-    SpecializationEnum.MOBILE,
-    SpecializationEnum.DEVOPS,
+    SpecializationEnum.Frontend,
+    SpecializationEnum.Backend,
+    SpecializationEnum.FullStack,
+    SpecializationEnum.DevOps,
     SpecializationEnum.QA,
-    SpecializationEnum.UX_DESIGNER,
-    SpecializationEnum.DATA_SCIENTIST,
+    SpecializationEnum.UIUX,
   ];
 
   // Generate 25 mock resume items for pagination testing
@@ -249,31 +247,47 @@ function getMockResumeData(): ResumeData[] {
     // Generate a random date within the last 30 days
     const date = new Date();
     date.setDate(date.getDate() - Math.floor(Math.random() * 30));
+    
+    // Create mock company data
+    const mockCompanies = Array.from({ length: Math.floor(Math.random() * 3) + 1 }, (_, j) => {
+      const cIdx = (companyIndex + j) % companies.length;
+      return {
+        ...companies[cIdx],
+        isHrScreeningPassed: Math.random() > 0.5, // Randomly true or false
+      };
+    });
 
-    // Assign 1-3 random companies to each resume
-    const numCompanies = Math.floor(Math.random() * 3) + 1;
-    const resumeCompanies = [];
-    for (let j = 0; j < numCompanies; j++) {
-      const randomCompanyIndex = (companyIndex + j) % companies.length;
-      const isHrScreeningPassed = Math.random() > 0.5; // Random boolean
+    // Create mock documents
+    const mockDocuments = [
+      {
+        accessType: 'PUBLIC',
+        url: `https://example.com/resume-${authorId}-public.pdf`,
+        name: `Resume-${authorId}-Public.pdf`,
+      },
+      {
+        accessType: 'PRIVATE',
+        url: `https://example.com/resume-${authorId}-private.pdf`,
+        name: `Resume-${authorId}-Private.pdf`,
+      },
+    ];
 
-      resumeCompanies.push({
-        ...companies[randomCompanyIndex],
-        isHrScreeningPassed,
-      });
-    }
+    // Get a random resume status
+    const statuses = [
+      ResumeStatusEnum.APPROVED,
+      ResumeStatusEnum.REJECTED,
+      ResumeStatusEnum.WAITING_FOR_APPROVE
+    ];
+    const statusIndex = i % statuses.length;
 
     return {
-      id: (i + 1).toString(),
-      document: {
-        accessType: 'public',
-        url: `https://example.com/resume-${i + 1}.pdf`,
-        name: `resume-${i + 1}.pdf`,
-      },
-      companies: resumeCompanies,
+      id: `resume-${authorId}`,
+      documents: mockDocuments,
+      companies: mockCompanies,
       speciality: specializations[specializationIndex],
       yearsOfExperience: yoe,
-      date: date.toISOString().split('T')[0], // YYYY-MM-DD format
+      createdAt: date.toISOString(),
+      resumeStatus: statuses[statusIndex],
+      hidden: false
     };
   });
 }
