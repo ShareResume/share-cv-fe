@@ -8,6 +8,7 @@ import { PrivateResume, Resume, ResumeStatusEnum } from '@app/features/resume/mo
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IconComponent } from '@app/reusable/icon/icon.component';
+import { AdminResumeStateService } from '../../services/admin-resume-state.service';
 
 interface AdminTableItem extends PrivateResume {
   statusObject: PrivateResume;
@@ -52,7 +53,10 @@ export class AdminTableComponent {
     actions: '',
   };
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private adminResumeStateService: AdminResumeStateService
+  ) {
     // Set up effect to update data source when resumes change
     this.setupResumeEffect();
   }
@@ -180,5 +184,37 @@ export class AdminTableComponent {
     }
     
     return documents.some(doc => doc.accessType === 'PUBLIC');
+  }
+
+  viewResumeDetails(resume: any): void {
+    console.log('Viewing resume details for:', resume);
+    
+    if (!resume || !resume.id) {
+      console.error('Invalid resume object for details view', resume);
+      return;
+    }
+    
+    try {
+      // Extract the value from the "statusObject" property if it exists
+      // This is needed because the template might pass the entire row object
+      const resumeData = resume.statusObject || resume;
+      
+      // Store the selected resume in the state service for access on the detail page
+      if (resumeData instanceof PrivateResume) {
+        console.log('Resume is a PrivateResume instance');
+        this.adminResumeStateService.setSelectedResume(resumeData);
+      } else {
+        // Convert to PrivateResume instance if not already
+        console.log('Converting to PrivateResume instance');
+        const resumeInstance = PrivateResume.fromJson(resumeData);
+        this.adminResumeStateService.setSelectedResume(resumeInstance);
+      }
+      
+      // Navigate to the detail page
+      console.log('Navigating to:', '/admin/resume/' + resumeData.id);
+      this.router.navigate(['/admin/resume', resumeData.id]);
+    } catch (error) {
+      console.error('Error processing resume for details view', error);
+    }
   }
 }

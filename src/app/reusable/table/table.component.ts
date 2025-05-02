@@ -26,6 +26,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { TableSelectionChange } from '@app/core/models/table.model';
 
+export interface TableCellContext<T = any> {
+  value: any;
+  row: T;
+}
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -58,7 +63,7 @@ export class TableComponent<T> implements AfterViewInit {
     new MatTableDataSource<T>([]),
   );
 
-  public customTemplate = input<Record<string, TemplateRef<{ value: string }>>>(
+  public customTemplate = input<Record<string, TemplateRef<TableCellContext<T>>>>(
     {},
   );
 
@@ -77,7 +82,7 @@ export class TableComponent<T> implements AfterViewInit {
 
   public getTemplate(
     column: string,
-  ): TemplateRef<{ value: string }> | undefined {
+  ): TemplateRef<TableCellContext<T>> | undefined {
     return this.customTemplate()![column];
   }
 

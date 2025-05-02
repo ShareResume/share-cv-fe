@@ -42,6 +42,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/admin/pages/admin-page.component').then(m => m.AdminPageComponent),
         canActivate: [adminGuard],
       },
+      {
+        path: 'admin/resume/:id',
+        loadComponent: () => import('./features/admin/pages/admin-resume-detail-page.component').then(m => m.AdminResumeDetailPageComponent),
+        canActivate: [adminGuard],
+      },
     ],
   },
   {

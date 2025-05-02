@@ -1,0 +1,202 @@
+@use 'variables' as *;
+
+.admin-resume-detail-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.error-message {
+  background-color: $resume-error-bg;
+  color: $resume-error-text;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 16px;
+  color: $color-text-secondary;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: $color-white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.status-badge {
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  
+  &.status-approved {
+    background-color: $chip-bg-color-active;
+    color: $chip-color-active;
+  }
+  
+  &.status-rejected {
+    background-color: $chip-bg-color-cancelled;
+    color: $chip-color-cancelled;
+  }
+  
+  &.status-waiting {
+    background-color: $chip-bg-color-pending;
+    color: $chip-color-pending;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  gap: 12px;
+  
+  app-button {
+    margin-right: 8px;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.resume-info {
+  background-color: $color-white;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.resume-header {
+  margin-bottom: 24px;
+  
+  h1 {
+    margin-bottom: 16px;
+    font-size: 24px;
+    color: $color-text-primary;
+  }
+}
+
+.resume-metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.metadata-item {
+  .label {
+    font-weight: 500;
+    color: $color-text-secondary;
+    margin-right: 8px;
+  }
+}
+
+.documents-section {
+  margin-top: 32px;
+  
+  h2 {
+    font-size: 20px;
+    color: $color-text-primary;
+    margin-bottom: 16px;
+  }
+}
+
+.documents-container {
+  display: flex;
+  gap: 24px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.document-panel {
+  flex: 1;
+  border: 1px solid $color-gray-400;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.document-header {
+  padding: 12px 16px;
+  background-color: $color-gray-100;
+  border-bottom: 1px solid $color-gray-400;
+  
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    color: $color-text-primary;
+  }
+}
+
+.document-viewer {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+.no-document {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  background-color: $color-gray-50;
+  color: $color-text-secondary;
+  font-size: 14px;
+}
+
+.companies-section {
+  margin-top: 32px;
+  
+  h2 {
+    font-size: 20px;
+    color: $color-text-primary;
+    margin-bottom: 16px;
+  }
+}
+
+.companies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.company-item {
+  padding: 16px;
+  background-color: $color-gray-100;
+  border-radius: 8px;
+  border: 1px solid $color-gray-400;
+}
+
+.company-name {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: $color-text-primary;
+}
+
+.hr-status {
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  
+  &.hr-passed {
+    background-color: $chip-bg-color-active;
+    color: $chip-color-active;
+  }
+  
+  &.hr-failed {
+    background-color: $chip-bg-color-cancelled;
+    color: $chip-color-cancelled;
+  }
+} 

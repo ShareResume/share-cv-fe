@@ -46,11 +46,14 @@
   </div>
 </ng-template>
 
-<ng-template #actionsTemplate let-value="value">
+<ng-template #actionsTemplate let-value="value" let-row="row">
   <div class="action-buttons">
+    <app-button variant="primary" size="small" (click)="viewResumeDetails(row)">
+      Details
+    </app-button>
     <app-button variant="outline" size="small" 
-                (click)="viewDocument(getPublicDocumentUrl(value))" 
-                [disabled]="!getPublicDocumentUrl(value)">
+                (click)="viewDocument(getPublicDocumentUrl(row))" 
+                [disabled]="!getPublicDocumentUrl(row)">
       View
     </app-button>
   </div>

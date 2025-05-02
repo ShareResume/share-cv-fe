@@ -14,7 +14,7 @@
           <ng-container
             *ngTemplateOutlet="
               getTemplate(column)!;
-              context: { value: element[column] }
+              context: { value: element[column], row: element }
             "
           ></ng-container>
         } @else {

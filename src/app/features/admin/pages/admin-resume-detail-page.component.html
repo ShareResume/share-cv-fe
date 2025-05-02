@@ -1,0 +1,109 @@
+<div class="admin-resume-detail-container">
+  @if (error()) {
+    <div class="error-message">{{ error() }}</div>
+  } @else if (resume()) {
+    <!-- Action buttons section -->
+    <div class="action-buttons">
+      <div class="status-badge" [ngClass]="getStatusClass()">
+        {{ formatStatusText() }}
+      </div>
+      
+      <div class="buttons-container">
+        <app-button variant="primary" [disabled]="resumeStatus() === 'APPROVED'" (click)="approveResume()">
+          Approve
+        </app-button>
+        
+        <app-button variant="destructive" [disabled]="resumeStatus() === 'REJECTED'" (click)="rejectResume()">
+          Reject
+        </app-button>
+        
+        <app-button variant="secondary" (click)="uploadEditedDocument()">
+          Upload Edited Document
+        </app-button>
+        
+        <app-button variant="outline" (click)="navigateBack()">
+          Back to List
+        </app-button>
+      </div>
+    </div>
+    
+    <!-- Resume information section -->
+    <div class="resume-info">
+      <div class="resume-header">
+        <h1>Resume Details</h1>
+        <div class="resume-metadata">
+          <div class="metadata-item">
+            <span class="label">ID:</span>
+            <span>{{ resume()?.id }}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="label">Created Date:</span>
+            <span>{{ getFormattedDate(resume()?.createdAt) }}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="label">Specialization:</span>
+            <span>{{ resume()?.speciality }}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="label">Experience:</span>
+            <span>{{ resume()?.yearsOfExperience }} years</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Documents section -->
+      <div class="documents-section">
+        <h2>Resume Documents</h2>
+        
+        <div class="documents-container">
+          <!-- Private document -->
+          <div class="document-panel">
+            <div class="document-header">
+              <h3>Private Document</h3>
+            </div>
+            @if (privateDocumentUrl()) {
+              <iframe [src]="safePrivateDocUrl()" class="document-viewer" title="Private Resume Document"></iframe>
+            } @else {
+              <div class="no-document">
+                No private document available
+              </div>
+            }
+          </div>
+          
+          <!-- Public document -->
+          <div class="document-panel">
+            <div class="document-header">
+              <h3>Public Document</h3>
+            </div>
+            @if (publicDocumentUrl()) {
+              <iframe [src]="safePublicDocUrl()" class="document-viewer" title="Public Resume Document"></iframe>
+            } @else {
+              <div class="no-document">
+                No public document available
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      
+      <!-- Company Information -->
+      @if (resume()?.companies && resume()?.companies!.length > 0) {
+        <div class="companies-section">
+          <h2>Companies</h2>
+          <div class="companies-list">
+            @for (company of resume()?.companies; track company.id) {
+              <div class="company-item">
+                <div class="company-name">{{ company.name }}</div>
+                <div class="hr-status" [ngClass]="{'hr-passed': company.isHrScreeningPassed, 'hr-failed': !company.isHrScreeningPassed}">
+                  HR Screening: {{ company.isHrScreeningPassed ? 'Passed' : 'Not Passed' }}
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="loading">Loading resume details...</div>
+  }
+</div> 
