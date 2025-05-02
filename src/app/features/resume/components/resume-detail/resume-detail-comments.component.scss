@@ -13,78 +13,74 @@ $red-600: $color-error-light;
 $green-600: $color-success;
 
 .comments-section {
-  background-color: $white;
-  border-radius: 8px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
-  overflow: hidden;
+  margin-top: $spacing-xl;
+  padding: $spacing-lg;
+  border-radius: $resume-border-radius;
+  background-color: $color-white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .comments-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
-  border-bottom: 1px solid $gray-200;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0 0 16px;
-  color: $gray-900;
-}
-
-.comments-sort {
-  position: relative;
-}
-
-.sort-dropdown {
-  appearance: none;
-  background-color: $white;
-  border: 1px solid $gray-200;
-  border-radius: 8px;
-  padding: 8px 32px 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
+  margin-bottom: $spacing-lg;
   
-  &:focus {
-    outline: none;
-    border-color: $gray-400;
+  .section-title {
+    font-size: $resume-table-title-size;
+    font-weight: $font-weight-medium;
+    margin: 0;
+  }
+  
+  .comments-sort {
+    .sort-dropdown {
+      padding: $spacing-sm;
+      border: 1px solid $color-gray-500;
+      border-radius: 4px;
+      background-color: $color-white;
+      font-size: $filter-label-size;
+    }
   }
 }
 
 .comments-list {
-  padding: 24px;
+  .loading-comments, .comments-error, .no-comments {
+    text-align: center;
+    padding: $spacing-md;
+    color: $color-gray-600;
+  }
+  
+  .comments-error {
+    color: $color-error-light;
+  }
 }
 
-// Comment Styling
-.comment {
-  margin-bottom: 24px;
-  border-left: 4px solid transparent;
-  transition: all 0.2s ease;
+/* Comment thread structure */
+.comment-thread {
+  margin-bottom: $spacing-lg;
+}
 
+.comment, .reply {
+  padding: $spacing-sm;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  
   &.highlighted {
-    border-left-color: $gray-900;
-    background-color: $gray-50;
-    border-radius: 0 8px 8px 0;
-    padding-left: 12px;
+    background-color: rgba($color-black, 0.05);
   }
 }
 
 .comment-container {
   display: flex;
-  gap: 16px;
+  gap: $spacing-sm;
 }
 
 .comment-avatar {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-
+  
   img {
-    width: 100%;
-    height: 100%;
+    width: $resume-avatar-size;
+    height: $resume-avatar-size;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -92,164 +88,168 @@ $green-600: $color-success;
 
 .comment-content {
   flex: 1;
-}
-
-.comment-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.comment-author {
-  font-weight: 500;
-  color: $gray-900;
-  margin-right: 12px;
-}
-
-.comment-date {
-  font-size: 14px;
-  color: $gray-500;
-}
-
-.comment-text {
-  margin-bottom: 12px;
-  color: $gray-600;
-  line-height: 1.5;
-}
-
-.comment-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.vote-button, .reply-button {
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 14px;
-  color: $gray-600;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: $gray-100;
-  }
-
-  &.active {
-    color: $gray-900;
-    font-weight: 500;
-  }
-
-  i {
-    margin-right: 0;
-  }
-}
-
-.vote-button.up.active {
-  color: $green-600;
-}
-
-.vote-button.down.active {
-  color: $red-600;
-}
-
-.reaction-count {
-  font-size: 14px;
-  font-weight: 500;
-  color: $gray-600;
-  min-width: 24px;
-  text-align: center;
   
-  &.positive {
-    color: $green-600;
-  }
-  
-  &.negative {
-    color: $red-600;
-  }
-}
-
-// Replies styling
-.replies {
-  margin-left: 56px;
-  margin-top: 16px;
-  
-  .reply {
+  .comment-header {
     display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-}
-
-// Reply form
-.reply-form {
-  margin-left: 56px;
-  margin-top: 16px;
-  margin-bottom: 24px;
-
-  textarea {
-    width: 100%;
-    border: 1px solid $gray-200;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    resize: vertical;
-    margin-bottom: 12px;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xs;
     
-    &:focus {
-      outline: none;
-      border-color: $gray-400;
+    .comment-author {
+      font-weight: $font-weight-medium;
+      font-size: $filter-label-size;
+    }
+    
+    .comment-date {
+      font-size: $filter-label-size;
+      color: $color-gray-700;
+    }
+  }
+  
+  .comment-text {
+    font-size: $resume-text-size;
+    line-height: 1.5;
+    margin-bottom: $spacing-sm;
+    word-break: break-word;
+  }
+  
+  .comment-actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    
+    .vote-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: $spacing-xs;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &.active {
+        color: $color-black;
+      }
+      
+      &:hover {
+        background-color: $color-gray-200;
+        border-radius: 4px;
+      }
+    }
+    
+    .reaction-count {
+      font-size: $filter-label-size;
+      
+      &.positive {
+        color: $color-success;
+      }
+      
+      &.negative {
+        color: $color-error-light;
+      }
+    }
+    
+    .reply-button {
+      background: none;
+      border: none;
+      font-size: $filter-label-size;
+      color: $color-gray-600;
+      cursor: pointer;
+      padding: $spacing-xs $spacing-sm;
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+/* Reddit-like reply structure with indentation and connecting lines */
+.replies {
+  margin-left: $spacing-lg;
+  margin-top: $spacing-sm;
+  border-left: 2px solid $color-gray-500;
+  padding-left: $spacing-md;
 }
 
-// New comment form
+.reply-thread {
+  position: relative;
+  
+  &:not(:last-child) {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.reply {
+  background-color: $color-gray-50;
+}
+
+.reply-form {
+  margin: $spacing-sm 0 $spacing-sm $spacing-lg;
+  padding-left: $spacing-md;
+  border-left: 2px solid $color-black;
+  
+  textarea {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid $color-gray-500;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: $font-family-primary;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-black;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+  }
+}
+
 .new-comment {
   display: flex;
-  gap: 16px;
-  margin-top: 24px;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+  
+  .comment-avatar {
+    flex-shrink: 0;
+    
+    img {
+      width: $resume-avatar-size;
+      height: $resume-avatar-size;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
   
   .new-comment-form {
     flex: 1;
     
     textarea {
       width: 100%;
-      border: 1px solid $gray-200;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 16px;
+      padding: $spacing-sm;
+      border: 1px solid $color-gray-500;
+      border-radius: 4px;
       resize: vertical;
-      margin-bottom: 12px;
+      font-family: $font-family-primary;
       
       &:focus {
         outline: none;
-        border-color: $gray-400;
+        border-color: $color-black;
       }
     }
+    
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: $spacing-sm;
+    }
   }
-}
-
-// Loading and error states
-.loading-comments,
-.comments-error,
-.no-comments {
-  text-align: center;
-  padding: 24px;
-  color: $gray-600;
-}
-
-.comments-error {
-  color: $red-600;
 }
 
 // Icon styles (placeholders for actual icons)
@@ -257,12 +257,12 @@ $green-600: $color-success;
 .icon-downvote:before { content: "↓"; }
 
 // Responsive styles
-@media (max-width: 768px) {
+@media (max-width: $filter-bp-mobile) {
   .replies {
-    margin-left: 24px;
+    margin-left: $spacing-lg;
   }
   
   .reply-form {
-    margin-left: 24px;
+    margin-left: $spacing-lg;
   }
 } 

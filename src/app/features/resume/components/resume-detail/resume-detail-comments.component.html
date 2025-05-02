@@ -24,87 +24,20 @@
       <div class="no-comments">No comments yet. Be the first to comment!</div>
     }
 
+    <!-- Top-level comments with recursive replies -->
     @for (comment of comments(); track comment.id) {
-      <div class="comment" [class.highlighted]="comment.id === replyingToComment()?.id">
-        <div class="comment-container">
-          <div class="comment-avatar">
-            <img [src]="comment.authorAvatarUrl" alt="User avatar">
-          </div>
-          <div class="comment-content">
-            <div class="comment-header">
-              <span class="comment-author">{{ comment.authorName }}</span>
-              <span class="comment-date">{{ comment.createdAt | date:'MMM d, y' }}</span>
-            </div>
-            <div class="comment-text">{{ comment.text }}</div>
-            <div class="comment-actions">
-              <button class="vote-button up" [class.active]="comment.userVoteState === 'UP'" (click)="voteOnComment(comment, 'UP')">
-                <i class="icon-upvote"></i>
-              </button>
-              <span class="reaction-count" [class.positive]="comment.reactionsRate > 0" [class.negative]="comment.reactionsRate < 0">
-                {{ comment.reactionsRate }}
-              </span>
-              <button class="vote-button down" [class.active]="comment.userVoteState === 'DOWN'" (click)="voteOnComment(comment, 'DOWN')">
-                <i class="icon-downvote"></i>
-              </button>
-              <button class="reply-button" (click)="replyToComment(comment)">Reply</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Replies to this comment -->
-        @if (comment.replies && comment.replies.length > 0) {
-          <div class="replies">
-            @for (reply of comment.replies; track reply.id) {
-              <div class="reply">
-                <div class="comment-avatar">
-                  <img [src]="reply.authorAvatarUrl" alt="User avatar">
-                </div>
-                <div class="comment-content">
-                  <div class="comment-header">
-                    <span class="comment-author">{{ reply.authorName }}</span>
-                    <span class="comment-date">{{ reply.createdAt | date:'MMM d, y' }}</span>
-                  </div>
-                  <div class="comment-text">{{ reply.text }}</div>
-                  <div class="comment-actions">
-                    <button class="vote-button up" [class.active]="reply.userVoteState === 'UP'" (click)="voteOnComment(reply, 'UP')">
-                      <i class="icon-upvote"></i>
-                    </button>
-                    <span class="reaction-count" [class.positive]="reply.reactionsRate > 0" [class.negative]="reply.reactionsRate < 0">
-                      {{ reply.reactionsRate }}
-                    </span>
-                    <button class="vote-button down" [class.active]="reply.userVoteState === 'DOWN'" (click)="voteOnComment(reply, 'DOWN')">
-                      <i class="icon-downvote"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
-        }
-
-        <!-- Reply form if replying to this comment -->
-        @if (replyingToComment()?.id === comment.id) {
-          <div class="reply-form">
-            <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-              <textarea
-                formControlName="text"
-                placeholder="Write your reply..."
-                rows="3"
-              ></textarea>
-              <div class="form-actions">
-                <app-button [colorType]="'secondary'" (click)="cancelReply()">Cancel</app-button>
-                <app-button 
-                  [colorType]="'primary'" 
-                  [disabled]="commentForm.invalid" 
-                  type="submit">Reply</app-button>
-              </div>
-            </form>
-          </div>
-        }
-      </div>
+      <app-comment-item 
+        [comment]="comment" 
+        [replyingToId]="replyingToComment()?.id || null"
+        [level]="0"
+        (vote)="handleVote($event)"
+        (replyClick)="replyToComment($event)"
+        (submitReply)="handleSubmitReply($event)"
+        (cancelReplyEvent)="cancelReply()">
+      </app-comment-item>
     }
 
-    <!-- New comment form -->
+    <!-- New comment form - only show at top level when not replying -->
     @if (!replyingToComment()) {
       <div class="new-comment">
         <div class="comment-avatar">

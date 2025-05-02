@@ -1,0 +1,64 @@
+<div class="comment-item" [style.margin-left.px]="level > 0 ? 20 : 0" [class.child-comment]="level > 0" [class.first-reply]="isFirstReply">
+  <div class="comment-connector" *ngIf="level > 0"></div>
+  <div class="comment" [class.highlighted]="isReplyingToThisComment">
+    <div class="comment-container">
+      <div class="comment-content">
+        <div class="comment-header">
+          <span class="comment-author">{{ comment.authorName || 'Anonymous' }}</span>
+          <span class="comment-date">{{ comment.createdAt | date:'medium' }}</span>
+        </div>
+        <div class="comment-text">{{ comment.text }}</div>
+        <div class="comment-actions">
+          <button class="vote-button up" [class.active]="comment.userVoteState === 'UP'" (click)="handleVote(comment, 'UP')">
+            <i class="icon-upvote"></i>
+          </button>
+          <span class="reaction-count" [class.positive]="comment.reactionsRate > 0" [class.negative]="comment.reactionsRate < 0">
+            {{ comment.reactionsRate }}
+          </span>
+          <button class="vote-button down" [class.active]="comment.userVoteState === 'DOWN'" (click)="handleVote(comment, 'DOWN')">
+            <i class="icon-downvote"></i>
+          </button>
+          <button class="reply-button" (click)="replyToComment(comment)">Reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reply form -->
+  @if (isReplyingToThisComment) {
+    <div class="reply-form">
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+        <textarea
+          formControlName="text"
+          placeholder="Write your reply..."
+          rows="3"
+        ></textarea>
+        <div class="form-actions">
+          <app-button [colorType]="'secondary'" (click)="cancelReply()">Cancel</app-button>
+          <app-button 
+            [colorType]="'primary'" 
+            [disabled]="commentForm.invalid" 
+            type="submit">Reply</app-button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <!-- Nested replies - recursive component usage -->
+  @if (comment.replies && comment.replies.length > 0) {
+    <div class="replies">
+      @for (reply of comment.replies; track reply.id; let first = $first) {
+        <app-comment-item 
+          [comment]="reply" 
+          [replyingToId]="replyingToId"
+          [level]="level + 1"
+          [isFirstReply]="first"
+          (vote)="vote.emit($event)"
+          (replyClick)="replyClick.emit($event)"
+          (submitReply)="submitReply.emit($event)"
+          (cancelReplyEvent)="cancelReplyEvent.emit()">
+        </app-comment-item>
+      }
+    </div>
+  }
+</div> 

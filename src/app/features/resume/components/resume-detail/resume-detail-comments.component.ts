@@ -6,6 +6,7 @@ import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { ButtonComponent } from '../../../../reusable/button/button.component';
 import { CommentsService } from '../../services/comments.service';
 import { Comment, CommentCreateRequest, CommentVoteRequest } from '../../models/comment.model';
+import { CommentItemComponent } from './comment-item.component';
 
 interface CommentForm {
   text: FormControl<string>;
@@ -20,7 +21,11 @@ interface CommentForm {
     ReactiveFormsModule,
     FormsModule,
     DatePipe,
-    ButtonComponent
+    ButtonComponent,
+    NgFor,
+    NgIf,
+    NgClass,
+    CommentItemComponent
   ]
 })
 export class ResumeDetailCommentsComponent implements OnChanges {
@@ -57,8 +62,46 @@ export class ResumeDetailCommentsComponent implements OnChanges {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
-          this.comments.set(response.data);
+          // Check if response is an array (direct data) or has a data property
+          const flatComments = Array.isArray(response) ? response : (response?.data || []);
+          
+          // Transform flat comments array into hierarchical structure
+          const commentMap = new Map<string, Comment>();
+          const rootComments: Comment[] = [];
+          
+          // First pass: map all comments by ID
+          flatComments.forEach(comment => {
+            // Ensure the comment has a replies array
+            comment.replies = [];
+            commentMap.set(comment.id, comment);
+          });
+          
+          // Second pass: organize into parent-child relationships
+          flatComments.forEach(comment => {
+            if (comment.parentCommentId) {
+              // This is a child comment - add it to its parent's replies
+              const parentComment = commentMap.get(comment.parentCommentId);
+              if (parentComment) {
+                if (!parentComment.replies) {
+                  parentComment.replies = [];
+                }
+                parentComment.replies.push(comment);
+              } else {
+                // If parent not found, treat as a root comment
+                rootComments.push(comment);
+              }
+            } else {
+              // This is a root comment (no parent)
+              rootComments.push(comment);
+            }
+          });
+          
+          // Set the organized comments to display
+          this.comments.set(rootComments);
           this.isLoadingComments.set(false);
+          
+          // Apply sorting after organizing the hierarchy
+          this.updateSort(this.selectedSort());
         },
         error: (error: HttpErrorResponse) => {
           console.error('Error loading comments:', error);
@@ -82,28 +125,15 @@ export class ResumeDetailCommentsComponent implements OnChanges {
     this.commentsService.createComment(newComment)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (comment) => {
-          // Update comments list
-          if (this.replyingToComment()) {
-            // If this is a reply, find the parent comment and add this as a reply
-            this.comments.update(comments => 
-              comments.map(c => {
-                if (c.id === this.replyingToComment()?.id) {
-                  return {
-                    ...c,
-                    replies: [...(c.replies || []), comment]
-                  };
-                }
-                return c;
-              })
-            );
-            this.cancelReply();
-          } else {
-            // Add as a new top-level comment
-            this.comments.update(comments => [comment, ...comments]);
-          }
+        next: () => {
           // Reset form
           this.commentForm.reset();
+          this.cancelReply();
+          
+          // Refresh comments
+          if (this.resumeId) {
+            this.loadComments(this.resumeId);
+          }
         },
         error: (error: HttpErrorResponse) => {
           console.error('Error posting comment:', error);
@@ -120,26 +150,20 @@ export class ResumeDetailCommentsComponent implements OnChanges {
     this.commentForm.reset();
   }
   
-  voteOnComment(comment: Comment, voteState: 'UP' | 'DOWN'): void {
-    // Toggle vote off if already voted the same way
-    const newVoteState = comment.userVoteState === voteState ? null : voteState;
-    
+  // Handler for vote events from comment-item component
+  handleVote(event: {comment: Comment, voteState: 'UP' | 'DOWN'}): void {
+    const { comment, voteState } = event;
     this.commentsService.voteOnComment({
       commentId: comment.id,
       voteState: voteState
     })
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe({
-      next: (updatedComment) => {
-        // Update the comments list with the updated vote counts
-        this.comments.update(comments => 
-          comments.map(c => {
-            if (c.id === updatedComment.id) {
-              return updatedComment;
-            }
-            return c;
-          })
-        );
+      next: () => {
+        // Refresh comments to get updated vote counts
+        if (this.resumeId) {
+          this.loadComments(this.resumeId);
+        }
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error voting on comment:', error);
@@ -147,12 +171,41 @@ export class ResumeDetailCommentsComponent implements OnChanges {
     });
   }
   
+  // Handler for reply submission from nested comments
+  handleSubmitReply(event: {parentId: string, text: string}): void {
+    if (!this.resumeId) {
+      return;
+    }
+    
+    const newComment: CommentCreateRequest = {
+      resumeId: this.resumeId,
+      text: event.text,
+      parentCommentId: event.parentId
+    };
+    
+    this.commentsService.createComment(newComment)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.cancelReply();
+          
+          // Refresh comments
+          if (this.resumeId) {
+            this.loadComments(this.resumeId);
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Error posting reply:', error);
+        }
+      });
+  }
+  
   updateSort(sort: string): void {
     this.selectedSort.set(sort);
     
     // Reorder comments based on sort option
-    this.comments.update(comments => {
-      return [...comments].sort((a, b) => {
+    this.comments.update(rootComments => {
+      const sortFunction = (a: Comment, b: Comment) => {
         if (this.selectedSort() === 'Most Helpful') {
           return b.reactionsRate - a.reactionsRate;
         } else if (this.selectedSort() === 'Newest') {
@@ -160,7 +213,33 @@ export class ResumeDetailCommentsComponent implements OnChanges {
         } else { // Oldest
           return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         }
+      };
+      
+      // Sort root comments
+      const sortedRoots = [...rootComments].sort(sortFunction);
+      
+      // Recursively sort child comments
+      const sortReplies = (replies: Comment[]) => {
+        if (!replies || replies.length === 0) return [];
+        
+        const sortedReplies = [...replies].sort(sortFunction);
+        sortedReplies.forEach(reply => {
+          if (reply.replies && reply.replies.length > 0) {
+            reply.replies = sortReplies(reply.replies);
+          }
+        });
+        
+        return sortedReplies;
+      };
+      
+      // Apply sorting to all replies
+      sortedRoots.forEach(comment => {
+        if (comment.replies && comment.replies.length > 0) {
+          comment.replies = sortReplies(comment.replies);
+        }
       });
+      
+      return sortedRoots;
     });
   }
 } 
