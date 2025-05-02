@@ -93,13 +93,15 @@ export class ResumeService {
         : this.DEFAULT_SORT_ORDER,
       company: params.company || undefined,
       companyId: params.companyId || undefined,
-      specialization: params.specialization || undefined,
-      status: params.status || undefined,
-      minYoe: params.minYoe !== undefined && !isNaN(Number(params.minYoe))
-        ? Number(params.minYoe)
+      speciality: params.speciality || undefined,
+      isHrScreeningPassed: params.isHrScreeningPassed,
+      'yearOfExperienceRange.min': params['yearOfExperienceRange.min'] !== undefined && 
+                                  !isNaN(Number(params['yearOfExperienceRange.min']))
+        ? Number(params['yearOfExperienceRange.min'])
         : undefined,
-      maxYoe: params.maxYoe !== undefined && !isNaN(Number(params.maxYoe))
-        ? Number(params.maxYoe)
+      'yearOfExperienceRange.max': params['yearOfExperienceRange.max'] !== undefined && 
+                                  !isNaN(Number(params['yearOfExperienceRange.max']))
+        ? Number(params['yearOfExperienceRange.max'])
         : undefined,
       date: params.date || undefined,
     };
@@ -127,34 +129,34 @@ export class ResumeService {
       return {};
     }
     
-    const { yearsOfExperience, company, ...basicFilters } = filters;
+    const { yearOfExperienceRange, company, companyId, ...basicFilters } = filters;
     
-    const queryParams: GetResumeParamsModel = Object.entries(basicFilters)
-      .reduce((params, [key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          params[key as keyof GetResumeParamsModel] = value;
-        }
-
-        return params;
-      }, {} as GetResumeParamsModel);
+    // Initialize with an empty object of the correct type
+    const queryParams = {} as GetResumeParamsModel;
     
-    // Add company or companyId if it exists
-    if (company) {
-      if (typeof company === 'string') {
-        queryParams.company = company;
-      } else {
-        // If company is an object, use its ID
-        queryParams['companyId'] = company.id;
+    // Add the basic filters
+    Object.entries(basicFilters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        // Type assertion to ensure TypeScript knows we're assigning to a valid key
+        (queryParams as any)[key] = value;
       }
+    });
+    
+    // Add companyId directly or from company object if it exists
+    if (companyId) {
+      queryParams.companyId = companyId;
+    } else if (company) {
+      // If company is an object, use its ID
+      queryParams.companyId = company.id;
     }
     
     // Add min/max years of experience if they exist
-    if (yearsOfExperience?.min !== undefined && yearsOfExperience.min !== null) {
-      queryParams.minYoe = yearsOfExperience.min;
+    if (yearOfExperienceRange?.min !== undefined && yearOfExperienceRange.min !== null) {
+      queryParams['yearOfExperienceRange.min'] = yearOfExperienceRange.min;
     }
     
-    if (yearsOfExperience?.max !== undefined && yearsOfExperience.max !== null) {
-      queryParams.maxYoe = yearsOfExperience.max;
+    if (yearOfExperienceRange?.max !== undefined && yearOfExperienceRange.max !== null) {
+      queryParams['yearOfExperienceRange.max'] = yearOfExperienceRange.max;
     }
     
     return queryParams;

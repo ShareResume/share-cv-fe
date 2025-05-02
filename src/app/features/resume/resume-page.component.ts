@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { ResumeFilterComponent } from './components/resume-filter/resume-filter.component';
 import { ResumeTableComponent } from './components/resume-table/resume-table.component';
 import { ResumeService } from './services/resume.service';
-import { Resume } from './models/resume.model';
+import { PublicResume, Resume } from './models/resume.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { ResumeFilters } from './models/resume-filters.model';
@@ -23,15 +23,15 @@ export class ResumePageComponent implements OnInit {
   protected readonly Math = Math;
 
   // Use signals instead of standard variables for reactivity
-  resumes = signal<Resume[]>([]);
+  resumes = signal<PublicResume[]>([]);
   totalCount = signal<number>(0);
   isLoading = signal<boolean>(false);
   error = signal<string | null>(null);
   filters = signal<ResumeFilters>({
-    company: '',
-    specialization: '',
-    status: '',
-    yearsOfExperience: {
+    companyId: '',
+    speciality: '',
+    isHrScreeningPassed: null,
+    yearOfExperienceRange: {
       min: null,
       max: null,
     },

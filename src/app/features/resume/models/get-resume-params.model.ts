@@ -3,10 +3,10 @@ import { QueryParamsModel } from '@app/core/models/query-params-model';
 export interface GetResumeParamsModel extends QueryParamsModel {
   company?: string;
   companyId?: string;
-  specialization?: string;
-  status?: string;
-  minYoe?: number;
-  maxYoe?: number;
+  speciality?: string;
+  isHrScreeningPassed?: boolean;
+  'yearOfExperienceRange.min'?: number;
+  'yearOfExperienceRange.max'?: number;
   date?: string;
   page?: number;
   pageSize?: number;

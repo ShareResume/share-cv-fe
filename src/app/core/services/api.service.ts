@@ -63,7 +63,11 @@ export class ApiService {
 
     Object.entries(paramsObj)
       .filter(([, value]) => typeof value !== 'undefined' && value !== null)
-      .map(([key, value]) => (params = params.set(key, value!)));
+      .map(([key, value]) => {
+        // Convert boolean values to strings
+        const paramValue = typeof value === 'boolean' ? value.toString() : value;
+        return (params = params.set(key, paramValue as string));
+      });
 
     return params.toString();
   }

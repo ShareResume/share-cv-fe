@@ -1,10 +1,11 @@
 import { Company } from '@app/core/models/company.model';
 
 export interface ResumeFilters {
-  company?: Company | string;
-  specialization?: string;
-  status?: string;
-  yearsOfExperience?: {
+  companyId?: string;
+  company?: Company; // Keep for backward compatibility and internal use
+  speciality?: string;
+  isHrScreeningPassed?: boolean | null;
+  yearOfExperienceRange?: {
     min?: number | null;
     max?: number | null;
   };

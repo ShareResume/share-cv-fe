@@ -7,7 +7,6 @@ import { ResumeFilters } from '../../models/resume-filters.model';
 import { DropdownComponent } from '@app/reusable/dropdown/dropdown.component';
 import { Status } from '@app/reusable/models/dropdown.model';
 import { SpecializationEnum } from '@app/core/enums/specialization.enum';
-import { ResumeStatusEnum } from '@app/core/enums/resume-status.enum';
 import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
 import { Company } from '@app/core/models/company.model';
 
@@ -30,10 +29,10 @@ export class ResumeFilterComponent implements OnInit {
   
   // Input for existing filters - allows parent to pass down current filters
   currentFilters = input<ResumeFilters>({
-    company: '',
-    specialization: '',
-    status: '',
-    yearsOfExperience: {
+    companyId: '',
+    speciality: '',
+    isHrScreeningPassed: null,
+    yearOfExperienceRange: {
       min: null,
       max: null,
     },
@@ -46,17 +45,17 @@ export class ResumeFilterComponent implements OnInit {
     viewValue: SpecializationEnum[key as keyof typeof SpecializationEnum]
   }));
   
-  // Status options for dropdown
-  readonly STATUS_OPTIONS: Status[] = Object.keys(ResumeStatusEnum).map(key => ({
-    value: ResumeStatusEnum[key as keyof typeof ResumeStatusEnum],
-    viewValue: ResumeStatusEnum[key as keyof typeof ResumeStatusEnum]
-  }));
+  // Status options for boolean dropdown
+  readonly HR_SCREENING_OPTIONS: Status[] = [
+    { value: 'true', viewValue: 'Passed' },
+    { value: 'false', viewValue: 'Not Passed' }
+  ];
   
   // Form group for all filters
   filterForm = new FormGroup({
     company: new FormControl<Company | null>(null),
-    specialization: new FormControl<string | string[] | null>(null),
-    status: new FormControl<string | string[] | null>(null),
+    speciality: new FormControl<string | string[] | null>(null),
+    isHrScreeningPassed: new FormControl<string | null>(null),
     minYoe: new FormControl<number | null>(null),
     maxYoe: new FormControl<number | null>(null),
     date: new FormControl(''),
@@ -67,11 +66,11 @@ export class ResumeFilterComponent implements OnInit {
     const filters = this.currentFilters();
     
     this.filterForm.setValue({
-      company: typeof filters.company === 'object' ? filters.company : null,
-      specialization: filters.specialization || null,
-      status: filters.status || null,
-      minYoe: filters.yearsOfExperience?.min || null,
-      maxYoe: filters.yearsOfExperience?.max || null,
+      company: filters.company || null,
+      speciality: filters.speciality || null,
+      isHrScreeningPassed: filters.isHrScreeningPassed !== null ? String(filters.isHrScreeningPassed) : null,
+      minYoe: filters.yearOfExperienceRange?.min || null,
+      maxYoe: filters.yearOfExperienceRange?.max || null,
       date: filters.date || '',
     }, { emitEvent: false });
   }
@@ -82,39 +81,35 @@ export class ResumeFilterComponent implements OnInit {
     
     // Create the filters object with basic structure
     const filters: ResumeFilters = {
-      company: formValue.company || '',
-      specialization: '',
-      status: '',
+      companyId: formValue.company ? (formValue.company as Company).id : '',
+      speciality: '',
+      isHrScreeningPassed: null,
       date: formValue.date || '',
-      yearsOfExperience: {
+      yearOfExperienceRange: {
         min: formValue.minYoe,
         max: formValue.maxYoe,
       }
     };
     
-    // Set specialization value if it exists
-    if (formValue.specialization) {
-      if (typeof formValue.specialization === 'string' && formValue.specialization !== '') {
-        filters.specialization = formValue.specialization;
-      } else if (Array.isArray(formValue.specialization) && formValue.specialization.length) {
-        filters.specialization = formValue.specialization[0];
+    // Set speciality value if it exists
+    if (formValue.speciality) {
+      if (typeof formValue.speciality === 'string' && formValue.speciality !== '') {
+        filters.speciality = formValue.speciality;
+      } else if (Array.isArray(formValue.speciality) && formValue.speciality.length) {
+        filters.speciality = formValue.speciality[0];
       }
     }
     
-    // Set status value if it exists
-    if (formValue.status) {
-      if (typeof formValue.status === 'string' && formValue.status !== '') {
-        filters.status = formValue.status;
-      } else if (Array.isArray(formValue.status) && formValue.status.length) {
-        filters.status = formValue.status[0];
-      }
+    // Set isHrScreeningPassed value if it exists
+    if (formValue.isHrScreeningPassed !== null) {
+      filters.isHrScreeningPassed = formValue.isHrScreeningPassed === 'true';
     }
     
-    // If yearsOfExperience has no values, remove it
-    if (filters.yearsOfExperience 
-        && filters.yearsOfExperience.min === null 
-        && filters.yearsOfExperience.max === null) {
-      delete filters.yearsOfExperience;
+    // If yearOfExperienceRange has no values, remove it
+    if (filters.yearOfExperienceRange 
+        && filters.yearOfExperienceRange.min === null 
+        && filters.yearOfExperienceRange.max === null) {
+      delete filters.yearOfExperienceRange;
     }
     
     this.filterApplied.emit(filters);
@@ -124,8 +119,8 @@ export class ResumeFilterComponent implements OnInit {
   resetFilters(): void {
     this.filterForm.reset({
       company: null,
-      specialization: null,
-      status: null,
+      speciality: null,
+      isHrScreeningPassed: null,
       minYoe: null,
       maxYoe: null, 
       date: '',
