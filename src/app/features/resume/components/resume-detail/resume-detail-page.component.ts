@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResumeStateService } from '../../services/resume-state.service';
 import { PublicResume } from '../../models/resume.model';
@@ -29,6 +29,13 @@ export class ResumeDetailPageComponent implements OnInit {
   resumeUrl = signal<string | null>(null);
   error = signal<string | null>(null);
   
+  // Computed signal for safe PDF URL that only updates when resumeUrl changes
+  safePdfUrl = computed<SafeResourceUrl>(() => {
+    return this.resumeUrl() 
+      ? this.sanitizer.bypassSecurityTrustResourceUrl(this.resumeUrl()!)
+      : this.sanitizer.bypassSecurityTrustResourceUrl('');
+  });
+  
   ngOnInit(): void {
     const resumeId = this.route.snapshot.paramMap.get('id');
     if (!resumeId) {
@@ -55,15 +62,6 @@ export class ResumeDetailPageComponent implements OnInit {
   
   navigateBack(): void {
     this.router.navigate(['/resumes']);
-  }
-  
-  /**
-   * Returns a sanitized URL for the PDF to safely use in an iframe
-   */
-  safePdfUrl(): SafeResourceUrl {
-    return this.resumeUrl() 
-      ? this.sanitizer.bypassSecurityTrustResourceUrl(this.resumeUrl()!)
-      : this.sanitizer.bypassSecurityTrustResourceUrl('');
   }
 
   /**
