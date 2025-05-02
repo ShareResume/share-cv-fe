@@ -132,7 +132,7 @@ export class ResumeTableComponent {
     }
     
     const counts = resume.getHrScreeningStatusCounts();
-    return `Passed: ${counts.passed} / Not passed: ${counts.notPassed}`;
+    return `Passed: ${counts.passed} / Rejected: ${counts.notPassed}`;
   }
 
   /**

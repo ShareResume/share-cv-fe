@@ -40,15 +40,19 @@ export class ResumeFilterComponent implements OnInit {
   });
   
   // Specialization options for dropdown
-  readonly SPECIALIZATION_OPTIONS: Status[] = Object.keys(SpecializationEnum).map(key => ({
-    value: SpecializationEnum[key as keyof typeof SpecializationEnum],
-    viewValue: SpecializationEnum[key as keyof typeof SpecializationEnum]
-  }));
+  readonly SPECIALIZATION_OPTIONS: Status[] = Object.keys(SpecializationEnum).map(key => {
+    const enumValue = SpecializationEnum[key as keyof typeof SpecializationEnum];
+    // Format the display value while keeping the actual value unchanged
+    return {
+      value: enumValue,
+      viewValue: this.formatSpecialization(enumValue)
+    };
+  });
   
   // Status options for boolean dropdown
   readonly HR_SCREENING_OPTIONS: Status[] = [
-    { value: 'true', viewValue: 'Passed' },
-    { value: 'false', viewValue: 'Not Passed' }
+    { value: 'true', viewValue: 'Approved' },
+    { value: 'false', viewValue: 'Rejected' }
   ];
   
   // Form group for all filters
@@ -127,5 +131,25 @@ export class ResumeFilterComponent implements OnInit {
     });
     
     this.applyFilters();
+  }
+
+  // Format specialization values for display
+  private formatSpecialization(value: string): string {
+    // Handle special cases first
+    switch (value) {
+      case 'DEV_OPS': return 'DevOps';
+      case 'QA': return 'QA';
+      case 'UI_UX': return 'UI/UX';
+      case 'FRONT_END': return 'Front-End';
+      case 'BACK_END': return 'Back-End';
+      case 'FULL_STACK': return 'Full-Stack';
+      default: {
+        // For other cases, apply general formatting rules
+        return value
+          .split('_')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ');
+      }
+    }
   }
 } 
