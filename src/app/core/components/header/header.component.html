@@ -25,13 +25,25 @@
         </nav>
       </div>
       <div class="header-right">
-        <app-button
-          colorType="primary"
-          class="upload-button"
-          fontWeight="regular"
-        >
-          Upload Resume
-        </app-button>
+        @if (isAuthenticated && !isAdmin) {
+          <app-button
+            colorType="primary"
+            class="upload-button"
+            fontWeight="regular"
+          >
+            Upload Resume
+          </app-button>
+        }
+        @if (!isAuthenticated) {
+          <app-button
+            colorType="primary"
+            class="login-button"
+            fontWeight="medium"
+            (click)="navigateToLogin()"
+          >
+            Login
+          </app-button>
+        }
         <div class="auth-status" [class.authenticated]="isAuthenticated">
           {{
             isAuthenticated
@@ -39,9 +51,27 @@
               : 'User is not authenticated'
           }}
         </div>
-        <button class="profile-button">
-          <img src="/user-icon.svg" alt="User profile" class="profile-icon" />
-        </button>
+        @if (isAuthenticated) {
+          <div class="menu-container">
+            <app-button
+              colorType="primary"
+              fontWeight="medium"
+              (click)="toggleMenu($event)"
+            >
+              Menu
+            </app-button>
+            @if (isMenuOpen) {
+              <div class="dropdown-menu">
+                <button class="dropdown-item" (click)="navigateToProfile()">
+                  Profile
+                </button>
+                <button class="dropdown-item" (click)="signOut()">
+                  Sign Out
+                </button>
+              </div>
+            }
+          </div>
+        }
       </div>
     </div>
   </div>

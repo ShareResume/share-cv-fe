@@ -9,7 +9,7 @@ import { Comment, CommentCreateRequest, CommentsResponse, CommentVoteRequest } f
 })
 export class CommentsService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiBaseUrl}/api/comments`;
+  private apiUrl = `${environment.apiBaseUrl}/comments`;
 
   getCommentsByResumeId(resumeId: string): Observable<CommentsResponse> {
     return this.http.get<CommentsResponse>(`${this.apiUrl}/resumes/${resumeId}`);
