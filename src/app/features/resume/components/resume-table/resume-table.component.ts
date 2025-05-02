@@ -12,6 +12,7 @@ import { ResumeStateService } from '../../services/resume-state.service';
 
 interface ResumeTableItem extends PublicResume {
   statusObject: PublicResume; 
+  companiesList: PublicResume;
 }
 
 @Component({
@@ -22,6 +23,7 @@ interface ResumeTableItem extends PublicResume {
   imports: [
     TableComponent,
     DatePipe,
+    ChipsComponent,
   ],
 })
 export class ResumeTableComponent {
@@ -45,7 +47,7 @@ export class ResumeTableComponent {
   
   // Table columns configuration
   displayedColumns: Record<string, string> = {
-    company: 'Company',
+    companiesList: 'Companies',
     speciality: 'Specialization',
     yearsOfExperience: 'Years of Experience',
     statusObject: 'Status',
@@ -68,6 +70,9 @@ export class ResumeTableComponent {
         
         // Add the statusObject property
         item.statusObject = resume;
+        
+        // Add the companies list property
+        item.companiesList = resume;
         
         return item;
       });

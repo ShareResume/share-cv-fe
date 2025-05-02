@@ -57,6 +57,49 @@
   }
 }
 
+// Styling for companies list display
+.companies-cell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  .companies-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    width: 100%;
+    
+    .company-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      
+      .company-logo {
+        width: $resume-logo-size;
+        height: $resume-logo-size;
+        object-fit: contain;
+      }
+      
+      .company-name {
+        font-size: $resume-text-size;
+        font-weight: $font-weight-regular;
+      }
+    }
+  }
+  
+  .placeholder-logo {
+    width: $resume-logo-size;
+    height: $resume-logo-size;
+    background-color: $color-gray-300;
+    border-radius: 4px;
+  }
+  
+  .company-name {
+    font-size: $resume-text-size;
+    font-weight: $font-weight-regular;
+  }
+}
+
 .status-text {
   display: inline-block;
   font-size: $resume-text-size;

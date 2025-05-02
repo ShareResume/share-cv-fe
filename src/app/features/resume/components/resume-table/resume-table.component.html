@@ -9,7 +9,7 @@
     [pageSize]="pageSize()"
     [pageIndex]="pageIndex()"
     [customTemplate]="{
-      company: companyTemplate,
+      companiesList: companiesTemplate,
       statusObject: statusTemplate,
       date: dateTemplate,
       speciality: specialityTemplate,
@@ -21,15 +21,21 @@
 
   <!-- Custom templates for column cells -->
   
-  <!-- Company template -->
-  <ng-template #companyTemplate let-value="value">
-    <div class="company-cell">
-      @if (value) {
-        <img class="company-logo" [src]="value.logoUrl" alt="Company Logo" />
-        <span class="company-name">{{value.name}}</span>
+  <!-- Companies template -->
+  <ng-template #companiesTemplate let-value="value">
+    <div class="companies-cell">
+      @if (value && value.companies && value.companies.length > 0) {
+        <div class="companies-list">
+          @for (company of value.companies; track company.id) {
+            <div class="company-item">
+              <img class="company-logo" [src]="company.logoUrl" alt="{{company.name}} Logo" />
+              <span class="company-name">{{company.name}}</span>
+            </div>
+          }
+        </div>
       } @else {
         <div class="company-logo placeholder-logo"></div>
-        <span class="company-name">Unknown</span>
+        <span class="company-name">No companies</span>
       }
     </div>
   </ng-template>
