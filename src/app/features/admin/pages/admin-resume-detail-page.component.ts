@@ -1,10 +1,12 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, DestroyRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, NgClass } from '@angular/common';
 import { ButtonComponent } from '../../../reusable/button/button.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PrivateResume, ResumeStatusEnum } from '../../resume/models/resume.model';
 import { AdminResumeStateService } from '../services/admin-resume-state.service';
+import { UserResumesService } from '../../resume/services/user-resumes.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-admin-resume-detail-page',
@@ -22,9 +24,12 @@ export class AdminResumeDetailPageComponent implements OnInit {
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
   private adminResumeStateService = inject(AdminResumeStateService);
+  private userResumesService = inject(UserResumesService);
+  private destroyRef = inject(DestroyRef);
   
   resume = signal<PrivateResume | null>(null);
   error = signal<string | null>(null);
+  isUpdating = signal<boolean>(false);
   
   // Computed signals for safe PDF URLs
   privateDocumentUrl = computed(() => {
@@ -78,27 +83,79 @@ export class AdminResumeDetailPageComponent implements OnInit {
   
   approveResume(): void {
     if (this.resume()) {
-      const updatedResume = {...this.resume()!};
-      updatedResume.resumeStatus = ResumeStatusEnum.APPROVED;
+      this.isUpdating.set(true);
       
-      // In a real implementation, an API call would happen here
-      
-      // Update the local state
-      this.resume.set(updatedResume as PrivateResume);
-      this.adminResumeStateService.setSelectedResume(updatedResume as PrivateResume);
+      this.userResumesService.updateResumeStatus(
+        this.resume()!.id, 
+        ResumeStatusEnum.APPROVED
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // Create a new PrivateResume instance with updated status
+          const currentResume = this.resume()!;
+          
+          const updatedResume = new PrivateResume(
+            currentResume.id,
+            currentResume.documents,
+            currentResume.companies,
+            currentResume.speciality,
+            currentResume.yearsOfExperience,
+            currentResume.createdAt,
+            ResumeStatusEnum.APPROVED,
+            currentResume.hidden
+          );
+          
+          // Update the local state
+          this.resume.set(updatedResume);
+          this.adminResumeStateService.setSelectedResume(updatedResume);
+          this.isUpdating.set(false);
+        },
+        error: (err) => {
+          this.error.set('Failed to approve resume');
+          this.isUpdating.set(false);
+          console.error('Error approving resume:', err);
+        }
+      });
     }
   }
   
   rejectResume(): void {
     if (this.resume()) {
-      const updatedResume = {...this.resume()!};
-      updatedResume.resumeStatus = ResumeStatusEnum.REJECTED;
+      this.isUpdating.set(true);
       
-      // In a real implementation, an API call would happen here
-      
-      // Update the local state
-      this.resume.set(updatedResume as PrivateResume);
-      this.adminResumeStateService.setSelectedResume(updatedResume as PrivateResume);
+      this.userResumesService.updateResumeStatus(
+        this.resume()!.id, 
+        ResumeStatusEnum.REJECTED
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // Create a new PrivateResume instance with updated status
+          const currentResume = this.resume()!;
+          
+          const updatedResume = new PrivateResume(
+            currentResume.id,
+            currentResume.documents,
+            currentResume.companies,
+            currentResume.speciality,
+            currentResume.yearsOfExperience,
+            currentResume.createdAt,
+            ResumeStatusEnum.REJECTED,
+            currentResume.hidden
+          );
+          
+          // Update the local state
+          this.resume.set(updatedResume);
+          this.adminResumeStateService.setSelectedResume(updatedResume);
+          this.isUpdating.set(false);
+        },
+        error: (err) => {
+          this.error.set('Failed to reject resume');
+          this.isUpdating.set(false);
+          console.error('Error rejecting resume:', err);
+        }
+      });
     }
   }
   

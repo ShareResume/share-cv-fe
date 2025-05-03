@@ -3,7 +3,7 @@ import { ResumeFormData, CompanyStatusInfo } from '../models/resume-form-data';
 import { Observable } from 'rxjs';
 import { CreateResumeModel, CompanyResumeInfo } from '../models/create-resume.model';
 import { ApiService } from '@app/core/services/api.service';
-import { PrivateResume } from '../models/resume.model';
+import { PrivateResume, ResumeStatusEnum } from '../models/resume.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +42,16 @@ export class UserResumesService {
    */
   getResumes(): Observable<PrivateResume[]> {
     return this.apiService.get<PrivateResume[]>(this.apiEndpoint);
+  }
+
+  /**
+   * Update resume status (approve or reject)
+   */
+  updateResumeStatus(resumeId: string, status: ResumeStatusEnum): Observable<any> {
+    const requestBody = {
+      resumeEvent: status === ResumeStatusEnum.APPROVED ? 'APPROVED' : 'REJECTED'
+    };
+    
+    return this.apiService.patch<any, any>(`${this.apiEndpoint}/${resumeId}`, requestBody);
   }
 }

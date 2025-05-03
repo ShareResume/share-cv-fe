@@ -9,13 +9,15 @@
       </div>
       
       <div class="buttons-container">
-        <app-button variant="primary" [disabled]="resumeStatus() === 'APPROVED'" (click)="approveResume()">
-          Approve
-        </app-button>
-        
-        <app-button variant="destructive" [disabled]="resumeStatus() === 'REJECTED'" (click)="rejectResume()">
-          Reject
-        </app-button>
+        @if (resumeStatus() === 'WAITING_FOR_APPROVE') {
+          <app-button variant="primary" [disabled]="isUpdating()" (click)="approveResume()">
+            Approve
+          </app-button>
+          
+          <app-button variant="destructive" [disabled]="isUpdating()" (click)="rejectResume()">
+            Reject
+          </app-button>
+        }
         
         <app-button variant="secondary" (click)="uploadEditedDocument()">
           Upload Edited Document
