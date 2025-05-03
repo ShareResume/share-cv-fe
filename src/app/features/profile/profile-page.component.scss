@@ -1,0 +1,202 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  padding: $spacing-lg;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  font-family: $font-family-primary;
+}
+
+.profile-content {
+  background-color: $color-white;
+  border-radius: $resume-table-border-radius;
+  box-shadow: $resume-table-shadow;
+  overflow: hidden;
+
+  ::ng-deep {
+    .mat-mdc-tab-header {
+      background-color: $color-white;
+      border-bottom: $border-width solid $color-gray-300;
+    }
+
+    .mat-mdc-tab-body-content {
+      padding: $spacing-lg;
+    }
+
+    .mdc-tab-indicator__content--underline {
+      border-color: $chip-color-active !important;
+    }
+
+    .mdc-tab {
+      .mdc-tab__text-label {
+        font-family: $font-family-primary;
+        font-weight: $font-weight-medium;
+        letter-spacing: 0.25px;
+      }
+    }
+
+    .mdc-tab--active .mdc-tab__text-label {
+      color: $chip-color-active !important;
+    }
+  }
+}
+
+.resume-list,
+.bookmark-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-lg;
+  margin-top: $spacing-md;
+}
+
+.resume-card,
+.bookmark-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: $resume-border-radius;
+  border: $border-width solid $color-gray-300;
+  background-color: $color-white;
+  transition: box-shadow 0.2s ease-in-out;
+  overflow: hidden;
+  
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  ::ng-deep {
+    .mat-mdc-card-header {
+      padding: $spacing-md $spacing-md 0 $spacing-md;
+    }
+    
+    .mat-mdc-card-title {
+      font-size: $resume-text-size;
+      font-weight: $font-weight-medium;
+      color: $color-text-primary;
+      margin-bottom: $spacing-xs;
+      font-family: $font-family-primary;
+      letter-spacing: 0.25px;
+    }
+    
+    .mat-mdc-card-subtitle {
+      color: $color-text-secondary;
+      font-size: 14px;
+      font-family: $font-family-primary;
+    }
+  }
+  
+  mat-card-content {
+    flex-grow: 1;
+    padding: $spacing-md;
+    
+    p {
+      color: $color-text-tertiary;
+      margin-bottom: $spacing-md;
+      font-family: $font-family-primary;
+    }
+  }
+  
+  mat-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    padding: $spacing-sm $spacing-md;
+    gap: $spacing-xs;
+    border-top: $border-width solid $color-gray-300;
+    background-color: $color-gray-50;
+    
+    button {
+      min-width: auto;
+      color: $color-text-secondary;
+      font-family: $font-family-primary;
+      font-weight: $font-weight-medium;
+      letter-spacing: 0.25px;
+      
+      &.view-btn, &.open-btn {
+        color: $color-black;
+      }
+      
+      &.edit-btn {
+        color: $auth-hyperlink-color;
+      }
+      
+      &.delete-btn, &.remove-btn {
+        color: $color-text-danger;
+      }
+    }
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px $spacing-sm;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: $font-weight-medium;
+  margin-top: $spacing-sm;
+  font-family: $font-family-primary;
+  letter-spacing: 0.25px;
+  
+  &.published {
+    background-color: $chip-bg-color-active;
+    color: $chip-color-active;
+  }
+  
+  &.waiting_for_approve {
+    background-color: $chip-bg-color-pending;
+    color: $chip-color-pending;
+  }
+  
+  &.rejected {
+    background-color: $chip-bg-color-cancelled;
+    color: $chip-color-cancelled;
+  }
+}
+
+.empty-state,
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl;
+  text-align: center;
+  background-color: $color-gray-50;
+  border-radius: $resume-border-radius;
+  width: 100%;
+  grid-column: 1 / -1;
+  border: $border-width dashed $color-gray-300;
+  
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+    margin-bottom: $spacing-md;
+    color: $color-gray-600;
+    opacity: 0.6;
+  }
+  
+  p {
+    font-size: 18px;
+    color: $color-text-secondary;
+    margin: 0;
+    font-family: $font-family-primary;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.25px;
+  }
+}
+
+.loading-state {
+  mat-icon {
+    animation: rotating 2s linear infinite;
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} 

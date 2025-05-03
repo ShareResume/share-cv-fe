@@ -8,11 +8,11 @@ import {
   successfulPasswordResetConfig,
 } from './core/constants/auth-page-configs.constants';
 import { HomeComponent } from './features/home/home.component';
-import { ProfileComponent } from './features/profile/profile.component';
 import { popupGuard } from './core/providers/popup.guard';
 import { MainLayoutComponent } from './core/components/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './core/components/auth-layout/auth-layout.component';
 import { adminGuard } from './core/providers/admin.guard';
+import { ProfilePageComponent } from './features/profile/profile-page.component';
 
 export const routes: Routes = [
   {
@@ -25,7 +25,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        component: ProfileComponent,
+        component: ProfilePageComponent,
         canActivate: [popupGuard],
       },
       {
