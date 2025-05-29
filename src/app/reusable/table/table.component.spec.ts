@@ -69,7 +69,8 @@ describe('TableComponent', () => {
       ]),
     );
 
-    fixture.componentRef.setInput('total', 10);
+    fixture.componentRef.setInput('total', 25);
+    fixture.componentRef.setInput('pageSize', 10);
 
     fixture.detectChanges();
 

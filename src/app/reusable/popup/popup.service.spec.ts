@@ -103,6 +103,8 @@ describe('PopupService', () => {
         PopupComponent,
         jasmine.objectContaining({
           data: {
+            title: 'Confirm Title',
+            content: 'Confirm Message',
             buttons: [
               { label: 'No', type: 'secondary', action: 'cancel' },
               { label: 'Yes', type: 'primary', action: 'confirm' }

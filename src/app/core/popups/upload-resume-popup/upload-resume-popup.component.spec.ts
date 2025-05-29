@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UploadResumePopupComponent } from './upload-resume-popup.component';
 import { Component } from '@angular/core';
 
@@ -30,6 +31,7 @@ describe('UploadResumePopupComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        HttpClientTestingModule,
         UploadResumePopupComponent,
         MockInputComponent,
         MockDropdownComponent

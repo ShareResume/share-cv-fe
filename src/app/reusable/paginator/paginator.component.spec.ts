@@ -29,10 +29,11 @@ describe('PaginatorComponent', () => {
 
     fixture.detectChanges();
 
-    expect(
-      fixture.debugElement.query(By.css('.page-indicator')).nativeElement
-        .innerText,
-    ).toEqual('Showing 0 - 10 of 100 results');
+    const paginatorCounter = fixture.debugElement.query(By.css('.paginator-counter'));
+    expect(paginatorCounter).toBeTruthy();
+    if (paginatorCounter) {
+      expect(paginatorCounter.nativeElement.textContent.trim()).toEqual('Showing 1 - 10 of 100 results');
+    }
   });
 
   it('should trigger next page', () => {
@@ -41,17 +42,21 @@ describe('PaginatorComponent', () => {
     fixture.componentRef.setInput('pageIndex', 0);
     spyOn(component.pageEvent, 'emit');
 
-    fixture.debugElement
-      .query(By.css('.actions app-button:last-child'))
-      .nativeElement.click();
-
     fixture.detectChanges();
 
-    expect(component.pageEvent.emit).toHaveBeenCalledWith({
-      pageIndex: 1,
-      pageSize: 10,
-      length: 100,
-      previousPageIndex: 0,
-    });
+    const nextButton = fixture.debugElement.query(By.css('.paginator-controls app-button:last-child'));
+    expect(nextButton).toBeTruthy();
+    
+    if (nextButton) {
+      nextButton.nativeElement.click();
+      fixture.detectChanges();
+
+      expect(component.pageEvent.emit).toHaveBeenCalledWith({
+        pageIndex: 1,
+        pageSize: 10,
+        length: 100,
+        previousPageIndex: 0,
+      });
+    }
   });
 });
