@@ -11,7 +11,24 @@
     "delete": "Delete",
     "submit": "Submit",
     "back": "Back",
-    "next": "Next"
+    "next": "Next",
+    "view": "View",
+    "details": "Details",
+    "close": "Close",
+    "remove": "Remove",
+    "retry": "Retry",
+    "approve": "Approve",
+    "reject": "Reject",
+    "upload": "Upload",
+    "browse": "Browse",
+    "or": "or",
+    "year": "year",
+    "years": "years",
+    "companies": "companies",
+    "documents": "documents",
+    "reply": "Reply",
+    "postComment": "Post Comment",
+    "selectOption": "Select an option"
   },
   "auth": {
     "login": "Login",
@@ -19,6 +36,153 @@
     "register": "Register",
     "email": "Email",
     "password": "Password",
-    "forgotPassword": "Forgot Password?"
-  }
+    "forgotPassword": "Forgot Password?",
+    "continueWithGoogle": "Continue with Google",
+    "signOut": "Sign Out",
+    "deleteAccount": "Delete Account"
+  },
+  "header": {
+    "logo": "ResumeShare",
+    "navigation": {
+      "overview": "Overview",
+      "resumes": "Resumes",
+      "adminDashboard": "Admin Dashboard"
+    },
+    "uploadResume": "Upload Resume",
+    "login": "Login",
+    "menu": "Menu",
+    "profile": "Profile",
+    "userAuthenticated": "User is authenticated",
+    "userNotAuthenticated": "User is not authenticated"
+  },
+  "footer": {
+    "copyright": "© 2025 ResumeShare. All rights reserved.",
+    "links": {
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "help": "Help"
+    }
+  },
+  "home": {
+    "headline": "Transparent hiring insights: Share your resume anonymously and see where people get hired.",
+    "uploadResume": "Upload Resume",
+    "browseResumes": "Browse Resumes",
+    "statistics": {
+      "loadingStatistics": "Loading statistics...",
+      "noDataAvailable": "No statistics data available"
+    }
+  },
+  "resume": {
+    "recentSubmissions": "Recent Submissions",
+    "noCompanies": "No companies",
+    "notSpecified": "Not specified",
+    "na": "N/A",
+    "loading": "Loading resumes...",
+    "loadError": "Failed to load resumes. Please try again later.",
+    "noResultsFound": "No resumes found. Try adjusting your filters.",
+    "resumeDetails": "Resume Details",
+    "resumeNotAvailable": "Resume document is loading or unavailable...",
+    "loadingComments": "Loading comments...",
+    "noComments": "No comments yet. Be the first to add one!",
+    "status": {
+      "waitingForApprove": "Waiting for Approval",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending",
+      "processing": "Processing",
+      "published": "Published"
+    },
+    "filter": {
+      "searchPlaceholder": "Search resumes...",
+      "filterByStatus": "Filter by status",
+      "filterBySpecialty": "Filter by specialty",
+      "allStatuses": "All statuses",
+      "allSpecialties": "All specialties"
+    },
+    "upload": {
+      "title": "Upload Resume",
+      "uploadFile": "Upload Resume (PDF or Word)",
+      "yearsOfExperience": "Years of Experience",
+      "specialization": "Specialization",
+      "enterYearsOfExperience": "Enter years of experience",
+      "selectSpecialization": "Select specialization",
+      "selectedFile": "Selected file",
+      "companies": "Companies",
+      "selectCompanies": "Select companies",
+      "searchCompanies": "Search companies"
+    },
+    "details": {
+      "resumeDetails": "Resume Details",
+      "id": "ID",
+      "createdDate": "Created Date",
+      "specialization": "Specialization",
+      "experience": "Experience",
+      "uploadEditedDocument": "Upload Edited Document",
+      "backToList": "Back to List",
+      "loadingResumeDetails": "Loading resume details..."
+    }
+  },
+  "profile": {
+    "myResumes": "My Resumes",
+    "myBookmarks": "My Bookmarks",
+    "loadingResumes": "Loading your resumes...",
+    "loadingBookmarks": "Loading your bookmarks...",
+    "loadingResumesError": "Failed to load your resumes. Please try again later.",
+    "loadingBookmarksError": "Failed to load your bookmarks. Please try again later.",
+    "resumeDeletedSuccess": "Resume deleted successfully",
+    "bookmarkRemovedSuccess": "Bookmark removed successfully",
+    "bookmarkRemoveError": "Failed to remove bookmark",
+    "developerResume": "Developer Resume",
+    "yearsOfExperience": "years of experience",
+    "noResumesYet": "You haven't created any resumes yet",
+    "noBookmarksYet": "You haven't bookmarked any resumes yet",
+    "resumeDetailsNotAvailable": "Resume details not available",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "admin": {
+    "table": {
+      "companiesCount": "companies",
+      "documentsCount": "documents"
+    }
+  },
+  "table": {
+    "columns": {
+      "id": "ID",
+      "speciality": "Speciality",
+      "yearsOfExperience": "Years of Experience",
+      "companies": "Companies",
+      "status": "Status",
+      "resumeStatus": "Resume Status",
+      "createdAt": "Created At",
+      "documents": "Documents",
+      "actions": "Actions"
+    }
+  },
+  "companyAutocomplete": {
+    "loading": "Loading...",
+    "failedToLoad": "Failed to load companies",
+    "noCompaniesFound": "No companies found",
+    "typeToSearch": "Type at least 3 characters to search",
+    "startTyping": "Start typing to search companies"
+  },
+  "pagination": {
+    "itemsPerPage": "Items per page",
+    "nextPage": "Next page",
+    "previousPage": "Previous page",
+    "firstPage": "First page",
+    "lastPage": "Last page",
+    "of": "of"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Minimum length: {{value}} characters",
+    "maxLength": "Maximum length: {{value}} characters",
+    "hidePassword": "Hide password",
+    "showPassword": "Show password",
+    "selectValidOption": "Please select a valid option"
+  },
+  "noData": "No data available"
 }

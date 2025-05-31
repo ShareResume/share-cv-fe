@@ -17,6 +17,7 @@ import { CompanyService } from '../../core/services/company.service';
 import { Company } from '../../core/models/company.model';
 import { distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { waitResource } from '@app/core/utils/wait-resource';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-company-autocomplete',
@@ -30,6 +31,7 @@ import { waitResource } from '@app/core/utils/wait-resource';
     FormsModule,
     MatIconModule,
     IconComponent,
+    TranslateModule,
   ],
   templateUrl: './company-autocomplete.component.html',
   styleUrls: ['./company-autocomplete.component.scss'],

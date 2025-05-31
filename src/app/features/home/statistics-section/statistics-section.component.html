@@ -4,7 +4,7 @@
       <!-- Loading State -->
       @if (isLoading()) {
         <div class="loading-state">
-          <p>Loading statistics...</p>
+          <p>{{ 'home.statistics.loadingStatistics' | translate }}</p>
         </div>
       }
 
@@ -16,7 +16,7 @@
       }
 
       <!-- Statistics Cards -->
-      @if (statistics().length > 0 && !isLoading() && !error()) {
+      @if (categories().length > 0 && !isLoading() && !error()) {
         <div class="statistics-cards">
           @for (categoryGroup of categories(); track categoryGroup.category) {
             <app-stat-card 
@@ -27,7 +27,7 @@
         </div>
       } @else if (!isLoading() && !error()) {
         <div class="no-data-state">
-          <p>No statistics data available</p>
+          <p>{{ 'home.statistics.noDataAvailable' | translate }}</p>
         </div>
       }
     </div>

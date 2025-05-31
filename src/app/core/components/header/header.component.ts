@@ -4,31 +4,35 @@ import { ButtonComponent } from '../../../reusable/button/button.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { UserRoleEnum } from '../../enums/user-role.enum';
+import { LanguageService } from '../../services/language.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [ButtonComponent, RouterLink, RouterLinkActive, CommonModule],
+  imports: [ButtonComponent, RouterLink, RouterLinkActive, CommonModule, TranslateModule],
 })
 export class HeaderComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private elementRef = inject(ElementRef);
+  
+  // Inject language service
+  languageService = inject(LanguageService);
 
   isMenuOpen = false;
 
   navItems = [
     {
-      label: 'Overview',
+      labelKey: 'header.navigation.overview',
       route: '',
     },
     {
-      label: 'Resumes',
+      labelKey: 'header.navigation.resumes',
       route: '/resumes',
     },
-
   ];
 
   @HostListener('document:click', ['$event'])
@@ -63,5 +67,14 @@ export class HeaderComponent {
   
   navigateToLogin(): void {
     this.router.navigate(['/login']);
+  }
+  
+  // Language switching methods
+  toggleLanguage(): void {
+    this.languageService.toggleLanguage();
+  }
+  
+  getCurrentLanguage() {
+    return this.languageService.getCurrentLanguageOption();
   }
 }

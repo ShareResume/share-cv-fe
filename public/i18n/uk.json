@@ -1,0 +1,188 @@
+{
+  "app": {
+    "title": "Share CV",
+    "loading": "Завантаження...",
+    "error": "Сталася помилка"
+  },
+  "common": {
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "submit": "Надіслати",
+    "back": "Назад",
+    "next": "Далі",
+    "view": "Переглянути",
+    "details": "Деталі",
+    "close": "Закрити",
+    "remove": "Видалити",
+    "retry": "Спробувати знову",
+    "approve": "Схвалити",
+    "reject": "Відхилити",
+    "upload": "Завантажити",
+    "browse": "Переглядати",
+    "or": "або",
+    "year": "рік",
+    "years": "років",
+    "companies": "компанії",
+    "documents": "документи",
+    "reply": "Відповісти",
+    "postComment": "Опублікувати коментар",
+    "selectOption": "Оберіть варіант"
+  },
+  "auth": {
+    "login": "Увійти",
+    "logout": "Вийти",
+    "register": "Зареєструватися",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "forgotPassword": "Забули пароль?",
+    "continueWithGoogle": "Продовжити з Google",
+    "signOut": "Вийти з системи",
+    "deleteAccount": "Видалити обліковий запис"
+  },
+  "header": {
+    "logo": "ResumeShare",
+    "navigation": {
+      "overview": "Огляд",
+      "resumes": "Резюме",
+      "adminDashboard": "Панель адміністратора"
+    },
+    "uploadResume": "Завантажити резюме",
+    "login": "Увійти",
+    "menu": "Меню",
+    "profile": "Профіль",
+    "userAuthenticated": "Користувач автентифікований",
+    "userNotAuthenticated": "Користувач не автентифікований"
+  },
+  "footer": {
+    "copyright": "© 2025 ResumeShare. Всі права захищені.",
+    "links": {
+      "terms": "Умови",
+      "privacy": "Конфіденційність",
+      "help": "Допомога"
+    }
+  },
+  "home": {
+    "headline": "Прозорі інсайти найму: Поділіться своїм резюме анонімно і подивіться, де люди влаштовуються на роботу.",
+    "uploadResume": "Завантажити резюме",
+    "browseResumes": "Переглянути резюме",
+    "statistics": {
+      "loadingStatistics": "Завантаження статистики...",
+      "noDataAvailable": "Дані статистики недоступні"
+    }
+  },
+  "resume": {
+    "recentSubmissions": "Останні подання",
+    "noCompanies": "Немає компаній",
+    "notSpecified": "Не вказано",
+    "na": "Н/Д",
+    "loading": "Завантаження резюме...",
+    "loadError": "Не вдалося завантажити резюме. Спробуйте пізніше.",
+    "noResultsFound": "Резюме не знайдено. Спробуйте налаштувати фільтри.",
+    "resumeDetails": "Деталі резюме",
+    "resumeNotAvailable": "Документ резюме завантажується або недоступний...",
+    "loadingComments": "Завантаження коментарів...",
+    "noComments": "Поки що немає коментарів. Будьте першим, хто додасть!",
+    "status": {
+      "waitingForApprove": "Очікує схвалення",
+      "approved": "Схвалено",
+      "rejected": "Відхилено",
+      "pending": "Очікує",
+      "processing": "Обробляється",
+      "published": "Опубліковано"
+    },
+    "filter": {
+      "searchPlaceholder": "Пошук резюме...",
+      "filterByStatus": "Фільтр за статусом",
+      "filterBySpecialty": "Фільтр за спеціальністю",
+      "allStatuses": "Всі статуси",
+      "allSpecialties": "Всі спеціальності"
+    },
+    "upload": {
+      "title": "Завантажити резюме",
+      "uploadFile": "Завантажити резюме (PDF або Word)",
+      "yearsOfExperience": "Роки досвіду",
+      "specialization": "Спеціалізація",
+      "enterYearsOfExperience": "Введіть роки досвіду",
+      "selectSpecialization": "Оберіть спеціалізацію",
+      "selectedFile": "Обраний файл",
+      "companies": "Компанії",
+      "selectCompanies": "Оберіть компанії",
+      "searchCompanies": "Пошук компаній"
+    },
+    "details": {
+      "resumeDetails": "Деталі резюме",
+      "id": "ID",
+      "createdDate": "Дата створення",
+      "specialization": "Спеціалізація",
+      "experience": "Досвід",
+      "uploadEditedDocument": "Завантажити відредагований документ",
+      "backToList": "Повернутися до списку",
+      "loadingResumeDetails": "Завантаження деталей резюме..."
+    }
+  },
+  "profile": {
+    "myResumes": "Мої резюме",
+    "myBookmarks": "Мої закладки",
+    "loadingResumes": "Завантаження ваших резюме...",
+    "loadingBookmarks": "Завантаження ваших закладок...",
+    "loadingResumesError": "Не вдалося завантажити ваші резюме. Спробуйте пізніше.",
+    "loadingBookmarksError": "Не вдалося завантажити ваші закладки. Спробуйте пізніше.",
+    "resumeDeletedSuccess": "Резюме успішно видалено",
+    "bookmarkRemovedSuccess": "Закладку успішно видалено",
+    "bookmarkRemoveError": "Не вдалося видалити закладку",
+    "developerResume": "Резюме розробника",
+    "yearsOfExperience": "років досвіду",
+    "noResumesYet": "Ви ще не створили жодного резюме",
+    "noBookmarksYet": "Ви ще не додали жодного резюме до закладок",
+    "resumeDetailsNotAvailable": "Деталі резюме недоступні",
+    "view": "Переглянути",
+    "edit": "Редагувати",
+    "delete": "Видалити"
+  },
+  "admin": {
+    "table": {
+      "companiesCount": "компаній",
+      "documentsCount": "документів"
+    }
+  },
+  "table": {
+    "columns": {
+      "id": "ID",
+      "speciality": "Спеціальність",
+      "yearsOfExperience": "Роки досвіду",
+      "companies": "Компанії",
+      "status": "Статус",
+      "resumeStatus": "Статус резюме",
+      "createdAt": "Дата створення",
+      "documents": "Документи",
+      "actions": "Дії"
+    }
+  },
+  "companyAutocomplete": {
+    "loading": "Завантаження...",
+    "failedToLoad": "Не вдалося завантажити компанії",
+    "noCompaniesFound": "Компанії не знайдені",
+    "typeToSearch": "Введіть принаймні 3 символи для пошуку",
+    "startTyping": "Почніть вводити для пошуку компаній"
+  },
+  "pagination": {
+    "itemsPerPage": "Елементів на сторінці",
+    "nextPage": "Наступна сторінка",
+    "previousPage": "Попередня сторінка",
+    "firstPage": "Перша сторінка",
+    "lastPage": "Остання сторінка",
+    "of": "з"
+  },
+  "validation": {
+    "required": "Це поле обов'язкове",
+    "email": "Введіть дійсну електронну адресу",
+    "minLength": "Мінімальна довжина: {{value}} символів",
+    "maxLength": "Максимальна довжина: {{value}} символів",
+    "hidePassword": "Приховати пароль",
+    "showPassword": "Показати пароль",
+    "selectValidOption": "Будь ласка, оберіть дійсний варіант"
+  },
+  "noData": "Дані недоступні"
+} 

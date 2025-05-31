@@ -14,6 +14,7 @@ import { ResumeService } from '@app/features/resume/services/resume.service';
 import { UserResumesService } from '@app/features/resume/services/user-resumes.service';
 import { finalize, forkJoin, of } from 'rxjs';
 import { ToasterService } from '@app/core/services/toaster.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-page',
@@ -26,7 +27,8 @@ import { ToasterService } from '@app/core/services/toaster.service';
     MatIconModule,
     MatDividerModule,
     DatePipe,
-    MatSnackBarModule
+    MatSnackBarModule,
+    TranslateModule
   ],
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.scss'],
@@ -37,6 +39,7 @@ export class ProfilePageComponent implements OnInit {
   private userResumesService = inject(UserResumesService);
   private toasterService = inject(ToasterService);
   private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
 
   myResumes: PrivateResume[] = [];
   bookmarks: Bookmark[] = [];
@@ -62,7 +65,7 @@ export class ProfilePageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading user resumes:', error);
-        this.showError('Failed to load your resumes. Please try again later.');
+        this.showError(this.translateService.instant('profile.loadingResumesError'));
       }
     });
   }
@@ -78,7 +81,7 @@ export class ProfilePageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading bookmarks:', error);
-        this.showError('Failed to load your bookmarks. Please try again later.');
+        this.showError(this.translateService.instant('profile.loadingBookmarksError'));
       }
     });
   }
@@ -106,7 +109,7 @@ export class ProfilePageComponent implements OnInit {
 
     // For demo purposes, we're just filtering it out
     this.myResumes = this.myResumes.filter(resume => resume.id !== resumeId);
-    this.showSuccess('Resume deleted successfully');
+    this.showSuccess(this.translateService.instant('profile.resumeDeletedSuccess'));
   }
 
   openBookmark(bookmark: Bookmark): void {
@@ -122,24 +125,24 @@ export class ProfilePageComponent implements OnInit {
         if (success) {
           console.log(`Removed bookmark with ID: ${bookmark.id}`);
           this.bookmarks = this.bookmarks.filter(b => b.id !== bookmark.id);
-          this.showSuccess('Bookmark removed successfully');
+          this.showSuccess(this.translateService.instant('profile.bookmarkRemovedSuccess'));
         } else {
-          this.showError('Failed to remove bookmark');
+          this.showError(this.translateService.instant('profile.bookmarkRemoveError'));
         }
       },
       error: (error) => {
         console.error('Error removing bookmark:', error);
-        this.showError('Failed to remove bookmark');
+        this.showError(this.translateService.instant('profile.bookmarkRemoveError'));
       }
     });
   }
 
   getStatusText(status: string): string {
     const statusMap: Record<string, string> = {
-      'PUBLISHED': 'Published',
-      'WAITING_FOR_APPROVE': 'Under Review',
-      'REJECTED': 'Rejected',
-      'APPROVED': 'Approved'
+      'PUBLISHED': this.translateService.instant('resume.status.published'),
+      'WAITING_FOR_APPROVE': this.translateService.instant('resume.status.waitingForApprove'),
+      'REJECTED': this.translateService.instant('resume.status.rejected'),
+      'APPROVED': this.translateService.instant('resume.status.approved')
     };
     
     return statusMap[status] || status;

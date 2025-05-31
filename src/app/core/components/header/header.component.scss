@@ -177,3 +177,18 @@
     }
   }
 }
+
+// Language switcher styles
+.language-switcher {
+  min-width: auto;
+  white-space: nowrap;
+  font-size: 14px;
+  
+  // Override button component styles for compact appearance
+  ::ng-deep {
+    .button {
+      padding: 6px 12px;
+      gap: 6px;
+    }
+  }
+}

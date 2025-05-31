@@ -6,17 +6,19 @@ import { PublicResume, Resume } from './models/resume.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { ResumeFilters } from './models/resume-filters.model';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-resume-page',
   templateUrl: './resume-page.component.html',
   styleUrl: './resume-page.component.scss',
   standalone: true,
-  imports: [ResumeFilterComponent, ResumeTableComponent],
+  imports: [ResumeFilterComponent, ResumeTableComponent, TranslateModule],
 })
 export class ResumePageComponent implements OnInit {
   private resumeService = inject(ResumeService);
   private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
   private initialLoadComplete = false;
   private lastLoadedFilters: string = '';
 
@@ -137,7 +139,7 @@ export class ResumePageComponent implements OnInit {
         },
         error: (err) => {
           console.error('[ResumePageComponent] Error loading resumes:', err);
-          this.error.set('Failed to load resumes. Please try again later.');
+          this.error.set(this.translateService.instant('resume.loadError'));
         },
       });
   }

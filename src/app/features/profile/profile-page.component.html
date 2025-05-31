@@ -1,84 +1,84 @@
 <section class="profile-content">
   <mat-tab-group animationDuration="0ms">
-    <mat-tab label="My Resumes">
+    <mat-tab [label]="'profile.myResumes' | translate">
       <div class="resume-list">
         @if (isLoading.resumes) {
           <div class="loading-state">
             <mat-icon>sync</mat-icon>
-            <p>Loading your resumes...</p>
+            <p>{{ 'profile.loadingResumes' | translate }}</p>
           </div>
         } @else {
           @for (resume of myResumes; track resume.id) {
             <mat-card class="resume-card">
               <mat-card-header>
-                <mat-card-title>{{ resume.speciality }} Developer Resume</mat-card-title>
+                <mat-card-title>{{ resume.speciality }} {{ 'profile.developerResume' | translate }}</mat-card-title>
                 <mat-card-subtitle>{{ resume.createdAt | date:'mediumDate' }}</mat-card-subtitle>
               </mat-card-header>
               <mat-card-content>
-                <p>{{ resume.yearsOfExperience }} years of experience</p>
+                <p>{{ resume.yearsOfExperience }} {{ 'profile.yearsOfExperience' | translate }}</p>
                 <div class="status-badge" [ngClass]="resume.resumeStatus.toLowerCase()">
                   {{ getStatusText(resume.resumeStatus) }}
                 </div>
               </mat-card-content>
               <mat-card-actions>
                 <button mat-button class="view-btn" (click)="viewResume(resume.id)">
-                  <mat-icon>visibility</mat-icon> View
+                  <mat-icon>visibility</mat-icon> {{ 'profile.view' | translate }}
                 </button>
                 <button mat-button class="edit-btn" (click)="editResume(resume.id)">
-                  <mat-icon>edit</mat-icon> Edit
+                  <mat-icon>edit</mat-icon> {{ 'profile.edit' | translate }}
                 </button>
                 <button mat-button class="delete-btn" (click)="deleteResume(resume.id)">
-                  <mat-icon>delete</mat-icon> Delete
+                  <mat-icon>delete</mat-icon> {{ 'profile.delete' | translate }}
                 </button>
               </mat-card-actions>
             </mat-card>
           } @empty {
             <div class="empty-state">
               <mat-icon>description</mat-icon>
-              <p>You haven't created any resumes yet</p>
+              <p>{{ 'profile.noResumesYet' | translate }}</p>
             </div>
           }
         }
       </div>
     </mat-tab>
     
-    <mat-tab label="Bookmarks">
+    <mat-tab [label]="'profile.myBookmarks' | translate">
       <div class="bookmark-list">
         @if (isLoading.bookmarks) {
           <div class="loading-state">
             <mat-icon>sync</mat-icon>
-            <p>Loading your bookmarks...</p>
+            <p>{{ 'profile.loadingBookmarks' | translate }}</p>
           </div>
         } @else {
           @for (bookmark of bookmarks; track bookmark.id) {
             <mat-card class="bookmark-card">
               <mat-card-header>
                 <mat-card-title>
-                  {{ bookmark.resume?.speciality || 'Developer' }} Resume
+                  {{ bookmark.resume?.speciality || 'Developer' }} {{ 'profile.developerResume' | translate }}
                 </mat-card-title>
                 <mat-card-subtitle>{{ bookmark.createdAt | date:'mediumDate' }}</mat-card-subtitle>
               </mat-card-header>
               <mat-card-content>
                 <p *ngIf="bookmark.resume">
-                  {{ bookmark.resume.yearsOfExperience }} years of experience
+                  {{ bookmark.resume.yearsOfExperience }} {{ 'profile.yearsOfExperience' | translate }}
                 </p>
                 <p *ngIf="!bookmark.resume">
-                  Resume details not available
+                  {{ 'profile.resumeDetailsNotAvailable' | translate }}
                 </p>
               </mat-card-content>
               <mat-card-actions>
                 <button mat-button class="open-btn" (click)="openBookmark(bookmark)">
-                  <mat-icon>open_in_new</mat-icon> Open
+                  <mat-icon>open_in_new</mat-icon> {{ 'common.view' | translate }}
                 </button>
                 <button mat-button class="remove-btn" (click)="removeBookmark(bookmark)">
-                  <mat-icon>bookmark_remove</mat-icon> Remove
+                  <mat-icon>bookmark_remove</mat-icon> {{ 'common.remove' | translate }}
                 </button>
               </mat-card-actions>
             </mat-card>
           } @empty {
             <div class="empty-state">
               <mat-icon>bookmarks</mat-icon>
-              <p>You don't have any bookmarked resumes</p>
+              <p>{{ 'profile.noBookmarksYet' | translate }}</p>
             </div>
           }
         }

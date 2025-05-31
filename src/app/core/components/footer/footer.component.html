@@ -3,14 +3,14 @@
     <div class="footer-content">
       <div class="footer-left">
         <div class="copyright">
-          © 2025 ResumeShare. All rights reserved.
+          {{ 'footer.copyright' | translate }}
         </div>
       </div>
       <div class="footer-right">
         <nav class="footer-links">
-          <a [routerLink]="['/terms']" class="footer-link">Terms</a>
-          <a [routerLink]="['/privacy']" class="footer-link">Privacy</a>
-          <a [routerLink]="['/help']" class="footer-link">Help</a>
+          <a [routerLink]="['/terms']" class="footer-link">{{ 'footer.links.terms' | translate }}</a>
+          <a [routerLink]="['/privacy']" class="footer-link">{{ 'footer.links.privacy' | translate }}</a>
+          <a [routerLink]="['/help']" class="footer-link">{{ 'footer.links.help' | translate }}</a>
         </nav>
       </div>
     </div>

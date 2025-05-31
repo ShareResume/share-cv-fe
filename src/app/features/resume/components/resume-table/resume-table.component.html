@@ -1,5 +1,5 @@
 <section class="table-section">
-  <h2 class="table-title">Recent Submissions</h2>
+  <h2 class="table-title">{{ 'resume.recentSubmissions' | translate }}</h2>
   
   <!-- Main table component with ID column -->
   <app-table 
@@ -35,19 +35,19 @@
         </div>
       } @else {
         <div class="company-logo placeholder-logo"></div>
-        <span class="company-name">No companies</span>
+        <span class="company-name">{{ 'resume.noCompanies' | translate }}</span>
       }
     </div>
   </ng-template>
   
   <!-- Speciality template -->
   <ng-template #specialityTemplate let-value="value">
-    <span>{{value || 'Not specified'}}</span>
+    <span>{{value || ('resume.notSpecified' | translate)}}</span>
   </ng-template>
   
   <!-- Years of Experience template -->
   <ng-template #yearsOfExperienceTemplate let-value="value">
-    <span>{{value || 'N/A'}} {{value === 1 ? 'year' : 'years'}}</span>
+    <span>{{value || ('resume.na' | translate)}} {{value === 1 ? ('common.year' | translate) : ('common.years' | translate)}}</span>
   </ng-template>
   
   <!-- Status template with status text -->

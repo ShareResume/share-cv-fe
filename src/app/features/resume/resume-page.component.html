@@ -1,5 +1,5 @@
 <div class="resume-page">
-  <h1>Resumes</h1>
+  <h1>{{ 'header.navigation.resumes' | translate }}</h1>
   
   <!-- Filter component -->
   <app-resume-filter 
@@ -17,14 +17,14 @@
   <!-- Loading indicator -->
   @if (isLoading()) {
     <div class="loading-indicator">
-      Loading resumes...
+      {{ 'resume.loading' | translate }}
     </div>
   }
   
   <!-- No results message -->
   @if (!isLoading() && resumes().length === 0) {
     <div class="no-results">
-      No resumes found. Try adjusting your filters.
+      {{ 'resume.noResultsFound' | translate }}
     </div>
   }
   

@@ -2,11 +2,12 @@ import { Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompanyStat } from '../../../core/models/company-stat.model';
 import { StatCardComponent } from '../stat-card/stat-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-statistics-section',
   standalone: true,
-  imports: [CommonModule, StatCardComponent],
+  imports: [CommonModule, StatCardComponent, TranslateModule],
   templateUrl: './statistics-section.component.html',
   styleUrls: ['./statistics-section.component.scss'],
 })

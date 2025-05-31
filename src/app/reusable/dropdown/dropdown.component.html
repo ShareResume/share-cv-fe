@@ -20,7 +20,7 @@
   </div>
   <mat-select
     [multiple]="multiple()"
-    placeholder="Select an option"
+    [placeholder]="getPlaceholder()"
     class="dropdown"
     panelClass="custom"
     [formControl]="statusControl"
@@ -37,5 +37,5 @@
   </mat-select>
 </mat-form-field>
 <div *ngIf="statusControl.invalid && statusControl.touched" class="error-message">
-  {{ errorMessage() }}
+  {{ getErrorMessage() }}
 </div>

@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { IconComponent } from '../icon/icon.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Status } from '../models/dropdown.model';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 type SelectValue = string | string[] | null;
 
@@ -31,6 +32,7 @@ type SelectValue = string | string[] | null;
     CommonModule,
     MatIconModule,
     IconComponent,
+    TranslateModule,
   ],
   templateUrl: './dropdown.component.html',
   styleUrl: './dropdown.component.scss',
@@ -44,10 +46,12 @@ export class DropdownComponent implements ControlValueAccessor, OnInit {
   public options = input<Status[]>([]);
   public multiple = input<boolean>(false);
   public required = input<boolean>(false);
-  public errorMessage = input<string>('Please select a valid option');
+  public errorMessage = input<string>('');
   public label = input<string | undefined>(undefined);
+  public placeholder = input<string>('');
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly translateService = inject(TranslateService);
 
   public isOpen = false;
   public form?: FormGroup;
@@ -99,6 +103,14 @@ export class DropdownComponent implements ControlValueAccessor, OnInit {
       this.form.get('status')?.updateValueAndValidity();
       this.form.updateValueAndValidity();
     }
+  }
+
+  public getPlaceholder(): string {
+    return this.placeholder() || this.translateService.instant('common.selectOption');
+  }
+
+  public getErrorMessage(): string {
+    return this.errorMessage() || this.translateService.instant('validation.selectValidOption');
   }
 
   public ngOnInit(): void {

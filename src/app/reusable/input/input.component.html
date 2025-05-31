@@ -24,7 +24,7 @@
       [disableRipple]="true"
       [disabled]="disabled"
       matSuffix
-      [attr.aria-label]="'Hide password'"
+      [attr.aria-label]="getPasswordVisibilityLabel()"
       (click)="togglePasswordVisibility()"
     >
       <app-icon

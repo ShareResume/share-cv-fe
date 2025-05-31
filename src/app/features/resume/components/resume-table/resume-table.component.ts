@@ -9,6 +9,7 @@ import { effect, signal } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ResumeStateService } from '../../services/resume-state.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface ResumeTableItem extends PublicResume {
   statusObject: PublicResume; 
@@ -24,11 +25,13 @@ interface ResumeTableItem extends PublicResume {
     TableComponent,
     DatePipe,
     ChipsComponent,
+    TranslateModule,
   ],
 })
 export class ResumeTableComponent {
   private router = inject(Router);
   private resumeStateService = inject(ResumeStateService);
+  private translateService = inject(TranslateService);
   
   // Signal to track if we should process page events
   private enablePageEvents = signal<boolean>(false);
@@ -47,11 +50,11 @@ export class ResumeTableComponent {
   
   // Table columns configuration
   displayedColumns: Record<string, string> = {
-    companiesList: 'Companies',
-    speciality: 'Specialization',
-    yearsOfExperience: 'Years of Experience',
-    statusObject: 'Status',
-    date: 'Date',
+    companiesList: this.translateService.instant('table.columns.companies'),
+    speciality: this.translateService.instant('table.columns.speciality'),
+    yearsOfExperience: this.translateService.instant('table.columns.yearsOfExperience'),
+    statusObject: this.translateService.instant('table.columns.status'),
+    date: this.translateService.instant('table.columns.createdAt'),
   };
 
   constructor() {
@@ -86,6 +89,17 @@ export class ResumeTableComponent {
           this.enablePageEvents.set(true);
         }, 500);
       }
+    });
+
+    // Update column headers when language changes
+    this.translateService.onLangChange.subscribe(() => {
+      this.displayedColumns = {
+        companiesList: this.translateService.instant('table.columns.companies'),
+        speciality: this.translateService.instant('table.columns.speciality'),
+        yearsOfExperience: this.translateService.instant('table.columns.yearsOfExperience'),
+        statusObject: this.translateService.instant('table.columns.status'),
+        date: this.translateService.instant('table.columns.createdAt'),
+      };
     });
   }
   
@@ -128,7 +142,7 @@ export class ResumeTableComponent {
    */
   getStatusText(resume: PublicResume | null): string {
     if (!resume) {
-      return 'N/A';
+      return this.translateService.instant('resume.na');
     }
     
     const counts = resume.getHrScreeningStatusCounts();
@@ -139,7 +153,7 @@ export class ResumeTableComponent {
    * Format the date for display
    */
   formatDate(date: Date | null): string {
-    if (!date) return 'N/A';
+    if (!date) return this.translateService.instant('resume.na');
     
     const options: Intl.DateTimeFormatOptions = { 
       year: 'numeric', 

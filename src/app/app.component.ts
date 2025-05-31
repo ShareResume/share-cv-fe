@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { registerCustomIcons } from './core/utils/icon-registrator';
 import { RouterOutlet } from '@angular/router';
+import { LanguageService } from './core/services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,9 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private readonly translate: TranslateService = inject(TranslateService);
+  private readonly languageService = inject(LanguageService);
 
   public constructor() {
     registerCustomIcons();
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
   }
 }

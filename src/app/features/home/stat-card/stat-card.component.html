@@ -4,7 +4,7 @@
     @for (company of companies(); track company.companyName) {
       <app-company-stat-card [companyStat]="company"></app-company-stat-card>
     } @empty {
-      <div class="no-data">No data available</div>
+      <div class="no-data">{{ 'noData' | translate }}</div>
     }
   </div>
 </div> 

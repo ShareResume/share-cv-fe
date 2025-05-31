@@ -3,11 +3,12 @@ import { ButtonComponent } from '../../../reusable/button/button.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { PopupService } from '../../../core/services/popup.service';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-top-section',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, TranslateModule],
   templateUrl: './top-section.component.html',
   styleUrl: './top-section.component.scss',
 })
