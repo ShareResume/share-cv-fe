@@ -42,7 +42,6 @@ export class ResumeDetailCommentsComponent implements OnChanges {
     text: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
-  // For new comments with a parent
   replyingToComment = signal<Comment | null>(null);
   
   sortOptions = ['Most Helpful', 'Newest', 'Oldest'];
@@ -62,24 +61,19 @@ export class ResumeDetailCommentsComponent implements OnChanges {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
-          // Check if response is an array (direct data) or has a data property
           const flatComments = Array.isArray(response) ? response : (response?.data || []);
           
-          // Transform flat comments array into hierarchical structure
           const commentMap = new Map<string, Comment>();
           const rootComments: Comment[] = [];
           
-          // First pass: map all comments by ID
           flatComments.forEach(comment => {
             // Ensure the comment has a replies array
             comment.replies = [];
             commentMap.set(comment.id, comment);
           });
           
-          // Second pass: organize into parent-child relationships
           flatComments.forEach(comment => {
             if (comment.parentCommentId) {
-              // This is a child comment - add it to its parent's replies
               const parentComment = commentMap.get(comment.parentCommentId);
               if (parentComment) {
                 if (!parentComment.replies) {
@@ -87,20 +81,16 @@ export class ResumeDetailCommentsComponent implements OnChanges {
                 }
                 parentComment.replies.push(comment);
               } else {
-                // If parent not found, treat as a root comment
                 rootComments.push(comment);
               }
             } else {
-              // This is a root comment (no parent)
               rootComments.push(comment);
             }
           });
           
-          // Set the organized comments to display
           this.comments.set(rootComments);
           this.isLoadingComments.set(false);
           
-          // Apply sorting after organizing the hierarchy
           this.updateSort(this.selectedSort());
         },
         error: (error: HttpErrorResponse) => {

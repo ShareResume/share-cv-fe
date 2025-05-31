@@ -15,7 +15,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
-// Define the array of interceptors
 const interceptors = [errorInterceptor, authInterceptor, mockApiInterceptor];
 
 export const appConfig: ApplicationConfig = {

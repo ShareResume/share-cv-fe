@@ -29,7 +29,6 @@ interface AdminTableItem extends PrivateResume {
   ]
 })
 export class AdminTableComponent {
-  // Input signals from parent component
   resumes = input<PrivateResume[]>([]);
   isLoading = input<boolean>(false);
   totalCount = input<number>(0);
@@ -38,10 +37,8 @@ export class AdminTableComponent {
   
   @Output() pageChanged = new EventEmitter<PageEvent>();
   
-  // Table data source
   dataSource = new MatTableDataSource<AdminTableItem>([]);
   
-  // Table columns configuration
   displayedColumns: Record<string, string> = {
     id: 'ID',
     speciality: 'Specialization',
@@ -57,15 +54,12 @@ export class AdminTableComponent {
     private router: Router,
     private adminResumeStateService: AdminResumeStateService
   ) {
-    // Set up effect to update data source when resumes change
     this.setupResumeEffect();
   }
   
   private setupResumeEffect(): void {
-    // Detect changes to resumes input
     const resumesSignal = this.resumes;
     if (resumesSignal) {
-      // Manually react to resume changes
       this.updateDataSource(resumesSignal());
     }
   }
@@ -73,14 +67,11 @@ export class AdminTableComponent {
   private updateDataSource(resumes: PrivateResume[] | any[]): void {
     if (!resumes) return;
     
-    // Create admin table items from resumes
     this.dataSource.data = resumes.map(resumeData => {
-      // Convert raw JSON to PrivateResume instance if needed
       const resume = resumeData instanceof PrivateResume ? 
         resumeData : 
         PrivateResume.fromJson(resumeData);
       
-      // Create admin table item with proper class instance
       const item = {
         ...resume,
         id: resume.id,
@@ -92,7 +83,6 @@ export class AdminTableComponent {
         documents: resume.documents
       } as AdminTableItem;
       
-      // Add the statusObject property for displaying status
       item.statusObject = resume;
       
       return item;
@@ -100,7 +90,6 @@ export class AdminTableComponent {
   }
   
   ngOnChanges(): void {
-    // React to input changes when resumes signal updates
     if (this.resumes()) {
       console.log('Resumes updated in admin-table:', this.resumes());
       this.updateDataSource(this.resumes());
@@ -155,12 +144,10 @@ export class AdminTableComponent {
    * Get public document URL safely, whether from a class instance or a raw object
    */
   getPublicDocumentUrl(resume: any): string | null {
-    // If it's a PrivateResume instance with the method
     if (resume && typeof resume.getPublicDocumentUrl === 'function') {
       return resume.getPublicDocumentUrl();
     }
     
-    // Otherwise, try to extract from documents array
     if (resume && resume.documents && Array.isArray(resume.documents)) {
       const publicDoc = resume.documents.find((doc: any) => doc.accessType === 'PUBLIC');
       return publicDoc ? publicDoc.url : null;
@@ -195,22 +182,17 @@ export class AdminTableComponent {
     }
     
     try {
-      // Extract the value from the "statusObject" property if it exists
-      // This is needed because the template might pass the entire row object
       const resumeData = resume.statusObject || resume;
       
-      // Store the selected resume in the state service for access on the detail page
       if (resumeData instanceof PrivateResume) {
         console.log('Resume is a PrivateResume instance');
         this.adminResumeStateService.setSelectedResume(resumeData);
       } else {
-        // Convert to PrivateResume instance if not already
         console.log('Converting to PrivateResume instance');
         const resumeInstance = PrivateResume.fromJson(resumeData);
         this.adminResumeStateService.setSelectedResume(resumeInstance);
       }
       
-      // Navigate to the detail page
       console.log('Navigating to:', '/admin/resume/' + resumeData.id);
       this.router.navigate(['/admin/resume', resumeData.id]);
     } catch (error) {

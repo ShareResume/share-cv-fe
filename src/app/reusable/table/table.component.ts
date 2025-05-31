@@ -90,21 +90,14 @@ export class TableComponent<T> implements AfterViewInit {
     return this.dataSource().data.length;
   }
   
-  /**
-   * Determines whether to show the paginator based on total count
-   * Shows paginator if the total count is greater than page size
-   * or if there are multiple pages worth of data
-   */
   public shouldShowPaginator(): boolean {
     const totalValue = this.total();
     const pageSizeValue = this.pageSize();    
     
-    // Show paginator if we have more items than can fit on one page
     if (totalValue && pageSizeValue) {
       return totalValue > pageSizeValue;
     }
     
-    // Fallback - show paginator if we have at least some data
     return totalValue ? totalValue > 0 : false;
   }
 
@@ -119,19 +112,16 @@ export class TableComponent<T> implements AfterViewInit {
       .subscribe(([sort, page]) => {
         const nextPage = page as PageEvent;
         
-        // Ensure next page has all required properties
         if (!nextPage.pageSize) {
           nextPage.pageSize = this.pageSize() || 10;
         }
         
-        // Always use the explicitly set total value from the input
         nextPage.length = this.total() as number;
 
         if (
           sort.active !== prevSort.active
           || sort.direction !== prevSort.direction
         ) {
-          // Store previous page index when resetting
           nextPage.previousPageIndex = this.pageIndex();
           nextPage.pageIndex = 0;
         }

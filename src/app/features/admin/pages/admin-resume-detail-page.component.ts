@@ -31,7 +31,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
   error = signal<string | null>(null);
   isUpdating = signal<boolean>(false);
   
-  // Computed signals for safe PDF URLs
   privateDocumentUrl = computed(() => {
     const resume = this.resume();
     return resume ? resume.getPrivateDocumentUrl() : null;
@@ -42,7 +41,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
     return resume ? resume.getPublicDocumentUrl() : null;
   });
   
-  // Safe URLs for iframe display
   safePrivateDocUrl = computed<SafeResourceUrl>(() => {
     return this.privateDocumentUrl() 
       ? this.sanitizer.bypassSecurityTrustResourceUrl(this.privateDocumentUrl()!)
@@ -55,7 +53,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
       : this.sanitizer.bypassSecurityTrustResourceUrl('');
   });
   
-  // Status for UI display
   resumeStatus = computed(() => {
     return this.resume()?.resumeStatus || ResumeStatusEnum.WAITING_FOR_APPROVE;
   });
@@ -92,7 +89,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          // Create a new PrivateResume instance with updated status
           const currentResume = this.resume()!;
           
           const updatedResume = new PrivateResume(
@@ -106,7 +102,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
             currentResume.hidden
           );
           
-          // Update the local state
           this.resume.set(updatedResume);
           this.adminResumeStateService.setSelectedResume(updatedResume);
           this.isUpdating.set(false);
@@ -131,7 +126,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          // Create a new PrivateResume instance with updated status
           const currentResume = this.resume()!;
           
           const updatedResume = new PrivateResume(
@@ -145,7 +139,6 @@ export class AdminResumeDetailPageComponent implements OnInit {
             currentResume.hidden
           );
           
-          // Update the local state
           this.resume.set(updatedResume);
           this.adminResumeStateService.setSelectedResume(updatedResume);
           this.isUpdating.set(false);
@@ -160,10 +153,7 @@ export class AdminResumeDetailPageComponent implements OnInit {
   }
   
   uploadEditedDocument(): void {
-    // In a real implementation, this would open a file upload dialog
-    // and then make an API call to upload the new document
     console.log('Upload edited document functionality');
-    // This would be implemented with a file input and FormData
   }
   
   getFormattedDate(date: Date | null | undefined): string {

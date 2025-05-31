@@ -20,9 +20,7 @@ export class TopSectionComponent {
   private router = inject(Router);
 
   public uploadResume(): void {
-    // Check if user is authenticated
     if (this.authService.isAuthenticated) {
-      // User is authenticated, emit event first then navigate
       this.uploadResumeClick.emit();
     } else {
       this.popupService.showLoginPopup();

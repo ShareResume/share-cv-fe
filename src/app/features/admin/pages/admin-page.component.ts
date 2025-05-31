@@ -51,7 +51,6 @@ export class AdminPageComponent implements OnInit {
             
             // Convert the raw JSON to proper PrivateResume instances
             this.resumes = Array.isArray(data) ? data.map(item => {
-              // Be sure we're working with the Resume.fromJson method
               const resume = Resume.fromJson(item);
               console.log('Converted resume:', resume);
               return resume instanceof PrivateResume ? resume : PrivateResume.fromJson(item);

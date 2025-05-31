@@ -24,7 +24,6 @@ export class ResumePageComponent implements OnInit {
 
   protected readonly Math = Math;
 
-  // Use signals instead of standard variables for reactivity
   resumes = signal<PublicResume[]>([]);
   totalCount = signal<number>(0);
   isLoading = signal<boolean>(false);
@@ -45,31 +44,25 @@ export class ResumePageComponent implements OnInit {
   });
   
   ngOnInit(): void {
-    // Load resumes just once during initialization
     console.log('[ResumePageComponent] Initial load');
     this.loadResumes(this.filters());
   }
   
-  // Handle filter events from filter component
   onFilterApplied(newFilters: ResumeFilters): void {
     console.log('[ResumePageComponent] Filters applied', newFilters);
     
-    // Update filters, preserving pagination and resetting to page 1
     this.filters.update(currentFilters => ({
       ...currentFilters,
       ...newFilters,
       page: 1,
     }));
     
-    // Load resumes with updated filters
     this.loadResumes(this.filters());
   }
   
-  // Handle page change events from the table
   onPageChanged(pageEvent: { pageIndex: number, pageSize: number }): void {
     console.log('[ResumePageComponent] Page changed', pageEvent);
     
-    // Prevent initial load from triggering duplicate API calls
     if (!this.initialLoadComplete) {
       console.log('[ResumePageComponent] Skipping page change during initial load');
       return;
@@ -77,8 +70,6 @@ export class ResumePageComponent implements OnInit {
     
     const currentFilters = this.filters();
     
-    // Skip API calls if this is the initial page rendering with default values
-    // or if the page hasn't actually changed
     if ((pageEvent.pageIndex === 0 && pageEvent.pageSize === 10 && 
          currentFilters.page === 1 && currentFilters.pageSize === 10) ||
         (pageEvent.pageIndex + 1 === currentFilters.page && 
@@ -87,29 +78,23 @@ export class ResumePageComponent implements OnInit {
       return;
     }
     
-    // Update filters with new pagination using signal update
     this.filters.update(currentFilters => ({
       ...currentFilters,
-      page: pageEvent.pageIndex + 1, // Convert from 0-based to 1-based index
+      page: pageEvent.pageIndex + 1,
       pageSize: pageEvent.pageSize,
     }));
     
-    // Load resumes with updated filters after page change
     this.loadResumes(this.filters());
   }
   
-  // Load resumes with filters
   private loadResumes(filters: ResumeFilters): void {
-    // Don't proceed if we're already loading
     if (this.isLoading()) {
       console.log('[ResumePageComponent] Skipping load - already loading');
       return;
     }
     
-    // Create string representation of filters to check for duplicates
     const filtersString = JSON.stringify(filters);
     
-    // Skip duplicate API calls for the same filters
     if (this.initialLoadComplete && filtersString === this.lastLoadedFilters) {
       console.log('[ResumePageComponent] Skipping load - filters unchanged');
       return;
@@ -119,7 +104,6 @@ export class ResumePageComponent implements OnInit {
     this.isLoading.set(true);
     this.error.set(null);
     
-    // Update last loaded filters
     this.lastLoadedFilters = filtersString;
     
     this.resumeService.getResumes(filters)

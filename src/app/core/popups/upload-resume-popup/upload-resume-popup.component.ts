@@ -144,7 +144,6 @@ export class UploadResumePopupComponent implements OnInit {
           },
           error: (error) => {
             console.error('Error submitting resume:', error);
-            // You could add error handling here, such as displaying an error message
           }
         });
     } else {

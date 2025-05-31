@@ -33,10 +33,8 @@ export class ResumeTableComponent {
   private resumeStateService = inject(ResumeStateService);
   private translateService = inject(TranslateService);
   
-  // Signal to track if we should process page events
   private enablePageEvents = signal<boolean>(false);
 
-  // Accept signal values from parent component
   resumes = input<PublicResume[]>([]);
   isLoading = input<boolean>(false);
   totalCount = input<number>(0);
@@ -45,10 +43,8 @@ export class ResumeTableComponent {
   
   @Output() pageChanged = new EventEmitter<PageEvent>();
   
-  // Table data source as a regular property, not a computed signal
   dataSource = new MatTableDataSource<ResumeTableItem>([]);
   
-  // Table columns configuration
   displayedColumns: Record<string, string> = {
     companiesList: this.translateService.instant('table.columns.companies'),
     speciality: this.translateService.instant('table.columns.speciality'),
@@ -58,30 +54,22 @@ export class ResumeTableComponent {
   };
 
   constructor() {
-    // Set up effect to update the data source when resumes change
     effect(() => {
       const data = this.resumes();
       console.log('[ResumeTableComponent] Updating data source with', data.length, 'items');
       
-      // Create proper ResumeTableItem objects
       this.dataSource.data = data.map(resume => {
-        // Create a new object that has all PublicResume properties and methods
         const item = Object.create(Object.getPrototypeOf(resume));
         
-        // Copy all properties from the original resume
         Object.assign(item, resume);
         
-        // Add the statusObject property
         item.statusObject = resume;
         
-        // Add the companies list property
         item.companiesList = resume;
         
         return item;
       });
       
-      // Wait for all data to be loaded and allow a little delay
-      // before enabling page events to avoid initialization loop
       if (data.length > 0 && !this.enablePageEvents()) {
         console.log('[ResumeTableComponent] Data loaded, enabling page events after delay');
         setTimeout(() => {
@@ -91,7 +79,6 @@ export class ResumeTableComponent {
       }
     });
 
-    // Update column headers when language changes
     this.translateService.onLangChange.subscribe(() => {
       this.displayedColumns = {
         companiesList: this.translateService.instant('table.columns.companies'),
@@ -104,27 +91,22 @@ export class ResumeTableComponent {
   }
   
   viewResume(resume: PublicResume): void {
-    // Add null check to prevent errors
     if (!resume) {
       console.error('Resume is undefined');
       return;
     }
     
-    // Store the selected resume in the shared service
     this.resumeStateService.setSelectedResume(resume);
     
-    // Navigate to the detail page
     this.router.navigate(['/resumes', resume.id]);
   }
   
   onPageChange(event: PageEvent): void {
-    // Completely block page change events during initialization
     if (!this.enablePageEvents()) {
       console.log('[ResumeTableComponent] Page events disabled, ignoring event');
       return;
     }
     
-    // Additional check to prevent redundant events
     const isRedundantEvent = 
       event.pageIndex === this.pageIndex() && 
       event.pageSize === this.pageSize();
@@ -137,9 +119,6 @@ export class ResumeTableComponent {
     }
   }
   
-  /**
-   * Get the status display text for a resume
-   */
   getStatusText(resume: PublicResume | null): string {
     if (!resume) {
       return this.translateService.instant('resume.na');
@@ -149,9 +128,6 @@ export class ResumeTableComponent {
     return `Passed: ${counts.passed} / Rejected: ${counts.notPassed}`;
   }
 
-  /**
-   * Format the date for display
-   */
   formatDate(date: Date | null): string {
     if (!date) return this.translateService.instant('resume.na');
     

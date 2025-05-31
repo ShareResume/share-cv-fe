@@ -19,7 +19,6 @@ export class HeaderComponent {
   private router = inject(Router);
   private elementRef = inject(ElementRef);
   
-  // Inject language service
   languageService = inject(LanguageService);
 
   isMenuOpen = false;
@@ -69,7 +68,6 @@ export class HeaderComponent {
     this.router.navigate(['/login']);
   }
   
-  // Language switching methods
   toggleLanguage(): void {
     this.languageService.toggleLanguage();
   }

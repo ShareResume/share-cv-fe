@@ -105,9 +105,7 @@ export class ProfilePageComponent implements OnInit {
 
   deleteResume(resumeId: string): void {
     console.log(`Deleting resume with ID: ${resumeId}`);
-    // Here you would call a service to delete the resume
 
-    // For demo purposes, we're just filtering it out
     this.myResumes = this.myResumes.filter(resume => resume.id !== resumeId);
     this.showSuccess(this.translateService.instant('profile.resumeDeletedSuccess'));
   }
