@@ -183,6 +183,11 @@ export class AuthService implements OnDestroy {
     this.clearTokenRefreshTimer();
   }
 
+  public deleteUser(): Observable<void> {
+    return this.apiService
+      .delete<void>(`${this.PATH}/users/me`);
+  }
+
   public resetPassword(email: string): Observable<void> {
     return this.apiService.post<{ email: string }, void>(`${this.PATH}/reset`, { email });
   }

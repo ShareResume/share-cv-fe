@@ -1,6 +1,7 @@
 import { Component, Inject, TemplateRef, Type, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { PopupContentComponent } from './popup-content.component';
 
 export interface PopupButton {
@@ -18,7 +19,7 @@ export interface PopupData {
 @Component({
   selector: 'app-popup',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, PopupContentComponent],
+  imports: [CommonModule, MatDialogModule, PopupContentComponent, TranslateModule],
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.scss',
 })

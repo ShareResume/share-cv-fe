@@ -141,6 +141,15 @@
   &:not(:last-child) {
     border-bottom: 1px solid $color-gray-300;
   }
+
+  &--danger {
+    color: $color-error;
+    
+    &:hover {
+      background-color: rgba($color-error, 0.1);
+      color: darken($color-error, 10%);
+    }
+  }
 }
 
 // Add styling for the admin link

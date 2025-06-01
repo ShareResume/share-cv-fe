@@ -1,6 +1,6 @@
 <div class="popup__container mat-dialog-container">
   <div class="popup__header">
-    <h2 class="popup__title mat-dialog-title">{{ title() }}</h2>
+    <h2 class="popup__title mat-dialog-title">{{ title() | translate }}</h2>
     <button class="popup__close" (click)="onCloseClick()" mat-dialog-close>
       <span class="popup__close-icon">×</span>
     </button>
@@ -15,7 +15,7 @@
           class="btn" 
           [class]="'btn--' + button.type"
           (click)="onButtonClick(button.action ?? button.label)">
-          {{ button.label }}
+          {{ button.label | translate }}
         </button>
       }
     </div>

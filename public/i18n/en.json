@@ -31,15 +31,19 @@
     "selectOption": "Select an option"
   },
   "auth": {
-    "login": "Login",
-    "logout": "Logout",
+    "login": "Log In",
+    "logout": "Log Out",
     "register": "Register",
     "email": "Email",
     "password": "Password",
-    "forgotPassword": "Forgot Password?",
+    "forgotPassword": "Forgot password?",
     "continueWithGoogle": "Continue with Google",
     "signOut": "Sign Out",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "deleteAccountTitle": "Delete Account",
+    "deleteAccountContent": "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data including resumes, bookmarks, and documents.",
+    "deleteAccountConfirm": "Delete Account",
+    "accountDeletedSuccess": "Your account and all associated data have been successfully deleted."
   },
   "header": {
     "logo": "ResumeShare",

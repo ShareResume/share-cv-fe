@@ -1,17 +1,18 @@
 import { Component, Input, TemplateRef, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-popup-content',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   template: `
     @if (isTemplate(content)) {
       <ng-container [ngTemplateOutlet]="content"></ng-container>
     } @else if (isComponent(content)) {
       <ng-container *ngComponentOutlet="content"></ng-container>
     } @else if (isString(content)) {
-      <p>{{ content }}</p>
+      <p>{{ content | translate }}</p>
     }
   `,
   styles: [`

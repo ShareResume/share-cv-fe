@@ -6,6 +6,9 @@ import { AuthService } from '../../services/auth.service';
 import { UserRoleEnum } from '../../enums/user-role.enum';
 import { LanguageService } from '../../services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { PopupService } from '../../services/popup.service';
+import { PopupData } from '../../../reusable/popup/popup.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +21,7 @@ export class HeaderComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private elementRef = inject(ElementRef);
+  private popupService = inject(PopupService);
   
   languageService = inject(LanguageService);
 
@@ -66,6 +70,64 @@ export class HeaderComponent {
   
   navigateToLogin(): void {
     this.router.navigate(['/login']);
+  }
+  
+  deleteUser(): void {
+    this.isMenuOpen = false;
+    
+    console.log('Delete user triggered');
+    console.log('User authenticated:', this.authService.isAuthenticated);
+    console.log('Access token exists:', !!this.authService.getAccessToken());
+    
+    const dialogData: PopupData = {
+      title: 'auth.deleteAccountTitle',
+      content: 'auth.deleteAccountContent',
+      buttons: [
+        {
+          label: 'common.cancel',
+          type: 'secondary',
+          action: 'cancel'
+        },
+        {
+          label: 'auth.deleteAccountConfirm',
+          type: 'primary',
+          action: 'delete'
+        }
+      ]
+    };
+
+    const dialogRef = this.popupService.openPopup(dialogData);
+    
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+      if (result === 'delete') {
+        console.log('User confirmed deletion, making API call...');
+        this.authService.deleteUser().pipe(take(1)).subscribe({
+          next: () => {
+            console.log('Account deleted successfully');
+            const successDialogData: PopupData = {
+              title: 'auth.deleteAccountTitle',
+              content: 'auth.accountDeletedSuccess',
+              buttons: [
+                {
+                  label: 'common.close',
+                  type: 'primary',
+                  action: 'close'
+                }
+              ]
+            };
+            
+            const successDialogRef = this.popupService.openPopup(successDialogData);
+            
+            successDialogRef.afterClosed().pipe(take(1)).subscribe(() => {
+              this.authService.logout();
+            });
+          },
+          error: (error) => {
+            console.error('Failed to delete account:', error);
+          }
+        });
+      }
+    });
   }
   
   toggleLanguage(): void {
