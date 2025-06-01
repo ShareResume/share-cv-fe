@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   statisticsError = signal<string | null>(null);
   
   ngOnInit(): void {
-    this.loadStatistics();
+    //this.loadStatistics();
   }
   
   openUploadResumePopup(): void {
