@@ -13,17 +13,12 @@ export class UserResumesService {
   private readonly apiEndpoint = '/resumes';
   constructor() {}
 
-  /**
-   * Add a new resume with file attachment and multiple companies
-   */
   addResume(resumeData: ResumeFormData): Observable<any> {
-    // Map each company and its status to the API format
     const companiesInfo: CompanyResumeInfo[] = resumeData.companies.map(company => ({
       id: company.companyId,
       isHrScreeningPassed: company.status === 'Approved'
     }));
 
-    // Transform form data to match API requirements
     const apiRequest: CreateResumeModel = {
       companies: companiesInfo,
       yearsOfExperience: resumeData.yearsOfExperience,
@@ -31,22 +26,15 @@ export class UserResumesService {
       document: resumeData.file,
     };
 
-    // Convert request object to FormData using ApiService's helper method
     const formData = this.apiService.createFormData(apiRequest);
 
     return this.apiService.post<FormData, any>(this.apiEndpoint, formData);
   }
 
-  /**
-   * Get all resumes for admin view
-   */
   getResumes(): Observable<PrivateResume[]> {
     return this.apiService.get<PrivateResume[]>(this.apiEndpoint);
   }
 
-  /**
-   * Update resume status (approve or reject)
-   */
   updateResumeStatus(resumeId: string, status: ResumeStatusEnum): Observable<any> {
     const requestBody = {
       resumeEvent: status === ResumeStatusEnum.APPROVED ? 'APPROVED' : 'REJECTED'

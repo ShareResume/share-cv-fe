@@ -10,7 +10,7 @@
               routerLinkActive="active"
               class="nav-link"
             >
-              {{ item.label }}
+              {{ item.labelKey | translate }}
             </a>
           }
           @if (isAdmin) {
@@ -19,7 +19,7 @@
               routerLinkActive="active"
               class="nav-link admin-link"
             >
-              Admin Dashboard
+              {{ 'header.navigation.adminDashboard' | translate }}
             </a>
           }
         </nav>
@@ -31,7 +31,7 @@
             class="upload-button"
             fontWeight="regular"
           >
-            Upload Resume
+            {{ 'header.uploadResume' | translate }}
           </app-button>
         }
         @if (!isAuthenticated) {
@@ -41,14 +41,26 @@
             fontWeight="medium"
             (click)="navigateToLogin()"
           >
-            Login
+            {{ 'header.login' | translate }}
           </app-button>
         }
+        
+        <!-- Language Toggle Button -->
+        <app-button
+          colorType="secondary"
+          class="language-switcher"
+          fontWeight="medium"
+          (click)="toggleLanguage()"
+          [title]="'Switch to ' + getOtherLanguageOption().name"
+        >
+          {{ getCurrentLanguage().flag }} {{ getCurrentLanguage().name }}
+        </app-button>
+        
         <div class="auth-status" [class.authenticated]="isAuthenticated">
           {{
             isAuthenticated
-              ? 'User is authenticated'
-              : 'User is not authenticated'
+              ? ('header.userAuthenticated' | translate)
+              : ('header.userNotAuthenticated' | translate)
           }}
         </div>
         @if (isAuthenticated) {
@@ -58,15 +70,15 @@
               fontWeight="medium"
               (click)="toggleMenu($event)"
             >
-              Menu
+              {{ 'header.menu' | translate }}
             </app-button>
             @if (isMenuOpen) {
               <div class="dropdown-menu">
                 <button class="dropdown-item" (click)="navigateToProfile()">
-                  Profile
+                  {{ 'header.profile' | translate }}
                 </button>
                 <button class="dropdown-item" (click)="signOut()">
-                  Sign Out
+                  {{ 'auth.signOut' | translate }}
                 </button>
               </div>
             }

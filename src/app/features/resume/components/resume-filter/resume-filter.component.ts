@@ -27,7 +27,6 @@ import { Company } from '@app/core/models/company.model';
 export class ResumeFilterComponent implements OnInit {
   @Output() filterApplied = new EventEmitter<ResumeFilters>();
   
-  // Input for existing filters - allows parent to pass down current filters
   currentFilters = input<ResumeFilters>({
     companyId: '',
     speciality: '',
@@ -39,23 +38,19 @@ export class ResumeFilterComponent implements OnInit {
     date: '',
   });
   
-  // Specialization options for dropdown
   readonly SPECIALIZATION_OPTIONS: Status[] = Object.keys(SpecializationEnum).map(key => {
     const enumValue = SpecializationEnum[key as keyof typeof SpecializationEnum];
-    // Format the display value while keeping the actual value unchanged
     return {
       value: enumValue,
       viewValue: this.formatSpecialization(enumValue)
     };
   });
   
-  // Status options for boolean dropdown
   readonly HR_SCREENING_OPTIONS: Status[] = [
     { value: 'true', viewValue: 'Approved' },
     { value: 'false', viewValue: 'Rejected' }
   ];
   
-  // Form group for all filters
   filterForm = new FormGroup({
     company: new FormControl<Company | null>(null),
     speciality: new FormControl<string | string[] | null>(null),
@@ -66,7 +61,6 @@ export class ResumeFilterComponent implements OnInit {
   });
   
   ngOnInit(): void {
-    // Initialize form with current filters from input
     const filters = this.currentFilters();
     
     this.filterForm.setValue({
@@ -79,11 +73,9 @@ export class ResumeFilterComponent implements OnInit {
     }, { emitEvent: false });
   }
   
-  // Apply filters
   applyFilters(): void {
     const formValue = this.filterForm.value;
     
-    // Create the filters object with basic structure
     const filters: ResumeFilters = {
       companyId: formValue.company ? (formValue.company as Company).id : '',
       speciality: '',
@@ -95,7 +87,6 @@ export class ResumeFilterComponent implements OnInit {
       }
     };
     
-    // Set speciality value if it exists
     if (formValue.speciality) {
       if (typeof formValue.speciality === 'string' && formValue.speciality !== '') {
         filters.speciality = formValue.speciality;
@@ -104,12 +95,10 @@ export class ResumeFilterComponent implements OnInit {
       }
     }
     
-    // Set isHrScreeningPassed value if it exists
     if (formValue.isHrScreeningPassed !== null) {
       filters.isHrScreeningPassed = formValue.isHrScreeningPassed === 'true';
     }
     
-    // If yearOfExperienceRange has no values, remove it
     if (filters.yearOfExperienceRange 
         && filters.yearOfExperienceRange.min === null 
         && filters.yearOfExperienceRange.max === null) {
@@ -119,7 +108,6 @@ export class ResumeFilterComponent implements OnInit {
     this.filterApplied.emit(filters);
   }
   
-  // Reset the form
   resetFilters(): void {
     this.filterForm.reset({
       company: null,
@@ -133,9 +121,7 @@ export class ResumeFilterComponent implements OnInit {
     this.applyFilters();
   }
 
-  // Format specialization values for display
   private formatSpecialization(value: string): string {
-    // Handle special cases first
     switch (value) {
       case 'DEV_OPS': return 'DevOps';
       case 'QA': return 'QA';
@@ -144,7 +130,6 @@ export class ResumeFilterComponent implements OnInit {
       case 'BACK_END': return 'Back-End';
       case 'FULL_STACK': return 'Full-Stack';
       default: {
-        // For other cases, apply general formatting rules
         return value
           .split('_')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())

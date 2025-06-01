@@ -75,4 +75,8 @@ export class HeaderComponent {
   getCurrentLanguage() {
     return this.languageService.getCurrentLanguageOption();
   }
+  
+  getOtherLanguageOption() {
+    return this.languageService.getOtherLanguageOption();
+  }
 }

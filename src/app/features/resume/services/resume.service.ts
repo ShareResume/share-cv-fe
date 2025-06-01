@@ -8,9 +8,6 @@ import { environment } from '@environments/environment';
 import { ResumeFilters } from '../models/resume-filters.model';
 import { ResumeResponse } from '../models/resume-response.model';
 
-/**
- * Update ResumeResponse to work with PublicResume
- */
 interface PublicResumeResponse {
   data: PublicResume[];
   totalCount: number;
@@ -25,17 +22,11 @@ export class ResumeService {
   private readonly apiEndpoint = '/public-users-resumes';
   private readonly baseUrl = environment.apiBaseUrl;
 
-  /**
-   * Default pagination settings
-   */
   private readonly DEFAULT_PAGE_SIZE = 10;
   private readonly DEFAULT_PAGE_NUMBER = 1;
   private readonly DEFAULT_ORDER_BY = 'Date';
   private readonly DEFAULT_SORT_ORDER = 'Descending';
 
-  /**
-   * Get resumes with optional filters
-   */
   getResumes(filters?: ResumeFilters): Observable<PublicResumeResponse> {
     const queryParams = this.transformFiltersToQueryParams(filters);
     const validParams = this.validateParams(queryParams);
@@ -48,7 +39,6 @@ export class ResumeService {
       map(response => {
         let totalCount = response.body?.length || 0;
         
-        // Try to get the total count from the X-Total-Count header
         const totalCountHeader = response.headers.get('X-Total-Count');
 
         if (totalCountHeader) {
@@ -59,7 +49,6 @@ export class ResumeService {
           }
         }
         
-        // Transform the data - explicitly use PublicResume.fromJson instead of the generic Resume.fromJson
         const data = response.body 
           ? response.body.map(item => PublicResume.fromJson(item))
           : [];
@@ -72,11 +61,6 @@ export class ResumeService {
     );
   }
   
-
-  
-  /**
-   * Validates and normalizes the params to ensure they meet expected formats
-   */
   private validateParams(params: GetResumeParamsModel): GetResumeParamsModel {
     return {
       pageSize: params.pageSize && !isNaN(Number(params.pageSize))
@@ -107,23 +91,14 @@ export class ResumeService {
     };
   }
   
-  /**
-   * Check if orderBy value is valid
-   */
   private isValidOrderBy(orderBy?: string): orderBy is 'Date' | 'Company' | 'Status' {
     return !!orderBy && ['Date', 'Company', 'Status'].includes(orderBy);
   }
   
-  /**
-   * Check if sortOrder value is valid
-   */
   private isValidSortOrder(sortOrder?: string): sortOrder is 'Ascending' | 'Descending' {
     return !!sortOrder && ['Ascending', 'Descending'].includes(sortOrder);
   }
   
-  /**
-   * Transforms the filters object into a flat query params object
-   */
   private transformFiltersToQueryParams(filters?: ResumeFilters): GetResumeParamsModel {
     if (!filters) {
       return {};
@@ -131,26 +106,20 @@ export class ResumeService {
     
     const { yearOfExperienceRange, company, companyId, ...basicFilters } = filters;
     
-    // Initialize with an empty object of the correct type
     const queryParams = {} as GetResumeParamsModel;
     
-    // Add the basic filters
     Object.entries(basicFilters).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
-        // Type assertion to ensure TypeScript knows we're assigning to a valid key
         (queryParams as any)[key] = value;
       }
     });
     
-    // Add companyId directly or from company object if it exists
     if (companyId) {
       queryParams.companyId = companyId;
     } else if (company) {
-      // If company is an object, use its ID
       queryParams.companyId = company.id;
     }
     
-    // Add min/max years of experience if they exist
     if (yearOfExperienceRange?.min !== undefined && yearOfExperienceRange.min !== null) {
       queryParams['yearOfExperienceRange.min'] = yearOfExperienceRange.min;
     }
@@ -161,4 +130,4 @@ export class ResumeService {
     
     return queryParams;
   }
-} 
+}

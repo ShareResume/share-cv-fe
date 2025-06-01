@@ -18,9 +18,6 @@ export class Company {
     this.isHrScreeningPassed = isHrScreeningPassed;
   }
 
-  /**
-   * Creates a Company instance from JSON data
-   */
   static fromJson(json: unknown): Company {
     const data = json as CompanyData;
     
@@ -32,9 +29,6 @@ export class Company {
     );
   }
 
-  /**
-   * Creates an array of Company instances from JSON array data
-   */
   static fromJsonArray(jsonArray: unknown[]): Company[] {
     if (!jsonArray || !Array.isArray(jsonArray)) {
       return [];
@@ -43,9 +37,6 @@ export class Company {
     return jsonArray.map(json => this.fromJson(json));
   }
 
-  /**
-   * Converts the Company instance to a JSON object
-   */
   toJson(): CompanyData {
     return {
       id: this.id,
