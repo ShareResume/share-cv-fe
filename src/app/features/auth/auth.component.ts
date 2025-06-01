@@ -16,6 +16,7 @@ import { ToasterService } from '../../core/services/toaster.service';
 import { forgotPasswordConfig, loginConfig, registerConfig } from '../../core/constants/auth-page-configs.constants';
 import { AuthPageConfig } from '../../core/models/auth-page-config.model';
 import { UserRoleEnum } from '../../core/enums/user-role.enum';
+import { passwordConfirmationValidator } from '../../core/utils/password-confirmation.validator';
 
 @Component({
   selector: 'app-auth',
@@ -59,6 +60,11 @@ export class AuthComponent implements OnInit {
       formControls[field.name] = ['', field.validators || []];
     });
     this.authForm = this.fb.group(formControls);
+
+    // Add password confirmation validator for register form
+    if (this.config === registerConfig) {
+      this.authForm.addValidators(passwordConfirmationValidator());
+    }
   }
 
   public onSubmit(): void {
@@ -123,6 +129,7 @@ export class AuthComponent implements OnInit {
 
     this.authService.register(registerData).pipe(take(1)).subscribe({
       next: () => {
+        this.toasterService.showSuccess('Registration successful! Please log in with your credentials.');
         this.router.navigate(['/login']);
       },
     });

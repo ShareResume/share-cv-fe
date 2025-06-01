@@ -58,15 +58,16 @@ export const registerConfig: AuthPageConfig = {
                 noSpecial:   'Password must contain at least one special character.',
             },
         },
-        // {
-        //     type: 'password',
-        //     name: 'confirmPassword',
-        //     placeholder: 'Repeat Password',
-        //     validators: [Validators.required],
-        //     errorMessages: {
-        //         required: 'Repeat Password is required.',
-        //     },
-        // },
+        {
+            type: 'password',
+            name: 'confirmPassword',
+            placeholder: 'Confirm Password',
+            validators: [Validators.required],
+            errorMessages: {
+                required: 'Confirm Password is required.',
+                passwordMismatch: 'Passwords do not match.',
+            },
+        },
     ],
     confirmButtonText: 'Sign up',
     //isGoogleAuth: true,
@@ -75,8 +76,8 @@ export const registerConfig: AuthPageConfig = {
 
 export const forgotPasswordConfig: AuthPageConfig = {
     title: 'Forgot Password?',
-    welcomePhrase: 'No worries. We’ll help you with that.',
-    subtitlePhrase: 'We’ll send you an email with verification code.',
+    welcomePhrase: "No worries. We'll help you with that.",
+    subtitlePhrase: "We'll send you an email with verification code.",
     fields: [
         {
             type: 'email',
@@ -95,7 +96,7 @@ export const forgotPasswordConfig: AuthPageConfig = {
 
 export const passwordResetConfig: AuthPageConfig = {
     title: 'Password reset',
-    welcomePhrase: 'No worries. We’ll help you with that.',
+    welcomePhrase: "No worries. We'll help you with that.",
     subtitlePhrase: 'We sent a code to <a> emailexample@gmail.com. </a>',
     fields: [
         {
@@ -110,13 +111,13 @@ export const passwordResetConfig: AuthPageConfig = {
         },
     ],
     confirmButtonText: 'Continue',
-    bottomPhrase: "Didn’t receive the verification code? <a>Resend it</a>",
+    bottomPhrase: "Didn't receive the verification code? <a>Resend it</a>",
     bottomPhraseButton: 'Back to log in',
 };
 
 export const successfulPasswordResetConfig: AuthPageConfig = {
     title: 'Successful',
-    welcomePhrase: 'No worries. We’ll help you with that.',
+    welcomePhrase: "No worries. We'll help you with that.",
     subtitlePhrase: 'Your password has been reset.',
     bottomPhraseButton: 'Back to log in',
 };

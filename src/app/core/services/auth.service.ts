@@ -148,13 +148,7 @@ export class AuthService implements OnDestroy {
   public register(data: RegisterData): Observable<AuthResponse> {
     localStorage.removeItem(TOKEN_KEY);
     return this.apiService
-      .post<RegisterData, AuthResponse>(`${this.PATH}/users`, data)
-      .pipe(
-        tap((response) => {
-          this.apiService.setAccessToken(response);
-          this.userRoleSignal.set(response.role);
-        })
-      );
+      .post<RegisterData, AuthResponse>(`${this.PATH}/users`, data);
   }
 
   public login(email: string, password: string): Observable<AuthResponse> {

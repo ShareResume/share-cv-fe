@@ -85,6 +85,19 @@ export class InputComponent implements ControlValueAccessor, OnInit {
         this.setErrorMessageFromControl();
       });
 
+      // Listen to parent form changes for password confirmation validation
+      if (this.formControlName === 'confirmPassword') {
+        this.control.parent?.statusChanges?.subscribe(() => {
+          this.setErrorMessageFromControl();
+        });
+        
+        // Also listen to password field changes
+        const passwordControl = this.control.parent?.get('password');
+        passwordControl?.valueChanges?.subscribe(() => {
+          this.setErrorMessageFromControl();
+        });
+      }
+
       this.setErrorMessageFromControl();
     }
   }
@@ -173,6 +186,12 @@ export class InputComponent implements ControlValueAccessor, OnInit {
       = this.control.invalid && (this.control.touched || this.control.dirty);
 
     if (!showErrors) {
+      // Check for form-level passwordMismatch error on confirmPassword field
+      if (this.formControlName === 'confirmPassword' && this.control.parent?.hasError('passwordMismatch')) {
+        this.errorMessage = this.errorMessages['passwordMismatch'] || 'Passwords do not match.';
+        return;
+      }
+      
       this.errorMessage = '';
 
       return;
@@ -183,6 +202,12 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     const firstErrorKey = Object.keys(errors)[0];
 
     if (!firstErrorKey) {
+      // Check for form-level passwordMismatch error on confirmPassword field
+      if (this.formControlName === 'confirmPassword' && this.control.parent?.hasError('passwordMismatch')) {
+        this.errorMessage = this.errorMessages['passwordMismatch'] || 'Passwords do not match.';
+        return;
+      }
+      
       this.errorMessage = '';
 
       return;
