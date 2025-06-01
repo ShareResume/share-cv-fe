@@ -1,1 +1,14 @@
+@use 'variables' as *;
+
 // Home component styles 
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+  app-top-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+} 

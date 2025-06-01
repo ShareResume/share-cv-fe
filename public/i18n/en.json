@@ -46,7 +46,7 @@
     "accountDeletedSuccess": "Your account and all associated data have been successfully deleted."
   },
   "header": {
-    "logo": "ResumeShare",
+    "logo": "ShareCV",
     "navigation": {
       "overview": "Overview",
       "resumes": "Resumes",
@@ -60,7 +60,7 @@
     "userNotAuthenticated": "User is not authenticated"
   },
   "footer": {
-    "copyright": "© 2025 ResumeShare. All rights reserved.",
+    "copyright": "© 2025 ShareCV. All rights reserved.",
     "links": {
       "terms": "Terms",
       "privacy": "Privacy",
@@ -68,7 +68,7 @@
     }
   },
   "home": {
-    "headline": "Transparent hiring insights: Share your resume anonymously and see where people get hired.",
+    "headline": "Transparent hiring insights: Share your resume and see where people get hired.",
     "uploadResume": "Upload Resume",
     "browseResumes": "Browse Resumes",
     "statistics": {
