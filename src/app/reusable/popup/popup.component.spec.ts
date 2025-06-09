@@ -4,6 +4,7 @@ import { PopupComponent, PopupData } from './popup.component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PopupContentComponent } from './popup-content.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('PopupComponent', () => {
   let component: PopupComponent;
@@ -26,12 +27,15 @@ describe('PopupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PopupComponent, 
+        PopupComponent,
         MatDialogModule,
         NoopAnimationsModule,
-        PopupContentComponent
+        PopupContentComponent,
+        TranslateModule.forRoot(),
+
       ],
       providers: [
+        TranslateService,
         { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
       ]

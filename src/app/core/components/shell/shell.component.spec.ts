@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ShellComponent } from './shell.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ShellComponent', () => {
   let component: ShellComponent;
@@ -10,8 +11,9 @@ describe('ShellComponent', () => {
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
-      imports: [ ShellComponent, HttpClientTestingModule ],
+      imports: [ TranslateModule.forRoot(),ShellComponent, HttpClientTestingModule ],
       providers: [
+        TranslateService,
         {
           provide: ActivatedRoute,
           useValue: {

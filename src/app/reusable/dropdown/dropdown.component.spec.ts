@@ -6,6 +6,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { Status } from '../models/dropdown.model';
 import { Component } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   template: `
@@ -30,14 +31,15 @@ describe('DropdownComponent Basic', () => {
     viewValue: 'Name',
   }];
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DropdownComponent, MatIconTestingModule],
+      imports: [DropdownComponent, MatIconTestingModule, TranslateModule.forRoot()],
       providers: [
         provideNoopAnimations(),
+        TranslateService
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DropdownComponent);
     component = fixture.componentInstance;
@@ -69,21 +71,24 @@ describe('DropdownComponent with multiple selection', () => {
     viewValue: 'Name',
   }];
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent, DropdownComponent, MatIconTestingModule],
+      imports: [TestHostComponent, DropdownComponent, MatIconTestingModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
+        TranslateService,
         provideNoopAnimations(),
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
     hostComponent = hostFixture.componentInstance;
     hostComponent.options = testOptions;
     hostComponent.multiple = true;
     hostFixture.detectChanges();
-    
+
     dropdownComponent = hostFixture.debugElement.query(
       By.directive(DropdownComponent),
     ).componentInstance;
@@ -116,21 +121,24 @@ describe('DropdownComponent with single selection', () => {
     viewValue: 'Name',
   }];
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent, DropdownComponent, MatIconTestingModule],
+      imports: [TestHostComponent, DropdownComponent, MatIconTestingModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
+        TranslateService,
         provideNoopAnimations(),
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
     hostComponent = hostFixture.componentInstance;
     hostComponent.options = testOptions;
     hostComponent.multiple = false;
     hostFixture.detectChanges();
-    
+
     dropdownComponent = hostFixture.debugElement.query(
       By.directive(DropdownComponent),
     ).componentInstance;

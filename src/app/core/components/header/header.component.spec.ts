@@ -3,15 +3,19 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HeaderComponent } from './header.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HeaderComponent, HttpClientTestingModule ],
+      imports: [HeaderComponent, HttpClientTestingModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
+        TranslateService,
         {
           provide: ActivatedRoute,
           useValue: {
@@ -20,7 +24,7 @@ describe('HeaderComponent', () => {
         },
       ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

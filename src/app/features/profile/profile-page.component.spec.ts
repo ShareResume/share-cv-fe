@@ -5,6 +5,7 @@ import { ResumeService } from '@app/features/resume/services/resume.service';
 import { UserResumesService } from '@app/features/resume/services/user-resumes.service';
 import { ToasterService } from '@app/core/services/toaster.service';
 import { of } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ProfilePageComponent', () => {
   let component: ProfilePageComponent;
@@ -14,15 +15,17 @@ describe('ProfilePageComponent', () => {
   let mockUserResumesService: jasmine.SpyObj<UserResumesService>;
   let mockToasterService: jasmine.SpyObj<ToasterService>;
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     const bookmarkServiceSpy = jasmine.createSpyObj('BookmarkService', ['getBookmarks', 'removeBookmark']);
     const resumeServiceSpy = jasmine.createSpyObj('ResumeService', ['getResume']);
     const userResumesServiceSpy = jasmine.createSpyObj('UserResumesService', ['getResumes']);
     const toasterServiceSpy = jasmine.createSpyObj('ToasterService', ['showSuccess', 'showError']);
 
     await TestBed.configureTestingModule({
-      imports: [ProfilePageComponent],
+      imports: [ProfilePageComponent, TranslateModule.forRoot(),
+      ],
       providers: [
+        TranslateService,
         { provide: BookmarkService, useValue: bookmarkServiceSpy },
         { provide: ResumeService, useValue: resumeServiceSpy },
         { provide: UserResumesService, useValue: userResumesServiceSpy },
@@ -38,7 +41,7 @@ describe('ProfilePageComponent', () => {
     // Setup default mock responses
     mockBookmarkService.getBookmarks.and.returnValue(of({ data: [], totalCount: 0 }));
     mockUserResumesService.getResumes.and.returnValue(of([]));
-    
+
     fixture = TestBed.createComponent(ProfilePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

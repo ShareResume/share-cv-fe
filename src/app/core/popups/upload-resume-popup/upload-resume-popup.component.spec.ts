@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UploadResumePopupComponent } from './upload-resume-popup.component';
 import { Component } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 // Create mock components for reusable components
 @Component({
@@ -11,14 +12,14 @@ import { Component } from '@angular/core';
   template: '',
   standalone: true
 })
-class MockInputComponent {}
+class MockInputComponent { }
 
 @Component({
   selector: 'app-dropdown',
   template: '',
   standalone: true
 })
-class MockDropdownComponent {}
+class MockDropdownComponent { }
 
 describe('UploadResumePopupComponent', () => {
   let component: UploadResumePopupComponent;
@@ -34,9 +35,11 @@ describe('UploadResumePopupComponent', () => {
         HttpClientTestingModule,
         UploadResumePopupComponent,
         MockInputComponent,
-        MockDropdownComponent
+        MockDropdownComponent,
+        TranslateModule.forRoot(),
       ],
       providers: [
+        TranslateService,
         { provide: MatDialogRef, useValue: dialogRefSpy }
       ]
     });

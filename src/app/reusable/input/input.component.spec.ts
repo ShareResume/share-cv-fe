@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputComponent } from './input.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('InputComponent', () => {
   let component: InputComponent;
@@ -9,8 +10,9 @@ describe('InputComponent', () => {
 
   beforeEach(async() => {
     TestBed.configureTestingModule({
-      imports: [ InputComponent ],
+      imports: [ InputComponent, TranslateModule.forRoot() ],
       providers: [
+        TranslateService,
         provideAnimations(),
       ],
     })
