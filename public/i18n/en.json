@@ -105,7 +105,7 @@
     },
     "upload": {
       "title": "Upload Resume",
-      "uploadFile": "Upload Resume (PDF or Word)",
+      "uploadFile": "Upload Resume (PDF)",
       "yearsOfExperience": "Years of Experience",
       "specialization": "Specialization",
       "enterYearsOfExperience": "Enter years of experience",

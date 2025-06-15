@@ -1,0 +1,61 @@
+<div class="file-upload-modal">
+  <div class="modal-header">
+    <h2>{{ 'resume.details.uploadEditedDocument' | translate }}</h2>
+    <button class="close-button" (click)="onCancel()">
+      <app-icon iconName="close"></app-icon>
+    </button>
+  </div>
+
+  <div class="modal-content">
+    @if (!selectedFile()) {
+      <div 
+        class="drop-zone"
+        [class.drag-over]="isDragOver()"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        (click)="fileInput.click()"
+      >
+        <div class="drop-zone-content">
+          <app-icon iconName="description" class="upload-icon"></app-icon>
+          <p class="drop-text">{{ 'common.browse' | translate }} {{ 'common.or' | translate }} {{ 'common.upload' | translate }}</p>
+          <p class="drop-subtext">{{ 'resume.upload.uploadFile' | translate }}</p>
+        </div>
+        
+        <input
+          #fileInput
+          type="file"
+          accept=".pdf"
+          style="display: none;"
+          (change)="onFileSelected($event)"
+        >
+      </div>
+    } @else {
+      <div class="selected-file">
+        <div class="file-info">
+          <app-icon iconName="description" class="file-icon"></app-icon>
+          <div class="file-details">
+            <div class="file-name">{{ selectedFile()?.name }}</div>
+            <div class="file-size">{{ formatFileSize(selectedFile()?.size || 0) }}</div>
+          </div>
+        </div>
+        <button class="remove-file-btn" (click)="removeFile()">
+          <app-icon iconName="delete"></app-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="modal-footer">
+    <app-button variant="outline" (click)="onCancel()">
+      {{ 'common.cancel' | translate }}
+    </app-button>
+    <app-button 
+      variant="primary" 
+      [disabled]="!selectedFile() || isUploading()" 
+      (click)="onUpload()"
+    >
+      {{ isUploading() ? ('common.upload' | translate) + '...' : ('common.upload' | translate) }}
+    </app-button>
+  </div>
+</div> 

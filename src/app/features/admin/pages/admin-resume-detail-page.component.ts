@@ -7,6 +7,10 @@ import { PrivateResume, ResumeStatusEnum } from '../../resume/models/resume.mode
 import { AdminResumeStateService } from '../services/admin-resume-state.service';
 import { UserResumesService } from '../../resume/services/user-resumes.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { FileUploadModalComponent } from '../components/file-upload-modal/file-upload-modal.component';
+import { ToasterService } from '../../../core/services/toaster.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-admin-resume-detail-page',
@@ -26,11 +30,12 @@ export class AdminResumeDetailPageComponent implements OnInit {
   private adminResumeStateService = inject(AdminResumeStateService);
   private userResumesService = inject(UserResumesService);
   private destroyRef = inject(DestroyRef);
+  private dialog = inject(MatDialog);
+  private toasterService = inject(ToasterService);
   
   resume = signal<PrivateResume | null>(null);
   error = signal<string | null>(null);
   isUpdating = signal<boolean>(false);
-  
   privateDocumentUrl = computed(() => {
     const resume = this.resume();
     return resume ? resume.getPrivateDocumentUrl() : null;
@@ -69,8 +74,18 @@ export class AdminResumeDetailPageComponent implements OnInit {
     if (selectedResume && selectedResume.id === resumeId) {
       this.resume.set(selectedResume);
     } else {
-      this.error.set('Resume not found');
-      this.navigateBack();
+      this.userResumesService.getResumeById(resumeId)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (resume: PrivateResume) => {
+            this.resume.set(resume);
+            this.adminResumeStateService.setSelectedResume(resume);
+          },
+          error: (error: any) => {
+            this.error.set('Resume not found');
+            this.navigateBack();
+          }
+        });
     }
   }
   
@@ -153,7 +168,58 @@ export class AdminResumeDetailPageComponent implements OnInit {
   }
   
   uploadEditedDocument(): void {
-    console.log('Upload edited document functionality');
+    const dialogRef = this.dialog.open(FileUploadModalComponent, {
+      width: '500px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result instanceof File) {
+        this.handleFileUpload(result);
+      }
+    });
+  }
+
+  private handleFileUpload(file: File): void {
+    const resumeId = this.resume()?.id;
+    if (!resumeId) {
+      this.toasterService.showError('Resume ID not found');
+      return;
+    }
+
+    this.isUpdating.set(true);
+
+    this.userResumesService.uploadEditedDocument(resumeId, file)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.isUpdating.set(false))
+      )
+      .subscribe({
+        next: () => {
+          this.toasterService.showSuccess('Document uploaded successfully');
+          this.refreshPageData();
+        },
+        error: (error) => {
+          this.toasterService.showError('Failed to upload document');
+        }
+      });
+  }
+
+  private refreshPageData(): void {
+    const currentResume = this.resume();
+    if (currentResume) {
+      this.userResumesService.getResumeById(currentResume.id)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (updatedResume: PrivateResume) => {
+            this.resume.set(updatedResume);
+            this.adminResumeStateService.setSelectedResume(updatedResume);
+          },
+          error: (error: any) => {
+            this.toasterService.showError('Failed to refresh resume data');
+          }
+        });
+    }
   }
   
   getFormattedDate(date: Date | null | undefined): string {
