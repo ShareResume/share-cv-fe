@@ -77,9 +77,11 @@
                 <button class="dropdown-item" (click)="navigateToProfile()">
                   {{ 'header.profile' | translate }}
                 </button>
-                <button class="dropdown-item dropdown-item--danger" (click)="deleteUser()">
-                  {{ 'auth.deleteAccount' | translate }}
-                </button>
+                @if (!isAdmin) {
+                  <button class="dropdown-item dropdown-item--danger" (click)="deleteUser()">
+                    {{ 'auth.deleteAccount' | translate }}
+                  </button>
+                }
                 <button class="dropdown-item" (click)="signOut()">
                   {{ 'auth.signOut' | translate }}
                 </button>
