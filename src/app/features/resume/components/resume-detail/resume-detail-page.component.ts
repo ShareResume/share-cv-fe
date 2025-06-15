@@ -7,6 +7,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { ChipsComponent } from '../../../../reusable/chips/chips.component';
 import { ResumeDetailCommentsComponent } from './resume-detail-comments.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { BookmarkService } from '../../../../core/services/bookmark.service';
 
 @Component({
   selector: 'app-resume-detail-page',
@@ -24,10 +25,13 @@ export class ResumeDetailPageComponent implements OnInit {
   private router = inject(Router);
   private resumeStateService = inject(ResumeStateService);
   private sanitizer = inject(DomSanitizer);
+  private bookmarkService = inject(BookmarkService);
   
   resume = signal<PublicResume | null>(null);
   resumeUrl = signal<string | null>(null);
   error = signal<string | null>(null);
+  isBookmarked = signal<boolean>(false);
+  isBookmarkLoading = signal<boolean>(false);
   
   // Computed signal for safe PDF URL that only updates when resumeUrl changes
   safePdfUrl = computed<SafeResourceUrl>(() => {
@@ -46,15 +50,14 @@ export class ResumeDetailPageComponent implements OnInit {
     const selectedResume = this.resumeStateService.selectedResume();
     
     if (selectedResume && selectedResume.id === resumeId) {
-      // Ensure we're working with a PublicResume
       if (this.isPublicResume(selectedResume)) {
         this.resume.set(selectedResume);
         this.resumeUrl.set(selectedResume.document?.url || null);
+        this.checkBookmarkStatus(selectedResume.id);
       } else {
         this.error.set('Invalid resume format');
       }
     } else if (resumeId) {
-      // If we don't have the resume or it doesn't match the ID, redirect back to the list
       this.error.set('Resume not found');
       this.router.navigate(['/resumes']);
     }
@@ -62,6 +65,52 @@ export class ResumeDetailPageComponent implements OnInit {
   
   navigateBack(): void {
     this.router.navigate(['/resumes']);
+  }
+
+  toggleBookmark(): void {
+    const resume = this.resume();
+    if (!resume) return;
+
+    this.isBookmarkLoading.set(true);
+
+    if (this.isBookmarked()) {
+      // Remove bookmark
+      this.bookmarkService.removeBookmark(resume.id).subscribe({
+        next: (success) => {
+          console.log('Remove bookmark result:', success);
+          if (success) {
+            this.isBookmarked.set(false);
+            console.log('Bookmark removed, new state:', this.isBookmarked());
+          }
+          this.isBookmarkLoading.set(false);
+        },
+        error: (error) => {
+          this.isBookmarkLoading.set(false);
+        }
+      });
+    } else {
+      // Add bookmark
+      this.bookmarkService.addBookmark(resume.id).subscribe({
+        next: (bookmark) => {
+          this.isBookmarked.set(true);
+          this.isBookmarkLoading.set(false);
+        },
+        error: (error) => {
+          this.isBookmarkLoading.set(false);
+        }
+      });
+    }
+  }
+  
+  private checkBookmarkStatus(resumeId: string): void {
+    this.bookmarkService.isBookmarked(resumeId).subscribe({
+      next: (isBookmarked) => {
+        this.isBookmarked.set(isBookmarked);
+      },
+      error: (error) => {
+        this.isBookmarked.set(false);
+      }
+    });
   }
 
   /**

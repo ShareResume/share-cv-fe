@@ -24,8 +24,17 @@
             <app-button [colorType]="'secondary'" (click)="navigateBack()">
               <i class="icon-back"></i> Back
             </app-button>
-            <app-button [colorType]="'primary'">
-              <i class="icon-save"></i> Save
+            <app-button 
+              [colorType]="isBookmarked() ? 'secondary' : 'primary'" 
+              [disabled]="isBookmarkLoading()"
+              (click)="toggleBookmark()">
+              @if (isBookmarkLoading()) {
+                <i class="icon-loading"></i> 
+                {{ isBookmarked() ? 'Removing...' : 'Saving...' }}
+              } @else {
+                <i class="{{ isBookmarked() ? 'icon-saved' : 'icon-save' }}"></i> 
+                {{ isBookmarked() ? 'Saved' : 'Save' }}
+              }
             </app-button>
             <!-- <app-button [colorType]="'secondary'">
               <i class="icon-report"></i> Report Issue

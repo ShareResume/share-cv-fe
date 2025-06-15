@@ -34,9 +34,16 @@ export class BookmarkService {
           }
         }
         
-        // Transform the data
         const data = response.body 
-          ? response.body.map(item => Bookmark.fromJson(item))
+          ? response.body.map(item => {
+              const bookmarkData = {
+                id: item.id + '_bookmark',
+                resumeId: item.id,
+                createdAt: item.createdAt || new Date().toISOString(),
+                resume: item
+              };
+              return Bookmark.fromJson(bookmarkData);
+            })
           : [];
         
         return {
@@ -59,7 +66,27 @@ export class BookmarkService {
       `${this.baseUrl}${this.apiEndpoint}`,
       { resumeId }
     ).pipe(
-      map(response => Bookmark.fromJson(response)),
+      map(response => {
+        console.log('Add bookmark API response:', response);
+        if (response && response.id) {
+          const bookmarkData = {
+            id: response.id + '_bookmark',
+            resumeId: response.id,
+            createdAt: response.createdAt || new Date().toISOString(),
+            resume: response
+          };
+          return Bookmark.fromJson(bookmarkData);
+        } else if (response && response.resumeId) {
+          return Bookmark.fromJson(response);
+        } else {
+          const bookmarkData = {
+            id: resumeId + '_bookmark',
+            resumeId: resumeId,
+            createdAt: new Date().toISOString()
+          };
+          return Bookmark.fromJson(bookmarkData);
+        }
+      }),
       catchError(error => {
         console.error('Error adding bookmark:', error);
         throw error;
@@ -88,7 +115,10 @@ export class BookmarkService {
    */
   isBookmarked(resumeId: string): Observable<boolean> {
     return this.getBookmarks().pipe(
-      map(response => response.data.some(bookmark => bookmark.resumeId === resumeId)),
+      map(response => {
+        const isFound = response.data.some(bookmark => bookmark.resumeId === resumeId);
+        return isFound;
+      }),
       catchError(error => {
         console.error('Error checking bookmark status:', error);
         return of(false);

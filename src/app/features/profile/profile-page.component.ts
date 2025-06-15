@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PrivateResume } from '@app/features/resume/models/resume.model';
+import { PrivateResume, PublicResume } from '@app/features/resume/models/resume.model';
 import { BookmarkService } from '@app/core/services/bookmark.service';
 import { Bookmark } from '@app/core/models/bookmark.model';
 import { ResumeService } from '@app/features/resume/services/resume.service';
@@ -15,6 +15,8 @@ import { UserResumesService } from '@app/features/resume/services/user-resumes.s
 import { finalize, forkJoin, of } from 'rxjs';
 import { ToasterService } from '@app/core/services/toaster.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { ResumeStateService } from '@app/features/resume/services/resume-state.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -40,6 +42,8 @@ export class ProfilePageComponent implements OnInit {
   private toasterService = inject(ToasterService);
   private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private resumeStateService = inject(ResumeStateService);
 
   myResumes: PrivateResume[] = [];
   bookmarks: Bookmark[] = [];
@@ -95,7 +99,20 @@ export class ProfilePageComponent implements OnInit {
 
   viewResume(resumeId: string): void {
     console.log(`Viewing resume with ID: ${resumeId}`);
-    // Navigate to resume detail page
+    
+    const resume = this.myResumes.find(r => r.id === resumeId);
+    if (resume) {
+      try {
+        const publicResume = PublicResume.fromJson(resume.toJson());
+        this.resumeStateService.setSelectedResume(publicResume);
+        this.router.navigate(['/resumes', resumeId]);
+      } catch (error: any) {
+        console.error('Error converting private resume to public resume:', error);
+        this.showError(this.translateService.instant('profile.resumeNavigationError'));
+      }
+    } else {
+      this.router.navigate(['/resumes', resumeId]);
+    }
   }
 
   editResume(resumeId: string): void {
@@ -111,8 +128,23 @@ export class ProfilePageComponent implements OnInit {
   }
 
   openBookmark(bookmark: Bookmark): void {
-    console.log(`Opening bookmark with ID: ${bookmark.id}`);
-    // Navigate to resume detail page
+    
+    if (!bookmark.resumeId) {
+      this.showError(this.translateService.instant('profile.bookmarkError'));
+      return;
+    }
+
+    if (bookmark.resume) {
+      try {
+        const publicResume = PublicResume.fromJson(bookmark.resume);
+        this.resumeStateService.setSelectedResume(publicResume);
+        this.router.navigate(['/resumes', bookmark.resumeId]);
+      } catch (error: any) {
+        this.showError(this.translateService.instant('profile.bookmarkNavigationError'));
+      }
+    } else {
+      this.router.navigate(['/resumes', bookmark.resumeId]);
+    }
   }
 
   removeBookmark(bookmark: Bookmark): void {
