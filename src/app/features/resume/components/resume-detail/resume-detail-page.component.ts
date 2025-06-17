@@ -8,6 +8,7 @@ import { ChipsComponent } from '../../../../reusable/chips/chips.component';
 import { ResumeDetailCommentsComponent } from './resume-detail-comments.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BookmarkService } from '../../../../core/services/bookmark.service';
+import { UserResumesService } from '../../services/user-resumes.service';
 
 @Component({
   selector: 'app-resume-detail-page',
@@ -26,12 +27,14 @@ export class ResumeDetailPageComponent implements OnInit {
   private resumeStateService = inject(ResumeStateService);
   private sanitizer = inject(DomSanitizer);
   private bookmarkService = inject(BookmarkService);
+  private userResumesService = inject(UserResumesService);
   
   resume = signal<PublicResume | null>(null);
   resumeUrl = signal<string | null>(null);
   error = signal<string | null>(null);
   isBookmarked = signal<boolean>(false);
   isBookmarkLoading = signal<boolean>(false);
+  isLoading = signal<boolean>(true);
   
   // Computed signal for safe PDF URL that only updates when resumeUrl changes
   safePdfUrl = computed<SafeResourceUrl>(() => {
@@ -44,23 +47,30 @@ export class ResumeDetailPageComponent implements OnInit {
     const resumeId = this.route.snapshot.paramMap.get('id');
     if (!resumeId) {
       this.error.set('Resume ID not found');
+      this.isLoading.set(false);
       return;
     }
     
-    const selectedResume = this.resumeStateService.selectedResume();
-    
-    if (selectedResume && selectedResume.id === resumeId) {
-      if (this.isPublicResume(selectedResume)) {
-        this.resume.set(selectedResume);
-        this.resumeUrl.set(selectedResume.document?.url || null);
-        this.checkBookmarkStatus(selectedResume.id);
-      } else {
-        this.error.set('Invalid resume format');
+    this.fetchResumeById(resumeId);
+  }
+
+  private fetchResumeById(resumeId: string): void {
+    this.isLoading.set(true);
+    this.userResumesService.getPublicResumeById(resumeId).subscribe({
+      next: (resume) => {
+        this.resume.set(resume);
+        this.resumeUrl.set(resume.document?.url || null);
+        this.checkBookmarkStatus(resume.id);
+        // Save to local state
+        this.resumeStateService.setSelectedResume(resume);
+        this.isLoading.set(false);
+      },
+      error: (error) => {
+        this.error.set('Failed to load resume');
+        this.isLoading.set(false);
+        this.router.navigate(['/resumes']);
       }
-    } else if (resumeId) {
-      this.error.set('Resume not found');
-      this.router.navigate(['/resumes']);
-    }
+    });
   }
   
   navigateBack(): void {
@@ -127,12 +137,5 @@ export class ResumeDetailPageComponent implements OnInit {
   private formatDate(date: Date): string {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-  }
-
-  /**
-   * Type guard to check if a resume is a PublicResume
-   */
-  private isPublicResume(resume: any): resume is PublicResume {
-    return resume && 'document' in resume && 'date' in resume;
   }
 } 

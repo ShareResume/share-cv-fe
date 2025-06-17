@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CreateResumeModel, CompanyResumeInfo } from '../models/create-resume.model';
 import { ApiService } from '@app/core/services/api.service';
-import { PrivateResume, ResumeStatusEnum } from '../models/resume.model';
+import { PrivateResume, ResumeStatusEnum, PublicResume } from '../models/resume.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +42,12 @@ export class UserResumesService {
   getResumeById(resumeId: string): Observable<PrivateResume> {
     return this.apiService.get<any>(`${this.apiEndpoint}/${resumeId}`).pipe(
       map((response: any) => PrivateResume.fromJson(response))
+    );
+  }
+
+  getPublicResumeById(resumeId: string): Observable<PublicResume> {
+    return this.apiService.get<any>(`${this.publicUsersResumesEndpoint}/${resumeId}`).pipe(
+      map((response: any) => PublicResume.fromJson(response))
     );
   }
 
