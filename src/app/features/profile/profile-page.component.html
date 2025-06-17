@@ -26,9 +26,11 @@
                 }
               </mat-card-content>
               <mat-card-actions>
-                <button mat-button class="view-btn" (click)="viewResume(resume.id)">
-                  <mat-icon>visibility</mat-icon> {{ 'profile.view' | translate }}
-                </button>
+                @if (resume.resumeStatus === 'APPROVED') {
+                  <button mat-button class="view-btn" (click)="viewResume(resume.id)">
+                    <mat-icon>visibility</mat-icon> {{ 'profile.view' | translate }}
+                  </button>
+                }
                 <button mat-button class="hide-btn" (click)="hideResume(resume.id)">
                   <mat-icon>{{ resume.hidden ? 'visibility' : 'visibility_off' }}</mat-icon> 
                   {{ resume.hidden ? ('profile.show' | translate) : ('profile.hide' | translate) }}
