@@ -115,9 +115,29 @@ export class ProfilePageComponent implements OnInit {
     }
   }
 
-  editResume(resumeId: string): void {
-    console.log(`Editing resume with ID: ${resumeId}`);
-    // Navigate to resume edit page
+  hideResume(resumeId: string): void {
+    const resume = this.myResumes.find(r => r.id === resumeId);
+    if (!resume) {
+      this.showError(this.translateService.instant('profile.resumeNotFound'));
+      return;
+    }
+
+    const newHiddenStatus = !resume.hidden;
+    
+    this.userResumesService.updateResumeVisibility(resumeId, newHiddenStatus).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
+      next: () => {
+        const message = newHiddenStatus 
+          ? this.translateService.instant('profile.resumeHiddenSuccess')
+          : this.translateService.instant('profile.resumeShownSuccess');
+        this.showSuccess(message);
+        this.loadMyResumes();
+      },
+      error: (error) => {
+        this.showError(this.translateService.instant('profile.resumeVisibilityUpdateError'));
+      }
+    });
   }
 
   deleteResume(resumeId: string): void {

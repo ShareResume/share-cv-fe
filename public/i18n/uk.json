@@ -143,7 +143,14 @@
     "resumeDetailsNotAvailable": "Деталі резюме недоступні",
     "view": "Переглянути",
     "edit": "Редагувати",
-    "delete": "Видалити"
+    "delete": "Видалити",
+    "hide": "Приховати",
+    "show": "Показати",
+    "hidden": "Приховано",
+    "resumeNotFound": "Резюме не знайдено",
+    "resumeHiddenSuccess": "Резюме успішно приховано",
+    "resumeShownSuccess": "Резюме успішно показано",
+    "resumeVisibilityUpdateError": "Не вдалося оновити видимість резюме"
   },
   "admin": {
     "table": {

@@ -143,7 +143,14 @@
     "resumeDetailsNotAvailable": "Resume details not available",
     "view": "View",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "hide": "Hide",
+    "show": "Show",
+    "hidden": "Hidden",
+    "resumeNotFound": "Resume not found",
+    "resumeHiddenSuccess": "Resume hidden successfully",
+    "resumeShownSuccess": "Resume shown successfully",
+    "resumeVisibilityUpdateError": "Failed to update resume visibility"
   },
   "admin": {
     "table": {

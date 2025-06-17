@@ -65,4 +65,9 @@ export class UserResumesService {
     
     return this.apiService.patch<FormData, any>(`${this.publicUsersResumesEndpoint}/${resumeId}`, formData);
   }
+
+  updateResumeVisibility(resumeId: string, isHidden: boolean): Observable<any> {
+    const requestBody = { isHidden };
+    return this.apiService.patch<any, any>(`${this.apiEndpoint}/${resumeId}`, requestBody);
+  }
 }
