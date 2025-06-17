@@ -4,14 +4,16 @@
       <div class="header-left">
         <div class="logo">ShareCV</div>
         <nav class="nav-menu">
-          @for (item of navItems; track item.route) {
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="active"
-              class="nav-link"
-            >
-              {{ item.labelKey | translate }}
-            </a>
+          @if (!isAdmin) {
+            @for (item of navItems; track item.route) {
+              <a
+                [routerLink]="item.route"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                {{ item.labelKey | translate }}
+              </a>
+            }
           }
           @if (isAdmin) {
             <a
@@ -74,9 +76,11 @@
             </app-button>
             @if (isMenuOpen) {
               <div class="dropdown-menu">
-                <button class="dropdown-item" (click)="navigateToProfile()">
-                  {{ 'header.profile' | translate }}
-                </button>
+                @if (!isAdmin) {
+                  <button class="dropdown-item" (click)="navigateToProfile()">
+                    {{ 'header.profile' | translate }}
+                  </button>
+                }
                 @if (!isAdmin) {
                   <button class="dropdown-item dropdown-item--danger" (click)="deleteUser()">
                     {{ 'auth.deleteAccount' | translate }}
