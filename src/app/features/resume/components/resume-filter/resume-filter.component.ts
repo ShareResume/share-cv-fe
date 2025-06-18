@@ -83,10 +83,6 @@ export class ResumeFilterComponent implements OnInit {
       speciality: '',
       isHrScreeningPassed: null,
       date: formValue.date || '',
-      yearOfExperienceRange: {
-        min: formValue.minYoe,
-        max: formValue.maxYoe,
-      }
     };
     
     if (formValue.speciality) {
@@ -101,10 +97,18 @@ export class ResumeFilterComponent implements OnInit {
       filters.isHrScreeningPassed = formValue.isHrScreeningPassed === 'true';
     }
     
-    if (filters.yearOfExperienceRange 
-        && filters.yearOfExperienceRange.min === null 
-        && filters.yearOfExperienceRange.max === null) {
-      delete filters.yearOfExperienceRange;
+    const minYoe = formValue.minYoe;
+    const maxYoe = formValue.maxYoe;
+    const hasValidMin = minYoe !== null && minYoe !== undefined && minYoe > 0;
+    const hasValidMax = maxYoe !== null && maxYoe !== undefined && maxYoe > 0;
+    
+    if (hasValidMin || hasValidMax) {
+      filters.yearOfExperienceRange = {
+        min: hasValidMin ? minYoe : null,
+        max: hasValidMax ? maxYoe : null,
+      };
+    } else {
+      filters.yearOfExperienceRange = undefined;
     }
     
     this.filterApplied.emit(filters);

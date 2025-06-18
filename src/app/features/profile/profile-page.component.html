@@ -35,9 +35,9 @@
                   <mat-icon>{{ resume.hidden ? 'visibility' : 'visibility_off' }}</mat-icon> 
                   {{ resume.hidden ? ('profile.show' | translate) : ('profile.hide' | translate) }}
                 </button>
-                <button mat-button class="delete-btn" (click)="deleteResume(resume.id)">
+                <!-- <button mat-button class="delete-btn" (click)="deleteResume(resume.id)">
                   <mat-icon>delete</mat-icon> {{ 'profile.delete' | translate }}
-                </button>
+                </button> -->
               </mat-card-actions>
             </mat-card>
           } @empty {
