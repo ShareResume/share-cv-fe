@@ -16,6 +16,7 @@ import { ResumeFormData, CompanyStatusInfo } from '@app/features/resume/models/r
 import { IconComponent } from '@app/reusable/icon/icon.component';
 import { ButtonComponent } from '@app/reusable/button/button.component';
 import { ToasterService } from '@app/core/services/toaster.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface CompanyStatus {
   company: Company | null;
@@ -35,7 +36,8 @@ interface CompanyStatus {
     DropdownComponent,
     CompanyAutocompleteComponent,
     IconComponent,
-    ButtonComponent
+    ButtonComponent,
+    TranslateModule
   ]
 })
 export class UploadResumePopupComponent implements OnInit {
@@ -65,7 +67,7 @@ export class UploadResumePopupComponent implements OnInit {
       companiesData: this.fb.array([
         this.createCompanyStatusGroup()
       ]),
-      yearsOfExperience: ['', [Validators.required, Validators.min(0)]],
+      yearsOfExperience: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
       specialization: ['', Validators.required]
     });
   }

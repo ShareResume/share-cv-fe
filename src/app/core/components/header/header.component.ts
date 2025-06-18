@@ -27,7 +27,7 @@ export class HeaderComponent {
 
   isMenuOpen = false;
 
-  navItems = [
+  private allNavItems = [
     {
       labelKey: 'header.navigation.overview',
       route: '',
@@ -35,8 +35,15 @@ export class HeaderComponent {
     {
       labelKey: 'header.navigation.resumes',
       route: '/resumes',
+      requiresAuth: true,
     },
   ];
+
+  get navItems() {
+    return this.allNavItems.filter(item => 
+      !item.requiresAuth || this.isAuthenticated
+    );
+  }
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: MouseEvent) {

@@ -136,6 +136,23 @@
       "selectCompanies": "Оберіть компанії",
       "searchCompanies": "Пошук компаній"
     },
+    "uploadPopup": {
+      "title": "Завантажити резюме",
+      "uploadFileLabel": "Завантажити резюме (PDF)",
+      "yearsOfExperience": "Роки досвіду",
+      "enterYearsOfExperience": "Введіть роки досвіду",
+      "specialization": "Спеціалізація",
+      "selectSpecialization": "Оберіть спеціалізацію",
+      "companies": "Компанії",
+      "addCompany": "Додати компанію +",
+      "company": "Компанія",
+      "status": "Статус",
+      "selectStatus": "Оберіть статус",
+      "cancel": "Скасувати",
+      "upload": "Завантажити",
+      "uploading": "Завантаження...",
+      "remove": "Видалити"
+    },
     "details": {
       "resumeDetails": "Деталі резюме",
       "id": "ID",
@@ -212,6 +229,8 @@
     "email": "Введіть дійсну електронну адресу",
     "minLength": "Мінімальна довжина: {{value}} символів",
     "maxLength": "Максимальна довжина: {{value}} символів",
+    "min": "Мінімальне значення: {{value}}",
+    "max": "Максимальне значення: {{value}}",
     "hidePassword": "Приховати пароль",
     "showPassword": "Показати пароль",
     "selectValidOption": "Будь ласка, оберіть дійсний варіант",
@@ -220,5 +239,13 @@
     "noSpecial": "Пароль повинен містити принаймні один спеціальний символ",
     "passwordMismatch": "Паролі не співпадають"
   },
-  "noData": "Дані недоступні"
+  "noData": "Дані недоступні",
+  "popup": {
+    "authRequired": {
+      "title": "Потрібна автентифікація",
+      "content": "Для цієї дії вам потрібно увійти в систему",
+      "cancel": "Скасувати",
+      "goToLogin": "Перейти до входу"
+    }
+  }
 } 

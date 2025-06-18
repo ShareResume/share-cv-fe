@@ -237,6 +237,14 @@ export class InputComponent implements ControlValueAccessor, OnInit {
           const maxLength = errors[firstErrorKey]?.requiredLength;
           this.errorMessage = this.translateService.instant('validation.maxLength', { value: maxLength });
           break;
+        case 'min':
+          const minValue = errors[firstErrorKey]?.min;
+          this.errorMessage = this.translateService.instant('validation.min', { value: minValue });
+          break;
+        case 'max':
+          const maxValue = errors[firstErrorKey]?.max;
+          this.errorMessage = this.translateService.instant('validation.max', { value: maxValue });
+          break;
         default:
           this.errorMessage = 'Invalid input.';
       }

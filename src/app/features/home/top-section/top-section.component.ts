@@ -28,6 +28,10 @@ export class TopSectionComponent {
   }
 
   public browseResumes(): void {
-    this.router.navigate(['/resumes']);
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['/resumes']);
+    } else {
+      this.popupService.showLoginPopup('/resumes');
+    }
   }
 }

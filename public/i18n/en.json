@@ -136,6 +136,23 @@
       "selectCompanies": "Select companies",
       "searchCompanies": "Search companies"
     },
+    "uploadPopup": {
+      "title": "Upload Resume",
+      "uploadFileLabel": "Upload Resume (PDF)",
+      "yearsOfExperience": "Years of Experience",
+      "enterYearsOfExperience": "Enter years of experience",
+      "specialization": "Specialization",
+      "selectSpecialization": "Select specialization",
+      "companies": "Companies",
+      "addCompany": "Add company +",
+      "company": "Company",
+      "status": "Status",
+      "selectStatus": "Select status",
+      "cancel": "Cancel",
+      "upload": "Upload",
+      "uploading": "Uploading...",
+      "remove": "Remove"
+    },
     "details": {
       "resumeDetails": "Resume Details",
       "id": "ID",
@@ -212,6 +229,8 @@
     "email": "Please enter a valid email address",
     "minLength": "Minimum length: {{value}} characters",
     "maxLength": "Maximum length: {{value}} characters",
+    "min": "Minimum value: {{value}}",
+    "max": "Maximum value: {{value}}",
     "hidePassword": "Hide password",
     "showPassword": "Show password",
     "selectValidOption": "Please select a valid option",
@@ -220,5 +239,13 @@
     "noSpecial": "Password must contain at least one special character",
     "passwordMismatch": "Passwords do not match"
   },
-  "noData": "No data available"
+  "noData": "No data available",
+  "popup": {
+    "authRequired": {
+      "title": "Authentication Required",
+      "content": "To access this action you need to login to system",
+      "cancel": "Cancel",
+      "goToLogin": "Go to Login"
+    }
+  }
 }
