@@ -188,7 +188,9 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     if (!showErrors) {
       // Check for form-level passwordMismatch error on confirmPassword field
       if (this.formControlName === 'confirmPassword' && this.control.parent?.hasError('passwordMismatch')) {
-        this.errorMessage = this.errorMessages['passwordMismatch'] || 'Passwords do not match.';
+        this.errorMessage = this.errorMessages['passwordMismatch'] 
+          ? this.translateService.instant(this.errorMessages['passwordMismatch'])
+          : this.translateService.instant('validation.passwordMismatch');
         return;
       }
       
@@ -204,7 +206,9 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     if (!firstErrorKey) {
       // Check for form-level passwordMismatch error on confirmPassword field
       if (this.formControlName === 'confirmPassword' && this.control.parent?.hasError('passwordMismatch')) {
-        this.errorMessage = this.errorMessages['passwordMismatch'] || 'Passwords do not match.';
+        this.errorMessage = this.errorMessages['passwordMismatch'] 
+          ? this.translateService.instant(this.errorMessages['passwordMismatch'])
+          : this.translateService.instant('validation.passwordMismatch');
         return;
       }
       
@@ -215,7 +219,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
 
     // Use custom message if provided, otherwise fallback
     if (this.errorMessages[firstErrorKey]) {
-      this.errorMessage = this.errorMessages[firstErrorKey];
+      this.errorMessage = this.translateService.instant(this.errorMessages[firstErrorKey]);
     } else {
       // Default messages for known errors with translation support
       switch (firstErrorKey) {

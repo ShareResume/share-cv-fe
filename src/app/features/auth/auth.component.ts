@@ -13,7 +13,7 @@ import { ButtonComponent } from '../../reusable/button/button.component';
 import { IconComponent } from '../../reusable/icon/icon.component';
 import { AuthService } from '../../core/services/auth.service';
 import { ToasterService } from '../../core/services/toaster.service';
-import { forgotPasswordConfig, loginConfig, registerConfig } from '../../core/constants/auth-page-configs.constants';
+import { loginConfig, registerConfig, forgotPasswordConfig } from '../../core/constants/auth-page-configs.constants';
 import { AuthPageConfig } from '../../core/models/auth-page-config.model';
 import { UserRoleEnum } from '../../core/enums/user-role.enum';
 import { passwordConfirmationValidator } from '../../core/utils/password-confirmation.validator';

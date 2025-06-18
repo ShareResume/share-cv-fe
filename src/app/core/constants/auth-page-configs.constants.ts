@@ -3,95 +3,95 @@ import { AuthPageConfig } from '../models/auth-page-config.model';
 import { passwordComplexityValidator } from '../utils/password-complexity.validator';
 
 export const loginConfig: AuthPageConfig = {
-    title: 'Login',
+    title: 'auth.login',
     welcomePhrase: 'Showcase your professional journey with ShareCV',
     fields: [
         {
             type: 'email',
             name: 'email',
-            placeholder: 'Email',
+            placeholder: 'auth.email',
             validators: [Validators.required, Validators.email],
             errorMessages: {
-                required: 'Email is required.',
-                email: 'Invalid email format.',
+                required: 'validation.required',
+                email: 'validation.email',
             },
         },
         {
             type: 'password',
             name: 'password',
-            additionalText: 'Forgot password?',
-            placeholder: 'Password',
+            additionalText: 'auth.forgotPassword',
+            placeholder: 'auth.password',
             validators: [Validators.required],
             errorMessages: {
-                required: 'Password is required.',
+                required: 'validation.required',
             },
         },
     ],
-    confirmButtonText: 'Log In',
+    confirmButtonText: 'auth.login',
     //isGoogleAuth: true,
-    bottomPhrase: "Don't have an account? <a href='/register'>Register</a>",
+    bottomPhrase: 'auth.dontHaveAccountWithLink',
 };
 
 export const registerConfig: AuthPageConfig = {
-    title: 'Sign up',
-    welcomePhrase: 'Start your professional journey with ShareCV today',
+    title: 'auth.register',
+    welcomePhrase: 'auth.joinCommunity',
     fields: [
         {
             type: 'email',
             name: 'email',
-            placeholder: 'Email',
+            placeholder: 'auth.email',
             validators: [Validators.required, Validators.email],
             errorMessages: {
-                required: 'Email is required.',
-                email: 'Invalid email format.',
+                required: 'validation.required',
+                email: 'validation.email',
             },
         },
         {
             type: 'password',
             name: 'password',
-            placeholder: 'Password',
+            placeholder: 'auth.password',
             validators: [Validators.required, passwordComplexityValidator],
             errorMessages: {
-                required: 'Password is required.',
-                noLowercase: 'Password must contain at least one lowercase letter.',
-                noUppercase: 'Password must contain at least one uppercase letter.',
-                noSpecial:   'Password must contain at least one special character.',
+                required: 'validation.required',
+                noLowercase: 'validation.noLowercase',
+                noUppercase: 'validation.noUppercase',
+                noSpecial: 'validation.noSpecial',
             },
         },
         {
             type: 'password',
             name: 'confirmPassword',
-            placeholder: 'Confirm Password',
+            placeholder: 'auth.confirmPassword',
             validators: [Validators.required],
             errorMessages: {
-                required: 'Confirm Password is required.',
-                passwordMismatch: 'Passwords do not match.',
+                required: 'validation.required',
+                passwordMismatch: 'validation.passwordMismatch',
             },
         },
     ],
-    confirmButtonText: 'Sign up',
+    confirmButtonText: 'auth.register',
     //isGoogleAuth: true,
-    bottomPhrase: "Already have an account? <a href='/login'>Log in</a>",
+    bottomPhrase: 'auth.alreadyHaveAccountWithLink',
 };
 
 export const forgotPasswordConfig: AuthPageConfig = {
-    title: 'Forgot Password?',
+    title: 'auth.resetPassword',
     welcomePhrase: "No worries. We'll help you with that.",
-    subtitlePhrase: "We'll send you an email with verification code.",
+    subtitlePhrase: 'auth.resetPasswordInstructions',
     fields: [
         {
             type: 'email',
             name: 'email',
-            placeholder: 'Email',
+            placeholder: 'auth.email',
             validators: [Validators.required, Validators.email],
             errorMessages: {
-                required: 'Email is required.',
-                email: 'Invalid email format.',
+                required: 'validation.required',
+                email: 'validation.email',
             },
         },
     ],
-    confirmButtonText: 'Send a code',
-    bottomPhraseButton: 'Back to log in',
+    confirmButtonText: 'auth.sendResetLink',
+    bottomPhraseButton: 'auth.backToLogin',
 };
 
 export const passwordResetConfig: AuthPageConfig = {

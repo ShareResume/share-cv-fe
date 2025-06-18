@@ -10,7 +10,7 @@
             {{ 'auth.goToHome' | translate }}
         </app-button>
             <h2 class="auth-background__title">
-                {{config.welcomePhrase}}
+                {{config.welcomePhrase | translate}}
             </h2>
         </div>
     </div>
@@ -20,13 +20,13 @@
         <div class="auth-form__wrapper">
             <div class="auth-form__text">
                 <h2 class="auth-form__title">
-                    {{ config.title }}
+                    {{ config.title | translate }}
                 </h2>
 
                 @if (config.subtitlePhrase) {
                     <h4
                     class="auth-form__subtitle"
-                    [innerHTML]="config.subtitlePhrase">
+                    [innerHTML]="config.subtitlePhrase | translate">
                   </h4>
                 }
             </div>
@@ -37,7 +37,7 @@
                     <app-input
                       class="input"
                       [formControlName]="field.name"
-                      [placeholder]="field.placeholder"
+                      [placeholder]="field.placeholder | translate"
                       [type]="field.type"
                       [errorMessages]="field.errorMessages"
                     ></app-input>
@@ -55,13 +55,13 @@
                     type="submit"
                     size="large"
                     >
-                    {{ config.confirmButtonText }}
+                    {{ config.confirmButtonText | translate }}
                     </app-button>
                 }
 
                 @if(config.isGoogleAuth) {
                     <div class="or-separator">
-                        <span>or</span>
+                        <span>{{ 'common.or' | translate }}</span>
                     </div>
                     <app-button
                     class="google-button"
@@ -70,14 +70,14 @@
                     [isLink]="true"
                     >
                     <app-icon iconName="google"></app-icon>
-                        Continue with Google
+                        {{ 'auth.continueWithGoogle' | translate }}
                     </app-button>
                 }
             </form>
             @if (config.bottomPhrase) {
                 <div
                 class="auth-form__bottom-phrase"
-                [innerHTML]="config.bottomPhrase">
+                [innerHTML]="config.bottomPhrase | translate">
               </div>
             }
             @if (config.bottomPhraseButton) {
@@ -89,7 +89,7 @@
 
                 >
                 <app-icon iconName="back"></app-icon>
-                {{config.bottomPhraseButton}}
+                {{config.bottomPhraseButton | translate}}
 
               </app-button>
             }

@@ -36,6 +36,9 @@
     "register": "Register",
     "email": "Email",
     "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
     "forgotPassword": "Forgot password?",
     "continueWithGoogle": "Continue with Google",
     "signOut": "Sign Out",
@@ -44,7 +47,19 @@
     "deleteAccountContent": "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data including resumes, bookmarks, and documents.",
     "deleteAccountConfirm": "Delete Account",
     "accountDeletedSuccess": "Your account and all associated data have been successfully deleted.",
-    "goToHome": "Go to Home"
+    "goToHome": "Go to Home",
+    "welcomeBack": "Welcome back!",
+    "signInToAccount": "Sign in to your account",
+    "createAccount": "Create Account",
+    "joinCommunity": "Start your professional journey with ShareCV today",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccountWithLink": "Already have an account? <a href='/login'>Log in</a>",
+    "dontHaveAccountWithLink": "Don't have an account? <a href='/register'>Register</a>",
+    "resetPassword": "Reset Password",
+    "resetPasswordInstructions": "Enter your email and we'll send you a link to reset your password",
+    "sendResetLink": "Send Reset Link",
+    "backToLogin": "Back to Login"
   },
   "header": {
     "logo": "ShareCV",
@@ -194,7 +209,11 @@
     "maxLength": "Maximum length: {{value}} characters",
     "hidePassword": "Hide password",
     "showPassword": "Show password",
-    "selectValidOption": "Please select a valid option"
+    "selectValidOption": "Please select a valid option",
+    "noLowercase": "Password must contain at least one lowercase letter",
+    "noUppercase": "Password must contain at least one uppercase letter",
+    "noSpecial": "Password must contain at least one special character",
+    "passwordMismatch": "Passwords do not match"
   },
   "noData": "No data available"
 }
