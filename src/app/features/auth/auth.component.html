@@ -1,10 +1,14 @@
 <div class="auth">
     <div class="auth-background">
         <div class="auth-background__text">
-            <!-- Replace with reusable label -->
-            <div class="auth-background__label">
-                ShareCV
-            </div>
+            <app-button
+            class="auth-background__home-button"
+            colorType="primary"
+            size="medium"
+            (click)="navigateToHome()"
+        >
+            {{ 'auth.goToHome' | translate }}
+        </app-button>
             <h2 class="auth-background__title">
                 {{config.welcomePhrase}}
             </h2>

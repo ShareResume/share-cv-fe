@@ -43,7 +43,8 @@
     "deleteAccountTitle": "Delete Account",
     "deleteAccountContent": "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data including resumes, bookmarks, and documents.",
     "deleteAccountConfirm": "Delete Account",
-    "accountDeletedSuccess": "Your account and all associated data have been successfully deleted."
+    "accountDeletedSuccess": "Your account and all associated data have been successfully deleted.",
+    "goToHome": "Go to Home"
   },
   "header": {
     "logo": "ShareCV",

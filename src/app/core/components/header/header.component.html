@@ -27,15 +27,6 @@
         </nav>
       </div>
       <div class="header-right">
-        @if (isAuthenticated && !isAdmin) {
-          <app-button
-            colorType="primary"
-            class="upload-button"
-            fontWeight="regular"
-          >
-            {{ 'header.uploadResume' | translate }}
-          </app-button>
-        }
         @if (!isAuthenticated) {
           <app-button
             colorType="primary"

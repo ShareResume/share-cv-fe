@@ -17,6 +17,7 @@ import { forgotPasswordConfig, loginConfig, registerConfig } from '../../core/co
 import { AuthPageConfig } from '../../core/models/auth-page-config.model';
 import { UserRoleEnum } from '../../core/enums/user-role.enum';
 import { passwordConfirmationValidator } from '../../core/utils/password-confirmation.validator';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth',
@@ -27,6 +28,7 @@ import { passwordConfirmationValidator } from '../../core/utils/password-confirm
     ButtonComponent,
     IconComponent,
     RouterLink,
+    TranslateModule
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
@@ -147,5 +149,9 @@ export class AuthComponent implements OnInit {
         this.toasterService.showError(error.message || 'Failed to send reset instructions');
       },
     });
+  }
+
+  public navigateToHome(): void {
+    this.router.navigate(['/']);
   }
 }
