@@ -117,7 +117,12 @@
       "filterByStatus": "Фільтр за статусом",
       "filterBySpecialty": "Фільтр за спеціальністю",
       "allStatuses": "Всі статуси",
-      "allSpecialties": "Всі спеціальності"
+      "allSpecialties": "Всі спеціальності",
+      "company": "Компанія",
+      "specialization": "Спеціалізація",
+      "hrScreening": "HR Скринінг",
+      "yearsOfExperience": "Роки досвіду",
+      "date": "Дата"
     },
     "upload": {
       "title": "Завантажити резюме",

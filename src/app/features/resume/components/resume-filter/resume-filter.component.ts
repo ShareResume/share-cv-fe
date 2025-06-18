@@ -9,6 +9,7 @@ import { Status } from '@app/reusable/models/dropdown.model';
 import { SpecializationEnum } from '@app/core/enums/specialization.enum';
 import { CompanyAutocompleteComponent } from '@app/reusable/company-autocomplete/company-autocomplete.component';
 import { Company } from '@app/core/models/company.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-resume-filter',
@@ -22,6 +23,7 @@ import { Company } from '@app/core/models/company.model';
     CommonModule, 
     DropdownComponent,
     CompanyAutocompleteComponent,
+    TranslateModule
   ],
 })
 export class ResumeFilterComponent implements OnInit {

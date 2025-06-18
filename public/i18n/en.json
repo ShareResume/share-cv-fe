@@ -117,7 +117,12 @@
       "filterByStatus": "Filter by status",
       "filterBySpecialty": "Filter by specialty",
       "allStatuses": "All statuses",
-      "allSpecialties": "All specialties"
+      "allSpecialties": "All specialties",
+      "company": "Company",
+      "specialization": "Specialization",
+      "hrScreening": "HR Screening",
+      "yearsOfExperience": "Years of Experience",
+      "date": "Date"
     },
     "upload": {
       "title": "Upload Resume",

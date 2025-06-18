@@ -2,7 +2,7 @@
   <form [formGroup]="filterForm" class="filter-grid">
     <!-- Company filter -->
     <div class="filter-item">
-      <label>Company</label>
+      <label>{{ 'resume.filter.company' | translate }}</label>
       <app-company-autocomplete 
         formControlName="company">
       </app-company-autocomplete>
@@ -10,7 +10,7 @@
     
     <!-- Specialization filter -->
     <div class="filter-item">
-      <label>Spec</label>
+      <label>{{ 'resume.filter.specialization' | translate }}</label>
       <app-dropdown
         [options]="SPECIALIZATION_OPTIONS"
         [multiple]="false"
@@ -21,7 +21,7 @@
     
     <!-- HR Screening Status filter -->
     <div class="filter-item">
-      <label>HR Screening</label>
+      <label>{{ 'resume.filter.hrScreening' | translate }}</label>
       <app-dropdown 
         [options]="HR_SCREENING_OPTIONS"
         [multiple]="false"
@@ -32,7 +32,7 @@
     
     <!-- Years of Experience filter -->
     <div class="filter-item yoe-filter">
-      <label>Years of Experience</label>
+      <label>{{ 'resume.filter.yearsOfExperience' | translate }}</label>
       <div class="yoe-inputs">
         <app-input 
           type="number" 
@@ -49,7 +49,7 @@
     
     <!-- Date filter -->
     <div class="filter-item">
-      <label>Date</label>
+      <label>{{ 'resume.filter.date' | translate }}</label>
       <app-input 
         type="date" 
         formControlName="date">
