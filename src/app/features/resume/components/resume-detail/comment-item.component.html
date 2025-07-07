@@ -1,5 +1,7 @@
 <div class="comment-item" [style.margin-left.px]="level > 0 ? 20 : 0" [class.child-comment]="level > 0" [class.first-reply]="isFirstReply">
-  <div class="comment-connector" *ngIf="level > 0"></div>
+  @if (level > 0) {
+    <div class="comment-connector"></div>
+  }
   <div class="comment" [class.highlighted]="isReplyingToThisComment">
     <div class="comment-container">
       <div class="comment-content">
@@ -35,10 +37,10 @@
         ></textarea>
         <div class="form-actions">
           <app-button [colorType]="'secondary'" (click)="cancelReply()">Cancel</app-button>
-          <app-button 
-            [colorType]="'primary'" 
-            [disabled]="commentForm.invalid" 
-            type="submit">Reply</app-button>
+          <app-button
+            [colorType]="'primary'"
+            [disabled]="commentForm.invalid"
+          type="submit">Reply</app-button>
         </div>
       </form>
     </div>
@@ -48,8 +50,8 @@
   @if (comment.replies && comment.replies.length > 0) {
     <div class="replies">
       @for (reply of comment.replies; track reply.id; let first = $first) {
-        <app-comment-item 
-          [comment]="reply" 
+        <app-comment-item
+          [comment]="reply"
           [replyingToId]="replyingToId"
           [level]="level + 1"
           [isFirstReply]="first"
@@ -61,4 +63,4 @@
       }
     </div>
   }
-</div> 
+</div>

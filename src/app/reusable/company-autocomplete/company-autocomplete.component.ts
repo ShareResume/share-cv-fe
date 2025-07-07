@@ -1,5 +1,5 @@
 import { Component, DestroyRef, ElementRef, Input, ViewChild, forwardRef, inject, signal, computed, resource } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -23,7 +23,6 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-company-autocomplete',
   standalone: true,
   imports: [
-    CommonModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -31,8 +30,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     MatIconModule,
     IconComponent,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   templateUrl: './company-autocomplete.component.html',
   styleUrls: ['./company-autocomplete.component.scss'],
   providers: [{
@@ -65,18 +64,18 @@ export class CompanyAutocompleteComponent implements ControlValueAccessor {
   
   // Company search resource with debouncing
   public companiesResource = resource({
-    request: () => {
+    params: () => {
       const term = this.searchTerm();
       return term && term.length > 2 ? term : undefined;
     },
-    loader: async ({ request, abortSignal }) => {
-      if (!request) return [];
+    loader: async ({ params, abortSignal }) => {
+      if (!params) return [];
       
       try {
         await waitResource(500, abortSignal);
         
         // Once debounce time has passed, fetch the companies
-        return await firstValueFrom(this.companyService.searchCompanies(request));
+        return await firstValueFrom(this.companyService.searchCompanies(params));
       } catch (error) {
         // If the operation was aborted (due to a new request), don't log an error
         if (error instanceof Error && error.message === 'Operation aborted') {

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { ButtonComponent } from '../../../../reusable/button/button.component';
 import { Comment } from '../../models/comment.model';
 
@@ -13,10 +13,8 @@ import { Comment } from '../../models/comment.model';
     ReactiveFormsModule,
     DatePipe,
     ButtonComponent,
-    NgClass,
-    NgFor,
-    NgIf
-  ]
+    NgClass
+]
 })
 export class CommentItemComponent {
   @Input() comment!: Comment;

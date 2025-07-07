@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, OnInit, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from '@app/reusable/input/input.component';
 import { ButtonComponent } from '@app/reusable/button/button.component';
-import { CommonModule } from '@angular/common';
+
 import { ResumeFilters } from '../../models/resume-filters.model';
 import { DropdownComponent } from '@app/reusable/dropdown/dropdown.component';
 import { Status } from '@app/reusable/models/dropdown.model';
@@ -17,14 +17,13 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './resume-filter.component.scss',
   standalone: true,
   imports: [
-    InputComponent, 
-    ButtonComponent, 
-    ReactiveFormsModule, 
-    CommonModule, 
+    InputComponent,
+    ButtonComponent,
+    ReactiveFormsModule,
     DropdownComponent,
     CompanyAutocompleteComponent,
     TranslateModule
-  ],
+],
 })
 export class ResumeFilterComponent implements OnInit {
   @Output() filterApplied = new EventEmitter<ResumeFilters>();

@@ -1,7 +1,7 @@
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { ButtonComponent } from '../../../reusable/button/button.component';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../services/auth.service';
 import { UserRoleEnum } from '../../enums/user-role.enum';
 import { LanguageService } from '../../services/language.service';
@@ -15,7 +15,7 @@ import { take } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [ButtonComponent, RouterLink, RouterLinkActive, CommonModule, TranslateModule],
+  imports: [ButtonComponent, RouterLink, RouterLinkActive, TranslateModule],
 })
 export class HeaderComponent {
   private authService = inject(AuthService);

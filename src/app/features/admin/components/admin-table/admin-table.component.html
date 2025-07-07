@@ -39,10 +39,12 @@
 <ng-template #documentsTemplate let-value="value">
   <div class="documents-count">
     {{ getDocumentCount(value) }} documents
-    <button *ngIf="hasPublicDocument(value)" class="view-button" 
-            (click)="viewDocument(getPublicDocumentUrlFromDocs(value))">
-      <app-icon name="document"></app-icon>
-    </button>
+    @if (hasPublicDocument(value)) {
+      <button class="view-button"
+        (click)="viewDocument(getPublicDocumentUrlFromDocs(value))">
+        <app-icon name="document"></app-icon>
+      </button>
+    }
   </div>
 </ng-template>
 
@@ -51,9 +53,9 @@
     <app-button variant="primary" size="small" (click)="viewResumeDetails(row)">
       Details
     </app-button>
-    <app-button variant="outline" size="small" 
-                (click)="viewDocument(getPublicDocumentUrl(row))" 
-                [disabled]="!getPublicDocumentUrl(row)">
+    <app-button variant="outline" size="small"
+      (click)="viewDocument(getPublicDocumentUrl(row))"
+      [disabled]="!getPublicDocumentUrl(row)">
       View
     </app-button>
   </div>

@@ -2,7 +2,7 @@ import { Component, DestroyRef, Input, OnChanges, SimpleChanges, inject, signal 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { ButtonComponent } from '../../../../reusable/button/button.component';
 import { CommentsService } from '../../services/comments.service';
 import { Comment, CommentCreateRequest, CommentVoteRequest } from '../../models/comment.model';
@@ -22,11 +22,9 @@ interface CommentForm {
     FormsModule,
     DatePipe,
     ButtonComponent,
-    NgFor,
-    NgIf,
     NgClass,
     CommentItemComponent
-  ]
+]
 })
 export class ResumeDetailCommentsComponent implements OnChanges {
   private commentsService = inject(CommentsService);

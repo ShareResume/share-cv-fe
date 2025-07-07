@@ -1,5 +1,5 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,9 +15,8 @@ import { ToasterService } from '@app/core/services/toaster.service';
   styleUrl: './admin-page.component.scss',
   standalone: true,
   imports: [
-    CommonModule,
     AdminTableComponent
-  ]
+]
 })
 export class AdminPageComponent implements OnInit {
   private resumesService = inject(UserResumesService);

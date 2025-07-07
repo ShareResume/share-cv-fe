@@ -1,5 +1,5 @@
 import { Component, inject, signal, DestroyRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatDialogRef } from '@angular/material/dialog';
 import { ButtonComponent } from '../../../../reusable/button/button.component';
 import { IconComponent } from '../../../../reusable/icon/icon.component';
@@ -14,11 +14,10 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './file-upload-modal.component.scss',
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     IconComponent,
     TranslateModule
-  ]
+]
 })
 export class FileUploadModalComponent {
   private dialogRef = inject(MatDialogRef<FileUploadModalComponent>);

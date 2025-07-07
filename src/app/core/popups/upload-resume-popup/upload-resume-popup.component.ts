@@ -1,5 +1,5 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../../reusable/input/input.component';
@@ -29,7 +29,6 @@ interface CompanyStatus {
   styleUrls: ['./upload-resume-popup.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     InputComponent,
@@ -38,7 +37,7 @@ interface CompanyStatus {
     IconComponent,
     ButtonComponent,
     TranslateModule
-  ]
+]
 })
 export class UploadResumePopupComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<UploadResumePopupComponent>);

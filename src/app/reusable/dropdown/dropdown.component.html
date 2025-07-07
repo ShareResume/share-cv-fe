@@ -9,13 +9,15 @@
 <mat-form-field
   class="dropdown--form custom-select"
   [class.has-error]="statusControl.invalid && statusControl.touched"
->
+  >
   <div matSuffix class="icon-container">
-    <div *ngIf="hasValue()" 
-         class="clear-button" 
-         (click)="clearSelection($event)">
-      <app-icon [iconName]="'close'"></app-icon>
-    </div>
+    @if (hasValue()) {
+      <div
+        class="clear-button"
+        (click)="clearSelection($event)">
+        <app-icon [iconName]="'close'"></app-icon>
+      </div>
+    }
     <app-icon [iconName]="!isOpen ? 'arrowDown' : 'arrowUp'"></app-icon>
   </div>
   <mat-select
@@ -25,17 +27,19 @@
     panelClass="custom"
     [formControl]="statusControl"
     (openedChange)="isOpen = $event"
-  >
+    >
     @for (option of options(); track option.value) {
       <mat-option
         [value]="option.value"
-      >
+        >
         {{ option.viewValue }}
       </mat-option>
     }
 
   </mat-select>
 </mat-form-field>
-<div *ngIf="statusControl.invalid && statusControl.touched" class="error-message">
-  {{ getErrorMessage() }}
-</div>
+@if (statusControl.invalid && statusControl.touched) {
+  <div class="error-message">
+    {{ getErrorMessage() }}
+  </div>
+}

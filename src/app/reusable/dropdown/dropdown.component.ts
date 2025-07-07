@@ -1,5 +1,5 @@
 import { Component, DestroyRef, forwardRef, inject, input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
@@ -29,11 +29,10 @@ type SelectValue = string | string[] | null;
     MatOptionModule,
     ReactiveFormsModule,
     FormsModule,
-    CommonModule,
     MatIconModule,
     IconComponent,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   templateUrl: './dropdown.component.html',
   styleUrl: './dropdown.component.scss',
   providers: [{
